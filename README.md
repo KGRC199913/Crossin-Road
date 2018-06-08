@@ -19,6 +19,9 @@
 
 
     5.1 Use stroustrup style for if-else, do-while, etc
+    
+    
+    5.2 1 class = 1 .h file and 1 .cpp file, do **NOT** put 2 classes into 1 file .h
 
 
 6. Refactor and optimize continously
