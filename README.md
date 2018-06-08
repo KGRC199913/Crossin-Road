@@ -18,6 +18,9 @@
 5. Follow naming conventions
 
 
+    5.1 Use stroustrup style for if-else, do-while, etc
+
+
 6. Refactor and optimize continously
 
 
