@@ -1,0 +1,12 @@
+#include "CVEHICLE.h"
+
+
+
+CVEHICLE::CVEHICLE()
+{
+}
+
+
+CVEHICLE::~CVEHICLE()
+{
+}
