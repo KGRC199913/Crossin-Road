@@ -4,7 +4,8 @@
 #include <thread>
 #include <Windows.h>
 #include <processthreadsapi.h>
-
+#include <string>
+#include <vector>
 
 #define MAX_LEVEL 10
 #define MAX_BIRD 6

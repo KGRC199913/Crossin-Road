@@ -10,12 +10,11 @@ class CPEOPLE
 	bool _Dead;
 public:
 	CPEOPLE();
-	~CPEOPLE();
 
-	void Up(int);
-	void Left(int);
-	void Right(int);
-	void Down(int);
+	void Up(int block = 1);
+	void Left(int block = 1);
+	void Right(int block = 1);
+	void Down(int block = 1);
 	bool isImpact(const CVEHICLE*&);
 	bool isImpact(const CANIMAL*&);
 	bool isFinish();

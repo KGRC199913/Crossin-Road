@@ -3,9 +3,11 @@
 
 class CVEHICLE
 {
+	int _x, _y;
 public:
 	CVEHICLE();
-	~CVEHICLE();
+	
+	void Move(int blockX, int blockY);
 };
 
 

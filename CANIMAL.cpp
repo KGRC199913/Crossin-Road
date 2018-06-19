@@ -7,6 +7,3 @@ CANIMAL::CANIMAL()
 }
 
 
-CANIMAL::~CANIMAL()
-{
-}
