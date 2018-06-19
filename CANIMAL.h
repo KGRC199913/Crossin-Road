@@ -3,9 +3,13 @@
 
 class CANIMAL
 {
+	int _x, _y;
 public:
 	CANIMAL();
-	~CANIMAL();
+
+	void Move(int blockX, int blockY);
+	int Tell();
+
 };
 
 #endif CANIMAL_H_

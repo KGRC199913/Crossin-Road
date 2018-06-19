@@ -11,10 +11,10 @@ bool STOP_FLAG = false;
 bool FINISH_FLAG = false;
 class CGAME
 {
-	CTRUCK* _truckArray;
-	CCAR* _carArray;
-	CDINOSAUR* _dinosaurArray;
-	CBIRD* _birdArray;
+	std::vector <CTRUCK> _truckArray;
+	std::vector <CCAR> _carArray;
+	std::vector <CDINOSAUR> _dinosaurArray;
+	std::vector <CBIRD> _birdArray;
 	CPEOPLE player;
 public:
 	CGAME();
@@ -35,6 +35,8 @@ public:
 	void updatePosPeople(char);
 	void updatePosVehicle();
 	void updatePosAnimal();
+
+
 };
 
 #endif CGAME_H_

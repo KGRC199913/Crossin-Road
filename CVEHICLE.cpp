@@ -7,6 +7,3 @@ CVEHICLE::CVEHICLE()
 }
 
 
-CVEHICLE::~CVEHICLE()
-{
-}
