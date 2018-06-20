@@ -6,6 +6,11 @@ CPEOPLE::CPEOPLE()
 {
 }
 
+unsigned int & CPEOPLE::Level()
+{
+	return _level;
+}
+
 void CPEOPLE::Up(int block)
 {
 	_y += block;

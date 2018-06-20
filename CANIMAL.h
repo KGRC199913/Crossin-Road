@@ -9,7 +9,8 @@ public:
 
 	void Move(int blockX, int blockY);
 	int Tell();
-
+	virtual void draw_self() = 0;
+	virtual void delete_self() = 0;
 };
 
 #endif CANIMAL_H_

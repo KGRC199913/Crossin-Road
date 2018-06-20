@@ -8,6 +8,9 @@ public:
 	CVEHICLE();
 	
 	void Move(int blockX, int blockY);
+
+	virtual void draw_self() = 0;
+	virtual void delete_self() = 0;
 };
 
 
