@@ -1,41 +1,48 @@
 #ifndef CGAME_H_
 #define CGAME_H_
-#include "MasterHeader.h"
+#include "masterheader.h"
 #include "CTRUCK.h"
 #include "CCAR.h"
 #include "CBIRD.h"
 #include "CDINOSAUR.h"
 #include "CPEOPLE.h"
+#include "GUI.h"
+#include "Database.h"
 
 bool STOP_FLAG = false;
 bool FINISH_FLAG = false;
-class CGAME
+class CGAME final
 {
 	std::vector <CTRUCK> _truckArray;
 	std::vector <CCAR> _carArray;
 	std::vector <CDINOSAUR> _dinosaurArray;
 	std::vector <CBIRD> _birdArray;
-	CPEOPLE player;
+	CPEOPLE _player;
+	GUI _gui;
+	Database _database;
 public:
 	CGAME();
 	~CGAME();
 
-	void drawGame();
+	void init();
 
 	CPEOPLE getPeople();
-	CVEHICLE* getVehicle();
-	CANIMAL* getAnimal();
+	std::vector<CVEHICLE> getVehicle() const;
+	std::vector<CANIMAL> getAnimal() const;
+
 	void resetGame();
 	void exitGame(HANDLE);
 	void startGame();
+
 	void loadGame(std::istream &);
 	void saveGame(std::istream &);
+
 	void pauseGame(HANDLE);
 	void resumeGame(HANDLE);
+
 	void updatePosPeople(char);
 	void updatePosVehicle();
 	void updatePosAnimal();
-
 
 };
 

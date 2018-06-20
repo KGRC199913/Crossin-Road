@@ -1,16 +1,17 @@
 #ifndef CPEOPLE_H_
 #define CPEOPLE_H_
 #include "MasterHeader.h"
-#include "CANIMAL.h"
 #include "CVEHICLE.h"
+#include "CANIMAL.h"
 
 class CPEOPLE
 {
 	int _x, _y;
 	bool _Dead;
+	unsigned int _level;
 public:
 	CPEOPLE();
-
+	unsigned int& Level();
 	void Up(int block = 1);
 	void Left(int block = 1);
 	void Right(int block = 1);
