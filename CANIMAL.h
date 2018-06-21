@@ -5,12 +5,12 @@ class CANIMAL
 {
 	int _x, _y;
 public:
-	CANIMAL();
+	CANIMAL() = default;
 
 	void Move(int blockX, int blockY);
 	int Tell();
-	virtual void draw_self() = 0;
-	virtual void delete_self() = 0;
+	virtual void draw_self() {};
+	virtual void delete_self() {};
 };
 
 #endif CANIMAL_H_
