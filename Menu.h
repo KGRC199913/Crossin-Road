@@ -6,9 +6,9 @@
 class Menu
 {
 private:
-	std::vector<std::string> options;
-	char pressKey;
-	int pointer;
+	std::vector<std::string> _options;
+	char _pressKey;
+	int _pointer;
 public:
 	Menu();
 	Menu& PushBackBeginOptions();

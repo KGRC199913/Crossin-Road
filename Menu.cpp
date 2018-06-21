@@ -1,34 +1,45 @@
 #include "Menu.h"
 #include "Function.h"
+#include "GUI.h"
 
 Menu::Menu()
 {
-	pressKey = NULL;
-	pointer = 0;
+	_pressKey = NULL;
+	_pointer = 0;
 }
 
 Menu & Menu::PushBackBeginOptions() {
-	std::vector<std::string> ops = { "NEW GAME", "OPTIONS", "ABOUT US", "EXIT" };
+	std::vector<std::string> ops = { "NEW GAME", "LOAD GAME", "SETTINGS", "ABOUT US", "EXIT" };
 	for (int i = 0; i < ops.size(); ++i)
-		options.push_back(ops[i]);
+		_options.push_back(ops[i]);
 
 	return *this;
 }
 
 void Menu::PrintMenuOptions() {
-	FixConsoleWindow();
+	GUI gui;
+	gui.SetWindowSize();
 	system("cls");
 	DrawGameName();
+	DrawTree();
 	DrawBox();
-	int t = 21;
-	for (int i = 0; i < options.size(); ++i) {
-		if (pointer == i) {
-			GotoXY(46, t);  std::cout << ">> " << options[i] << " <<";
-			t += 1;
+	DrawMan();
+	DrawDinos();
+	DrawBirds();
+	DrawCloud();
+	DrawCars();
+	DrawTrucks();
+	GotoXY(45, 30); std::cout << "BE SAFE PASSER!!!!";
+	
+	int coordY = 21;
+	for (int i = 0; i < _options.size(); ++i) {
+		if (_pointer == i) {
+			GotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
+			coordY += 1;
 		}
 		else {
-			GotoXY(46, t); std::cout <<"   "<< options[i];
-			t += 1;
+			GotoXY(46, coordY); std::cout <<"   "<< _options[i];
+			coordY += 1;
 		}
 	}
 }
@@ -37,26 +48,28 @@ void Menu::CreateLoopMenu() {
 	START: while (true) {
 		this->PrintMenuOptions();
 		while (true) {
-			pressKey = _getch();
-			if (pressKey == 72) {
-				if (pointer > 0)
-					--pointer;
+			_pressKey = _getch();
+			if (_pressKey == 72) {
+				if (_pointer > 0)
+					--_pointer;
 				else
-					pointer = options.size() - 1;
+					_pointer = _options.size() - 1;
 				break;
 			}
-			if (pressKey == 80) {
-				if (pointer < options.size() - 1)
-					++pointer;
+			if (_pressKey == 80) {
+				if (_pointer < _options.size() - 1)
+					++_pointer;
 				else
-					pointer = 0;
+					_pointer = 0;
 				break;
 			}
-			if (pressKey == 13) {
-				switch (pointer) {
+			if (_pressKey == 13) {
+				switch (_pointer) {
 				case 0: {
 					system("cls");
-					std::cout << "Game Start!!" << std::endl;
+					//std::cout << "Game Start!!" << std::endl;
+					GUI test;
+					test.drawPlayArea();
 					system("pause");
 					goto START;
 					break;
