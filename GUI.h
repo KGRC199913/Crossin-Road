@@ -8,18 +8,16 @@
 
 class GUI final
 {
-	
-	
+	GUI() = default;
+	~GUI() = default;
 	// go to (x, y) pos on console screen
 	void static gotoXY(int x, int y);
 public:
-	GUI() = default;
-	~GUI() = default;
 	// use to clear the console, DO NOT use the system("cls");
 	void static clearConsoleScreen();
 	// draw the playground
 	void static drawPlayArea();
-
+	
 	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
 	void static redrawObjects(std::vector<CVEHICLE> & vehicleList, std::vector<CANIMAL> & animalList, CPEOPLE& player);
 	// use to delete objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop

@@ -1,6 +1,4 @@
-﻿#include "GUI.h"
-
-
+#include "GUI.h"
 
 void GUI::drawPlayArea() {
 	std::cout << R"abcd(
@@ -40,6 +38,7 @@ void GUI::drawPlayArea() {
 )abcd";
 }
 
+
 void GUI::clearConsoleScreen()
 {
 	COORD topLeft = { 0, 0 };
@@ -58,23 +57,23 @@ void GUI::clearConsoleScreen()
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-//void GUI::redrawObjects(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
-//{
-//	for (auto& it : vehicleList)
-//		it.draw_self();
-//	for (auto& it : animalList)
-//		it.draw_self();
-//	player.draw_self();
-//}
+void GUI::redrawObjects(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
+{
+	for (auto& it : vehicleList)
+		it.draw_self();
+	for (auto& it : animalList)
+		it.draw_self();
+	player.draw_self();
+}
 
-//void GUI::deleteObjects(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
-//{
-//	for (auto& it : vehicleList)
-//		it.delete_self();
-//	for (auto& it : animalList)
-//		it.delete_self();
-//	player.delete_self();
-//}
+void GUI::deleteObjects(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
+{
+	for (auto& it : vehicleList)
+		it.delete_self();
+	for (auto& it : animalList)
+		it.delete_self();
+	player.delete_self();
+}
 
 void GUI::FixConsoleWindows()
 {
