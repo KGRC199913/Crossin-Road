@@ -5,12 +5,12 @@ class CVEHICLE
 {
 	int _x, _y;
 public:
-	CVEHICLE();
+	CVEHICLE() = default;
 	
 	void Move(int blockX, int blockY);
 
-	virtual void draw_self() = 0;
-	virtual void delete_self() = 0;
+	virtual void draw_self() {};
+	virtual void delete_self() {};
 };
 
 

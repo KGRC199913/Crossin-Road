@@ -6,8 +6,7 @@ class CTRUCK :
 	public CVEHICLE
 {
 public:
-	CTRUCK();
-	~CTRUCK();
+	CTRUCK() = default;
 
 	void draw_self() {};
 	void delete_self() {};

@@ -18,8 +18,6 @@ class CGAME final
 	std::vector <CDINOSAUR> _dinosaurArray;
 	std::vector <CBIRD> _birdArray;
 	CPEOPLE _player;
-	GUI _gui;
-	Database _database;
 public:
 	CGAME();
 	~CGAME();
