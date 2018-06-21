@@ -4,7 +4,7 @@
 #include "CVEHICLE.h"
 #include "CANIMAL.h"
 
-class CPEOPLE
+class CPEOPLE final
 {
 	int _x, _y;
 	bool _Dead;
@@ -20,6 +20,11 @@ public:
 	bool isImpact(const CANIMAL*&);
 	bool isFinish();
 	bool isDead();
+
+	void draw_self();
+	void delete_self();
+
+	explicit operator void*();
 };
 
 #endif CPEOPLE_H_

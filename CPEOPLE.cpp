@@ -30,3 +30,16 @@ void CPEOPLE::Down(int block)
 {
 	_y -= block;
 }
+
+void CPEOPLE::draw_self()
+{
+}
+
+void CPEOPLE::delete_self()
+{
+}
+
+CPEOPLE::operator void*()
+{
+	return reinterpret_cast<void*>(this);
+}
