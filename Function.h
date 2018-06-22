@@ -2,10 +2,10 @@
 #define FUNCTION_H_
 
 #include "MasterHeader.h"
+#include "GUI.h"
+// viet thanh class rieng HOAC nhet vo class Menu (chinh xac thi nen viet interface)
 
 void DrawGameName();
-void FixConsoleWindow();
-void GotoXY(int coordX, int coordY);
 void DrawBox();
 void DrawMan();
 void DrawDinos();

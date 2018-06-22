@@ -1,2 +1,0 @@
-GUI constructor and destructor set to Public
-redrawObjects and deleteObjects set to comment (draw_self() and delete_self() are not implement)

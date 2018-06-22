@@ -1,8 +1,11 @@
 #ifndef CVEHICLE_H_
 #define CVEHICLE_H_
+#include "MasterHeader.h"
+#include "GUI.h"
 
 class CVEHICLE
 {
+protected:
 	int _x, _y;
 public:
 	CVEHICLE() = default;

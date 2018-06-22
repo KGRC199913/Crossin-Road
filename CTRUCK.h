@@ -8,8 +8,8 @@ class CTRUCK :
 public:
 	CTRUCK() = default;
 
-	void draw_self() {};
-	void delete_self() {};
+	void draw_self();
+	void delete_self();
 };
 
 #endif CTRUCK_H_

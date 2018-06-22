@@ -4,6 +4,9 @@
 #include "CVEHICLE.h"
 #include "CANIMAL.h"
 
+class CVEHICLE;
+class CANIMAL;
+
 class CPEOPLE final
 {
 	int _x, _y;

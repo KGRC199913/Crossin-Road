@@ -9,6 +9,7 @@
 #include <processthreadsapi.h>
 #include <string>
 #include <vector>
+#include <conio.h>
 
 #define MAX_LEVEL 5
 #define MAX_BIRD 6

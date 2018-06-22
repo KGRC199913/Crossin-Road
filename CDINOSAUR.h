@@ -8,8 +8,8 @@ class CDINOSAUR :
 public:
 	CDINOSAUR() = default;
 
-	void draw_self() {};
-	void delete_self() {};
+	void draw_self();
+	void delete_self();
 };
 
 #endif CDINOSAUR_H_

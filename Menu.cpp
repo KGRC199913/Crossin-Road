@@ -1,6 +1,10 @@
 #include "Menu.h"
 #include "Function.h"
 #include "GUI.h"
+#include "CCAR.h"
+#include "CTRUCK.h"
+#include "CBIRD.h"
+#include "CDINOSAUR.h"
 
 Menu::Menu()
 {
@@ -10,16 +14,14 @@ Menu::Menu()
 
 Menu & Menu::PushBackBeginOptions() {
 	std::vector<std::string> ops = { "NEW GAME", "LOAD GAME", "SETTINGS", "ABOUT US", "EXIT" };
-	for (int i = 0; i < ops.size(); ++i)
+	for (size_t i = 0; i < ops.size(); ++i)
 		_options.push_back(ops[i]);
 
 	return *this;
 }
 
 void Menu::PrintMenuOptions() {
-	GUI gui;
-	gui.SetWindowSize();
-	system("cls");
+	GUI::clearConsoleScreen();
 	DrawGameName();
 	DrawTree();
 	DrawBox();
@@ -29,16 +31,16 @@ void Menu::PrintMenuOptions() {
 	DrawCloud();
 	DrawCars();
 	DrawTrucks();
-	GotoXY(45, 30); std::cout << "BE SAFE PASSER!!!!";
+	GUI::gotoXY(45, 30); std::cout << "BE SAFE PASSER!!!!";
 	
 	int coordY = 21;
-	for (int i = 0; i < _options.size(); ++i) {
+	for (size_t i = 0; i < _options.size(); ++i) {
 		if (_pointer == i) {
-			GotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
+			GUI::gotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
 			coordY += 1;
 		}
 		else {
-			GotoXY(46, coordY); std::cout <<"   "<< _options[i];
+			GUI::gotoXY(46, coordY); std::cout <<"   "<< _options[i];
 			coordY += 1;
 		}
 	}
@@ -66,33 +68,32 @@ void Menu::CreateLoopMenu() {
 			if (_pressKey == 13) {
 				switch (_pointer) {
 				case 0: {
-					system("cls");
+					GUI::clearConsoleScreen();
 					//std::cout << "Game Start!!" << std::endl;
-					GUI test;
-					test.drawPlayArea();
-					system("pause");
+					GUI::drawPlayArea();
+					system("pause > nul");
 					goto START;
 					break;
 				}
 
-				case 1: {
-					system("cls");
+				case 2: {
+					GUI::clearConsoleScreen();
 					std::cout << "Choose Options!!" << std::endl;
 					system("pause");
 					goto START;
 					break;
 				}
 
-				case 2: {
-					system("cls");
+				case 3: {
+					GUI::clearConsoleScreen();
 					std::cout << "Cat Rules The World!" << std::endl;
 					system("pause");
 					goto START;
 					break;
 				}
 
-				case 3: {
-					system("cls");
+				case 4: {
+					GUI::clearConsoleScreen();
 					std::cout << "EXIT!" << std::endl;
 
 					return;

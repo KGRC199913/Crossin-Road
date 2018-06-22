@@ -31,6 +31,26 @@ void CPEOPLE::Down(int block)
 	_y -= block;
 }
 
+bool CPEOPLE::isImpact(const CVEHICLE *&)
+{
+	return false;
+}
+
+bool CPEOPLE::isImpact(const CANIMAL *&)
+{
+	return false;
+}
+
+bool CPEOPLE::isFinish()
+{
+	return false;
+}
+
+bool CPEOPLE::isDead()
+{
+	return false;
+}
+
 void CPEOPLE::draw_self()
 {
 }
