@@ -1,8 +1,11 @@
 #ifndef CANIMAL_H_
 #define CANIMAL_H_
+#include "MasterHeader.h"
+#include "GUI.h"
 
 class CANIMAL
 {
+protected:
 	int _x, _y;
 public:
 	CANIMAL() = default;
