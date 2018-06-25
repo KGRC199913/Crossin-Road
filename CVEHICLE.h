@@ -9,7 +9,8 @@ protected:
 	int _x, _y;
 public:
 	CVEHICLE() = default;
-	
+
+	void setCoord(int x, int y);
 	void Move(int blockX, int blockY);
 
 	virtual void draw_self() {};

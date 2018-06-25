@@ -9,8 +9,8 @@
 #include "GUI.h"
 #include "Database.h"
 
-bool STOP_FLAG = false;
-bool FINISH_FLAG = false;
+// bool STOP_FLAG = false;
+// bool FINISH_FLAG = false;
 class CGAME final
 {
 	std::vector <CTRUCK> _truckArray;
@@ -24,7 +24,7 @@ public:
 
 	void init();
 
-	CPEOPLE getPeople();
+	CPEOPLE getPeople() const;
 	std::vector<CVEHICLE> getVehicle() const;
 	std::vector<CANIMAL> getAnimal() const;
 
@@ -41,7 +41,6 @@ public:
 	void updatePosPeople(char);
 	void updatePosVehicle();
 	void updatePosAnimal();
-
 };
 
 #endif CGAME_H_

@@ -4,6 +4,23 @@
 
 CPEOPLE::CPEOPLE()
 {
+	_x = 0;
+	_y = 0;
+	_Dead = false;
+	_level = 1;
+}
+
+void CPEOPLE::reset()
+{
+	_x = 0;
+	_y = 0;
+	_Dead = false;
+	_level = 1;
+}
+
+void CPEOPLE::LevelUp()
+{
+	++_level;
 }
 
 unsigned int & CPEOPLE::Level()
