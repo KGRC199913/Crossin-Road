@@ -21,9 +21,9 @@ public:
 	// draw the playground
 	void static drawPlayArea();
 	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	void static redrawObjects(std::vector<CVEHICLE> & vehicleList, std::vector<CANIMAL> & animalList, CPEOPLE& player);
+	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 	// use to delete objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	void static deleteObjects(std::vector<CVEHICLE> & vehicleList, std::vector<CANIMAL> & animalList, CPEOPLE& player);
+	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 	// Disable Maximize/Minimize button
 	// Disable Maximize/Minimize button
 	void static FixConsoleWindows();

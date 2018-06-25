@@ -14,6 +14,9 @@ class CPEOPLE final
 	unsigned int _level;
 public:
 	CPEOPLE();
+
+	void reset();
+	void LevelUp();
 	unsigned int& Level();
 	void Up(int block = 1);
 	void Left(int block = 1);

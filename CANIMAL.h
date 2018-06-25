@@ -10,8 +10,9 @@ protected:
 public:
 	CANIMAL() = default;
 
+	void setCoord(int x, int y);
 	void Move(int blockX, int blockY);
-	int Tell();
+	virtual void Tell() {};
 	virtual void draw_self() {};
 	virtual void delete_self() {};
 };
