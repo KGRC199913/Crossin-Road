@@ -70,10 +70,18 @@ bool CPEOPLE::isDead()
 
 void CPEOPLE::draw_self()
 {
+	GUI::gotoXY(_x, _y);
+	std::cout << (char)(220);
+	GUI::gotoXY(_x, _y - 1);
+	std::cout << (char)(142);
 }
 
 void CPEOPLE::delete_self()
 {
+	GUI::gotoXY(_x, _y);
+	std::cout << (char)(32);
+	GUI::gotoXY(_x, _y - 1);
+	std::cout << (char)(32);
 }
 
 CPEOPLE::operator void*()
