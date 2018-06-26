@@ -130,19 +130,19 @@ void DrawBox() {
 
 
 	for (int coordX = 44; coordX < 61; ++coordX) {
-		GUI::gotoXY(coordX, 20); std::cout << BOX_HORIZONTAL_ASCII;
-		GUI::gotoXY(coordX, 26); std::cout << BOX_HORIZONTAL_ASCII;;
+		GUI::gotoXY(coordX, 20); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 26); std::cout << char(BOX_HORIZONTAL_ASCII);
 	}
 
 	for (int coordY = 21; coordY <= 25; ++coordY) {
-		GUI::gotoXY(44, coordY); std::cout << BOX_VERTICAL_ASCII;
-		GUI::gotoXY(61, coordY); std::cout << BOX_VERTICAL_ASCII;
+		GUI::gotoXY(44, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(61, coordY); std::cout << char(BOX_VERTICAL_ASCII);
 	}
 
-	GUI::gotoXY(61, 20); std::cout << BOX_TOP_RIGHT_CORNER_ASCII;
-	GUI::gotoXY(61, 26); std::cout << BOX_BOTTOM_RIGHT_CORNER_ASCII;
-	GUI::gotoXY(44, 20); std::cout << BOX_TOP_LEFT_CORNER_ASCII;
-	GUI::gotoXY(44, 26); std::cout << BOX_BOTTOM_LEFT_CORNER_ASCII;
+	GUI::gotoXY(61, 20); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(61, 26); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(44, 20); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(44, 26); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 
 }
 
@@ -159,38 +159,38 @@ void DrawMan() {
 
 void DrawDinos() {
 	GUI::gotoXY(80, 25);
-	std::cout << SPACE_ASCII;
-	std::cout << SPACE_ASCII;
-	std::cout << SPACE_ASCII;
-	std::cout << BLOCK_ASCII;
-	std::cout << TOP_HALF_BLOCK_ASCII << std::endl;
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(BLOCK_ASCII);
+	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
 	GUI::gotoXY(81, 26);
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
-	std::cout << BLOCK_ASCII;
-	std::cout << BLOCK_ASCII;
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+	std::cout << char(BLOCK_ASCII);
+	std::cout << char(BLOCK_ASCII);
 }
 
 void DrawBirds() {
 	GUI::gotoXY(80, 20);
-	std::cout << TOP_HALF_BLOCK_ASCII;
-	std::cout << TOP_HALF_BLOCK_ASCII;
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
-	std::cout << TOP_HALF_BLOCK_ASCII;
-	std::cout << TOP_HALF_BLOCK_ASCII;
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
 }
 
 void DrawCars() {
 	GUI::gotoXY(5, 25);
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
-	std::cout << BLOCK_ASCII;
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+	std::cout << char(BLOCK_ASCII);
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 }
 
 void DrawTrucks() {
 	GUI::gotoXY(13, 25);
-	std::cout << BLOCK_ASCII;
-	std::cout << BLOCK_ASCII;
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << char(BLOCK_ASCII);
+	std::cout << char(BLOCK_ASCII);
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 	;
 }
 

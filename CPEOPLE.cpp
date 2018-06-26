@@ -71,17 +71,17 @@ bool CPEOPLE::isDead()
 void CPEOPLE::draw_self()
 {
 	GUI::gotoXY(_x, _y);
-	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 	GUI::gotoXY(_x, _y - 1);
-	std::cout << A_WITH_DIAERESIS;
+	std::cout << char(A_WITH_DIAERESIS);
 }
 
 void CPEOPLE::delete_self()
 {
 	GUI::gotoXY(_x, _y);
-	std::cout << SPACE_ASCII;
+	std::cout << char(SPACE_ASCII);
 	GUI::gotoXY(_x, _y - 1);
-	std::cout << SPACE_ASCII;
+	std::cout << char(SPACE_ASCII);
 }
 
 CPEOPLE::operator void*()
