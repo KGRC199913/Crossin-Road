@@ -17,4 +17,14 @@ public:
 	~Menu();
 };
 
+void DrawGameName();
+void DrawBox();
+void DrawMan();
+void DrawDinos();
+void DrawBirds();
+void DrawCars();
+void DrawTrucks();
+void DrawTree();
+void DrawCloud();
+
 #endif MENU_H_

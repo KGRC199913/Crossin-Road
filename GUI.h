@@ -5,6 +5,19 @@
 #include "CVEHICLE.h"
 #include "CPEOPLE.h"
 
+#define SPACE_ASCII                     32
+#define UNDERSCORE_ASCII                95
+#define TOP_HALF_BLOCK_ASCII            223
+#define BOTTOM_HALF_BLOCK_ASCII         220
+#define BLOCK_ASCII                     219
+#define A_WITH_DIAERESIS                142
+#define BOX_VERTICAL_ASCII              186
+#define BOX_HORIZONTAL_ASCII            205
+#define BOX_TOP_LEFT_CORNER_ASCII       201
+#define BOX_TOP_RIGHT_CORNER_ASCII      187
+#define BOX_BOTTOM_LEFT_CORNER_ASCII    200
+#define BOX_BOTTOM_RIGHT_CORNER_ASCII   188
+
 class CVEHICLE;
 class CANIMAL;
 class CPEOPLE;
