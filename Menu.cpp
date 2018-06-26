@@ -1,5 +1,4 @@
-#include "Menu.h"
-#include "Function.h"
+﻿#include "Menu.h"
 #include "GUI.h"
 #include "CCAR.h"
 #include "CTRUCK.h"
@@ -59,7 +58,7 @@ void Menu::CreateLoopMenu() {
 				break;
 			}
 			if (_pressKey == 80) {
-				if (_pointer < _options.size() - 1)
+				if ((size_t)_pointer < _options.size() - 1)
 					++_pointer;
 				else
 					_pointer = 0;
@@ -102,6 +101,119 @@ void Menu::CreateLoopMenu() {
 			}
 		}
 	}
+}
+
+//MENU's DECORATION FUNCTION
+void DrawGameName() {
+	std::cout << R"abcd(
+			 ____                                                         
+			/\  _`\                                __                     
+			\ \ \/\_\  _ __   ___     ____    ____/\_\    ___      __     
+			 \ \ \/_/_/\`'__\/ __`\  /',__\  /',__\/\ \ /' _ `\  /'_ `\   
+			  \ \ \L\ \ \ \//\ \L\ \/\__, `\/\__, `\ \ \/\ \/\ \/\ \L\ \  
+			   \ \____/\ \_\\ \____/\/\____/\/\____/\ \_\ \_\ \_\ \____ \ 
+			    \/___/  \/_/ \/___/  \/___/  \/___/  \/_/\/_/\/_/\/___L\ \
+			                                                       /\____/
+			                                                       \_/__/ 
+			            ____                         __                   
+			           /\  _`\                      /\ \                  
+			           \ \ \L\ \    ___      __     \_\ \                 
+			            \ \ ,  /   / __`\  /'__`\   /'_` \                
+			             \ \ \\ \ /\ \L\ \/\ \L\.\_/\ \L\ \               
+			              \ \_\ \_\ \____/\ \__/.\_\ \___,_\              
+			               \/_/\/ /\/___/  \/__/\/_/\/__,_ /      
+)abcd";
+	std::cout << std::endl;
+}
+
+void DrawBox() {
+
+
+	for (int coordX = 44; coordX < 61; ++coordX) {
+		GUI::gotoXY(coordX, 20); std::cout << BOX_HORIZONTAL_ASCII;
+		GUI::gotoXY(coordX, 26); std::cout << BOX_HORIZONTAL_ASCII;;
+	}
+
+	for (int coordY = 21; coordY <= 25; ++coordY) {
+		GUI::gotoXY(44, coordY); std::cout << BOX_VERTICAL_ASCII;
+		GUI::gotoXY(61, coordY); std::cout << BOX_VERTICAL_ASCII;
+	}
+
+	GUI::gotoXY(61, 20); std::cout << BOX_TOP_RIGHT_CORNER_ASCII;
+	GUI::gotoXY(61, 26); std::cout << BOX_BOTTOM_RIGHT_CORNER_ASCII;
+	GUI::gotoXY(44, 20); std::cout << BOX_TOP_LEFT_CORNER_ASCII;
+	GUI::gotoXY(44, 26); std::cout << BOX_BOTTOM_LEFT_CORNER_ASCII;
+
+}
+
+void DrawMan() {
+	GUI::gotoXY(100, 23);
+	std::cout << R"abcd(
+                    ___   O
+                  ____   /_\_
+                 ___   __/ \
+                     ___   /
+          
+)abcd";
+}
+
+void DrawDinos() {
+	GUI::gotoXY(80, 25);
+	std::cout << SPACE_ASCII;
+	std::cout << SPACE_ASCII;
+	std::cout << SPACE_ASCII;
+	std::cout << BLOCK_ASCII;
+	std::cout << TOP_HALF_BLOCK_ASCII << std::endl;
+	GUI::gotoXY(81, 26);
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << BLOCK_ASCII;
+	std::cout << BLOCK_ASCII;
+}
+
+void DrawBirds() {
+	GUI::gotoXY(80, 20);
+	std::cout << TOP_HALF_BLOCK_ASCII;
+	std::cout << TOP_HALF_BLOCK_ASCII;
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << TOP_HALF_BLOCK_ASCII;
+	std::cout << TOP_HALF_BLOCK_ASCII;
+}
+
+void DrawCars() {
+	GUI::gotoXY(5, 25);
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << BLOCK_ASCII;
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+}
+
+void DrawTrucks() {
+	GUI::gotoXY(13, 25);
+	std::cout << BLOCK_ASCII;
+	std::cout << BLOCK_ASCII;
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	;
+}
+
+void DrawTree() {
+	GUI::gotoXY(20, 19);
+	std::cout << R"abcd(
+                                                                                             @@@@
+                                                                                            @@@@~@
+                                                                                           @@@~@@@@@
+                                                                                            @@@@~@@
+                                                                                             @@_@
+                                                                                              ||
+                                                                                             _||_
+)abcd";
+}
+
+void DrawCloud() {
+	GUI::gotoXY(100, 18);
+	std::cout << R"abcd(
+   ____           ____
+ _(    )        _(    ) 
+(___(__)       (___(__)             
+)abcd";
 }
 
 Menu::~Menu() {}

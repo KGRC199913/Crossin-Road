@@ -3,15 +3,15 @@
 void CCAR::draw_self()
 {
 	GUI::gotoXY(_x, _y);
-	std::cout << (char)(220);
-	std::cout << (char)(219);
-	std::cout << (char)(220);
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
+	std::cout << BLOCK_ASCII;
+	std::cout << BOTTOM_HALF_BLOCK_ASCII;
 }
 
 void CCAR::delete_self()
 {
 	GUI::gotoXY(_x, _y);
-	std::cout << (char)(32);
-	std::cout << (char)(32);
-	std::cout << (char)(32);
+	std::cout << UNDERSCORE_ASCII;
+	std::cout << UNDERSCORE_ASCII;
+	std::cout << UNDERSCORE_ASCII;
 }
