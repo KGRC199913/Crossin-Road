@@ -6,7 +6,7 @@ class CDINOSAUR :
 	public CANIMAL
 {
 public:
-	CDINOSAUR() = default;
+	CDINOSAUR();
 
 	void draw_self();
 	void delete_self();

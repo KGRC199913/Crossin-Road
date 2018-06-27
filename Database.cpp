@@ -1,34 +1,42 @@
 #include "Database.h"
 
-void Database::saveGame(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
+// DO NOT USE YET
+void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
 {
-	std::ofstream SaveFile(SAVE_PATH, std::ios::binary);
+	/*std::ofstream SaveFile(SAVE_PATH, std::ios::binary);
 	SaveFile.write((char*)((void*)(player)), sizeof(player));
 
 	size_t temp = vehicleList.size();
 	SaveFile.write((char*)(&temp), sizeof(size_t));
-	SaveFile.write(reinterpret_cast<char*>(&vehicleList[0]), vehicleList.size() * sizeof(CVEHICLE));
+	for (auto& it : vehicleList) {
+		SaveFile.write(reinterpret_cast<char*>((void*)(it)), sizeof(CVEHICLE));
+	}
 
 	temp = animalList.size();
 	SaveFile.write((char*)(&temp), sizeof(size_t));
-	SaveFile.write(reinterpret_cast<char*>(&animalList[0]), animalList.size() * sizeof(CANIMAL));
-	SaveFile.close();
+	for (auto& it : animalList) {
+		SaveFile.write(reinterpret_cast<char*>((void*)(it)), sizeof(CANIMAL));
+	}
+	SaveFile.close();*/
 }
 
-void Database::loadGame(std::vector<CVEHICLE>& vehicleList, std::vector<CANIMAL>& animalList, CPEOPLE & player)
+//DO NOT USE YET
+void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
 {
-	std::ifstream SaveFile(SAVE_PATH, std::ios::binary);
-	SaveFile.read((char*)((void*)(player)), sizeof(player));
-	size_t Size = 0;
-	SaveFile.read(reinterpret_cast<char*>(&Size), sizeof(size_t));
-	vehicleList.clear();
-	vehicleList.resize(Size);
-	SaveFile.read(reinterpret_cast<char*>(&vehicleList[0]), Size * sizeof(CVEHICLE));
+	//std::ifstream savefile(save_path, std::ios::binary);
+	//savefile.read((char*)((void*)(player)), sizeof(player));
+	//size_t size = 0;
+	//savefile.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+	//vehiclelist.clear();
+	//vehiclelist.resize(size);
+	//for (auto& it : vehiclelist) {
 
-	Size = 0;
-	SaveFile.read(reinterpret_cast<char*>(&Size), sizeof(size_t));
-	animalList.clear();
-	animalList.resize(Size);
-	SaveFile.read(reinterpret_cast<char*>(&animalList[0]), Size * sizeof(CANIMAL));
-	SaveFile.close();
+	//}
+
+	//size = 0;
+	//savefile.read(reinterpret_cast<char*>(&size), sizeof(size_t));
+	//animallist.clear();
+	//animallist.resize(size);
+	//savefile.read(reinterpret_cast<char*>(&animallist[0]), size * sizeof(canimal));
+	//savefile.close();
 }

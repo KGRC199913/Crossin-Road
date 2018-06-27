@@ -19,9 +19,13 @@
 #define WIDTH 800
 #define HEIGHT 600
 #define SAVE_PATH "./save.dat"
+#define TOP_EDGE 10
+#define LOW_EDGE 599
+#define LEFT_EDGE 20
+#define RIGHT_EDGE 70
 
 
-extern bool STOP_FLAG;
-extern bool FINISH_FLAG;
+extern bool STOP_FLAG = false;
+extern bool FINISH_FLAG = false;
 
 #endif MASTERHEADER_H_
