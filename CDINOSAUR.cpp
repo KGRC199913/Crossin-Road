@@ -1,5 +1,11 @@
 #include "CDINOSAUR.h"
 
+CDINOSAUR::CDINOSAUR()
+{
+	_type = 1;
+	_x = _y = 0;
+}
+
 void CDINOSAUR::draw_self()
 {
 	GUI::gotoXY(_x, _y - 1);
@@ -22,4 +28,12 @@ void CDINOSAUR::delete_self()
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
+}
+
+void CDINOSAUR::draw_self_bw()
+{
+}
+
+void CDINOSAUR::delete_self_bw()
+{
 }

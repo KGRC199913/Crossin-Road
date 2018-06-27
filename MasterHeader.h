@@ -24,8 +24,7 @@
 #define LEFT_EDGE 20
 #define RIGHT_EDGE 70
 
-
-extern bool STOP_FLAG = false;
-extern bool FINISH_FLAG = false;
+extern bool STOP_FLAG;
+extern bool FINISH_FLAG;
 
 #endif MASTERHEADER_H_

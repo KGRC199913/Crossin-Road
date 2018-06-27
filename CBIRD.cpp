@@ -1,5 +1,11 @@
 #include "CBIRD.h"
 
+CBIRD::CBIRD()
+{
+	_type = 0;
+	_x = _y = 0;
+}
+
 void CBIRD::draw_self()
 {
 	GUI::gotoXY(_x, _y - 1);
@@ -14,4 +20,14 @@ void CBIRD::delete_self()
 	std::cout << char(SPACE_ASCII);
 	std::cout << char(SPACE_ASCII);
 	std::cout << char(SPACE_ASCII);
+}
+
+void CBIRD::draw_self_bw()
+{
+
+}
+
+void CBIRD::delete_self_bw()
+{
+
 }

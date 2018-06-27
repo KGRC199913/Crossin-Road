@@ -1,5 +1,11 @@
 #include "CTRUCK.h"
 
+CTRUCK::CTRUCK()
+{
+	_type = 1;
+	_x = _y = 0;
+}
+
 void CTRUCK::draw_self()
 {
 	GUI::gotoXY(_x, _y);
@@ -14,4 +20,12 @@ void CTRUCK::delete_self()
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
+}
+
+void CTRUCK::draw_self_bw()
+{
+}
+
+void CTRUCK::delete_self_bw()
+{
 }

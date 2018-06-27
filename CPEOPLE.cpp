@@ -1,6 +1,6 @@
 #include "CPEOPLE.h"
 
-
+bool FINISH_FLAG;
 
 CPEOPLE::CPEOPLE()
 {
@@ -67,33 +67,36 @@ void CPEOPLE::Down(int block)
 
 bool CPEOPLE::isImpact(const CVEHICLE *& obj)
 {
-	auto equal = [](COORD lhs, COORD rhs) {
-		return (lhs.X == rhs.X) && (lhs.Y == rhs.Y);
-	};
-
-	COORD hitboxP;
-	hitboxP.X = _x;
-	hitboxP.Y = _y;
-	COORD hitboxP_head;
-	hitboxP_head.X = _x;
-	hitboxP_head.Y = _y + 1;
-
-	COORD hitboxVec = obj->getCoord();
-	COORD hitboxVec1 = hitboxVec;
-	hitboxVec1.X += 1;
-	COORD hitboxVec2 = hitboxVec;
-	hitboxVec2.X += 2;
-
-	if (equal(hitboxP, hitboxVec) || equal(hitboxP, hitboxVec1) || equal(hitboxP, hitboxVec2)) {
-		return true;
+	COORD objCoord = obj->getCoord();
+	if (_y == objCoord.Y) {
+		if ((_x >= objCoord.X) && (_x <= (objCoord.X + 2))) {
+			_Dead = true;
+			return true;
+		}
 	}
-	if (equal(hitboxP_head, hitboxVec) || equal(hitboxP_head, hitboxVec1) || equal(hitboxP_head, hitboxVec2)) {
-		return true;
-	}
+	return false;
 }
 
 bool CPEOPLE::isImpact(const CANIMAL *& obj)
 {
+	COORD objCoord = obj->getCoord();
+
+	if (obj->getType() == 0) {
+		if (_y == objCoord.Y) {
+			if ((_x >= objCoord.X) && (_x <= (objCoord.X + 2))) {
+				_Dead = true;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	if ((_y == objCoord.Y) || _y == (objCoord.Y - 1)) {
+		if ((_x >= objCoord.X) && (_x <= (objCoord.X + 3))) {
+			_Dead = true;
+			return true;
+		}
+	}
 	return false;
 }
 
