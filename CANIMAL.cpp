@@ -13,11 +13,12 @@ void CANIMAL::setCoord(int x, int y)
 
 void CANIMAL::Move(int blockX)
 {
-	if (true) {
-		_x += blockX;
-		
+	if ((_x + blockX >= LEFT_EDGE) && (_x + blockX <= RIGHT_EDGE)) {
+		_x += blockX;		
 	}
-	
+	else {
+		_x = 20;
+	}
 }
 
 COORD CANIMAL::getCoord() const

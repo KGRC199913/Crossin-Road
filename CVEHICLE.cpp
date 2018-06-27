@@ -13,11 +13,12 @@ void CVEHICLE::setCoord(int x, int y)
 
 void CVEHICLE::Move(int blockX)
 {
-	if (true) {
+	if ((_x + blockX >= LEFT_EDGE) && (_x + blockX <= RIGHT_EDGE)) {
 		_x += blockX;
-		
 	}
-	
+	else {
+		_x = 20;
+	}
 }
 
 COORD CVEHICLE::getCoord() const

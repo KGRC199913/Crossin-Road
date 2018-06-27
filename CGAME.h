@@ -9,8 +9,6 @@
 #include "GUI.h"
 #include "Database.h"
 
-// bool STOP_FLAG = false;
-// bool FINISH_FLAG = false;
 class CGAME final
 {
 	std::vector <CTRUCK> _truckArray;

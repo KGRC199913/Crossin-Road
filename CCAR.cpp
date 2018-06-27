@@ -1,5 +1,11 @@
 #include "CCAR.h"
 
+CCAR::CCAR()
+{
+	_type = 0;
+	_x = _y = 0;
+}
+
 void CCAR::draw_self()
 {
 	GUI::gotoXY(_x, _y);
@@ -14,4 +20,12 @@ void CCAR::delete_self()
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
 	std::cout << char(UNDERSCORE_ASCII);
+}
+
+void CCAR::draw_self_bw()
+{
+}
+
+void CCAR::delete_self_bw()
+{
 }
