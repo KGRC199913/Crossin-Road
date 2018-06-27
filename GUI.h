@@ -25,7 +25,7 @@ class CPEOPLE;
 class GUI final
 {
 	GUI() = default;
-	~GUI() = default;
+	~GUI() = delete;
 public:
 	// go to (x, y) pos on console screen
 	void static gotoXY(int x, int y);
@@ -39,9 +39,9 @@ public:
 	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 	// Disable Maximize/Minimize button
 	// Disable Maximize/Minimize button
-	void static FixConsoleWindows();
+	void static fixConsoleWindows();
 	// Set Console size to WIDTH x HEIGHT
-	void static SetWindowSize();
+	void static setWindowSize();
 };
 
 #endif GUI_H_

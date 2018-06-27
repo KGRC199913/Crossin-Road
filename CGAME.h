@@ -25,8 +25,8 @@ public:
 	void init();
 
 	CPEOPLE getPeople() const;
-	std::vector<CVEHICLE> getVehicle() const;
-	std::vector<CANIMAL> getAnimal() const;
+	std::vector<CVEHICLE*> getVehicle() const;
+	std::vector<CANIMAL*> getAnimal() const;
 
 	void resetGame();
 	void exitGame(HANDLE);

@@ -15,6 +15,8 @@ class CPEOPLE final
 public:
 	CPEOPLE();
 
+	void setCoord(int x, int y);
+
 	void reset();
 	void LevelUp();
 	unsigned int& Level();

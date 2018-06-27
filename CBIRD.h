@@ -6,7 +6,7 @@ class CBIRD :
 	public CANIMAL
 {
 public:
-	CBIRD() = default;
+	CBIRD();
 
 	void draw_self();
 	void delete_self();

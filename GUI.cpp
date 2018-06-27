@@ -3,7 +3,7 @@
 
 
 void GUI::drawPlayArea() {
-	GUI::SetWindowSize();
+	GUI::setWindowSize();
 	//LeftOutline x = 19
 	//RightOutline x = 71
 	//1stLine y = 10
@@ -82,7 +82,7 @@ void GUI::deleteObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 }
 
 
-void GUI::FixConsoleWindows()
+void GUI::fixConsoleWindows()
 {
 	HWND consoleWindow = GetConsoleWindow();
 	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
@@ -90,7 +90,7 @@ void GUI::FixConsoleWindows()
 	SetWindowLong(consoleWindow, GWL_STYLE, style);
 }
 
-void GUI::SetWindowSize()
+void GUI::setWindowSize()
 {
 	HWND console = GetConsoleWindow();
 	RECT r = { 0 };

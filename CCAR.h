@@ -6,7 +6,7 @@ class CCAR :
 	public CVEHICLE
 {
 public:
-	CCAR() = default;
+	CCAR();
 
 	void draw_self();
 	void delete_self();

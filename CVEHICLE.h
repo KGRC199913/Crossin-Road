@@ -7,14 +7,19 @@ class CVEHICLE
 {
 protected:
 	int _x, _y;
+	int _type; // 0 = car, 1 = truck;
 public:
 	CVEHICLE() = default;
 
-	void setCoord(int x, int y);
-	void Move(int blockX, int blockY);
+	// 0 = car, 1 = truck;
+	int getType() const;
 
-	virtual void draw_self() {};
-	virtual void delete_self() {};
+	void setCoord(int x, int y);
+	void Move(int blockX);
+	COORD getCoord() const;
+
+	virtual void draw_self() = 0;
+	virtual void delete_self() = 0;
 };
 
 
