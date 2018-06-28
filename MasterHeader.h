@@ -26,5 +26,6 @@
 
 extern bool STOP_FLAG;
 extern bool FINISH_FLAG;
+extern char input_key;
 
 #endif MASTERHEADER_H_

@@ -26,7 +26,8 @@ void CPEOPLE::reset()
 
 void CPEOPLE::LevelUp()
 {
-	++_level;
+	if (_level < 5)
+		++_level;
 }
 
 unsigned int & CPEOPLE::Level()
@@ -39,7 +40,7 @@ void CPEOPLE::Up(int block)
 	if (_y - block > TOP_EDGE)
 		_y -= block;
 	else
-		if (_y - block == TOP_EDGE) {
+		if (_y - block <= TOP_EDGE) {
 			FINISH_FLAG = true;
 		}
 }
@@ -65,7 +66,7 @@ void CPEOPLE::Down(int block)
 	else; // pass
 }
 
-bool CPEOPLE::isImpact(const CVEHICLE *& obj)
+bool CPEOPLE::isImpact(const CVEHICLE * obj)
 {
 	COORD objCoord = obj->getCoord();
 	if (_y == objCoord.Y) {
@@ -77,7 +78,7 @@ bool CPEOPLE::isImpact(const CVEHICLE *& obj)
 	return false;
 }
 
-bool CPEOPLE::isImpact(const CANIMAL *& obj)
+bool CPEOPLE::isImpact(const CANIMAL * obj)
 {
 	COORD objCoord = obj->getCoord();
 
