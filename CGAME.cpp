@@ -2,6 +2,7 @@
 
 char input_key;
 bool STOP_FLAG;
+char movement_key;
 
 CGAME::CGAME()
 {
@@ -118,8 +119,9 @@ void CGAME::gameloop()
 	while (!STOP_FLAG) {
 		GUI::clearConsoleScreen();
 		GUI::drawPlayArea();
-		if (input_key == 'p') {
-			while (input_key != 'o') {}
+		if (input_key == 'g') {
+			input_key = ' ';
+			while (input_key != 'g') {}
 		}
 
 		updatePosVehicle();
@@ -144,9 +146,11 @@ void CGAME::gameloop()
 		GUI::deleteObjects(_vehicles, _animals, *_player);
 		GUI::redrawObjects(_vehicles, _animals, *_player);
 		if (FINISH_FLAG == true) {
+			GUI::deleteObjects(_vehicles, _animals, *_player);
+			GUI::redrawObjects(_vehicles, _animals, *_player);
 			break;
 		}
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(150));
 	}
 
 	FINISH_FLAG = false;
@@ -160,6 +164,11 @@ void CGAME::inputKey()
 	input_key = '\0';
 	while (!STOP_FLAG) {
 		input_key = _getch();
+		if ((input_key == KEY_UP) || (input_key == KEY_DOWN)
+			|| (input_key == KEY_LEFT) || (input_key == KEY_RIGHT)) {
+			movement_key = input_key;
+		}
+
 		if (input_key == 27) {
 			STOP_FLAG = true;
 			break;
@@ -169,12 +178,53 @@ void CGAME::inputKey()
 
 void CGAME::updatePosPeople()
 {
+	if (movement_key == KEY_UP) {
+		_player->Up();
+		movement_key = ' ';
+		return;
+	}
+		
+	if (movement_key == KEY_DOWN){
+		_player->Down();
+		movement_key = ' ';
+		return;
+	}
+		
+	if (movement_key == KEY_LEFT) {
+		_player->Left();
+		movement_key = ' ';
+		return;
+	}
+		
+	if (movement_key == KEY_RIGHT) {
+		_player->Right();
+		movement_key = ' ';
+		return;
+	}
 }
 
 void CGAME::updatePosVehicle()
 {
+	int enemiesCount = _player->Level() * 2;
+	for (auto i = 0; i < enemiesCount; ++i) {
+		if (i <= (enemiesCount / 2) - 1) {
+			_vehicles[i]->Move(1);
+		}
+		else {
+			_vehicles[i]->Move(5);
+		}
+	}
 }
 
 void CGAME::updatePosAnimal()
 {
+	int enemiesCount = _player->Level() * 2;
+	for (auto i = 0; i < enemiesCount; ++i) {
+		if (i <= (enemiesCount / 2) - 1) {
+			_animals[i]->Move(3);
+		}
+		else {
+			_animals[i]->Move(4);
+		}
+	}
 }

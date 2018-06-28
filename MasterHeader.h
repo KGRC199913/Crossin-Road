@@ -24,6 +24,11 @@
 #define LEFT_EDGE 20
 #define RIGHT_EDGE 70
 
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+
 extern bool STOP_FLAG;
 extern bool FINISH_FLAG;
 extern char input_key;
