@@ -30,30 +30,25 @@ CGAME::~CGAME()
 
 void CGAME::init()
 {
-	int enemiesCount = _player->Level() * 2;
-	
+	int enemiesCount = _player->Level() * 4;
+	int distance = 40 / (enemiesCount / 2);
+
 	_vehicles.resize(enemiesCount);
 	_animals.resize(enemiesCount);
+
 
 	for (auto i = 0; i < enemiesCount; ++i) {
 		if (i <= (enemiesCount / 2) - 1) {
 			_vehicles[i] = new CCAR;
-			_vehicles[i]->setCoord(21 + i, 21);
+			_vehicles[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 21);
+			_animals[i] = new CBIRD;
+			_animals[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 18);
 		}
 		else {
 			_vehicles[i] = new CTRUCK;
-			_vehicles[i]->setCoord(21 + i, 12);
-		}
-	}
-
-	for (auto i = 0; i < enemiesCount; ++i) {
-		if (i <= (enemiesCount / 2) - 1) {
-			_animals[i] = new CBIRD;
-			_animals[i]->setCoord(21 + i, 18);
-		}
-		else {
+			_vehicles[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 12);
 			_animals[i] = new CDINOSAUR;
-			_animals[i]->setCoord(21 + i, 15);
+			_animals[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 15);
 		}
 	}
 
@@ -117,7 +112,8 @@ void CGAME::resumeGame(HANDLE)
 void CGAME::gameloop()
 {
 	while (!STOP_FLAG) {
-		GUI::clearConsoleScreen();
+		// GUI::clearConsoleScreen();
+		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 		if (input_key == 'g') {
 			input_key = ' ';
@@ -150,7 +146,7 @@ void CGAME::gameloop()
 			GUI::redrawObjects(_vehicles, _animals, *_player);
 			break;
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(150));
+		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 	}
 
 	FINISH_FLAG = false;
@@ -205,7 +201,7 @@ void CGAME::updatePosPeople()
 
 void CGAME::updatePosVehicle()
 {
-	int enemiesCount = _player->Level() * 2;
+	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {
 		if (i <= (enemiesCount / 2) - 1) {
 			_vehicles[i]->Move(1);
@@ -218,7 +214,7 @@ void CGAME::updatePosVehicle()
 
 void CGAME::updatePosAnimal()
 {
-	int enemiesCount = _player->Level() * 2;
+	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {
 		if (i <= (enemiesCount / 2) - 1) {
 			_animals[i]->Move(3);
