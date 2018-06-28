@@ -103,8 +103,8 @@ void Menu::CreateLoopMenu() {
 	}
 }
 
-//MENU's DECORATION FUNCTION
-void DrawGameName() {
+
+void Menu::DrawGameName() {
 	std::cout << R"abcd(
 			 ____                                                         
 			/\  _`\                                __                     
@@ -126,7 +126,7 @@ void DrawGameName() {
 	std::cout << std::endl;
 }
 
-void DrawBox() {
+void Menu::DrawBox() {
 
 
 	for (int coordX = 44; coordX < 61; ++coordX) {
@@ -146,7 +146,7 @@ void DrawBox() {
 
 }
 
-void DrawMan() {
+void Menu::DrawMan() {
 	GUI::gotoXY(100, 23);
 	std::cout << R"abcd(
                     ___   O
@@ -157,7 +157,7 @@ void DrawMan() {
 )abcd";
 }
 
-void DrawDinos() {
+void Menu::DrawDinos() {
 	GUI::gotoXY(80, 25);
 	std::cout << char(SPACE_ASCII);
 	std::cout << char(SPACE_ASCII);
@@ -170,7 +170,7 @@ void DrawDinos() {
 	std::cout << char(BLOCK_ASCII);
 }
 
-void DrawBirds() {
+void Menu::DrawBirds() {
 	GUI::gotoXY(80, 20);
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
@@ -179,14 +179,14 @@ void DrawBirds() {
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
 }
 
-void DrawCars() {
+void Menu::DrawCars() {
 	GUI::gotoXY(5, 25);
 	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 }
 
-void DrawTrucks() {
+void Menu::DrawTrucks() {
 	GUI::gotoXY(13, 25);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
@@ -194,7 +194,7 @@ void DrawTrucks() {
 	;
 }
 
-void DrawTree() {
+void Menu::DrawTree() {
 	GUI::gotoXY(20, 19);
 	std::cout << R"abcd(
                                                                                              @@@@
@@ -207,7 +207,7 @@ void DrawTree() {
 )abcd";
 }
 
-void DrawCloud() {
+void Menu::DrawCloud() {
 	GUI::gotoXY(100, 18);
 	std::cout << R"abcd(
    ____           ____
