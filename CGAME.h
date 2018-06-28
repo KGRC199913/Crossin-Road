@@ -11,34 +11,33 @@
 
 class CGAME final
 {
-	std::vector <CTRUCK> _truckArray;
-	std::vector <CCAR> _carArray;
-	std::vector <CDINOSAUR> _dinosaurArray;
-	std::vector <CBIRD> _birdArray;
-	CPEOPLE _player;
+	std::vector<CVEHICLE*> _vehicles;
+	std::vector<CANIMAL*> _animals;
+	CPEOPLE* _player;
+	void gameloop();
+	void inputKey();
+	void updatePosPeople();
+	void updatePosVehicle();
+	void updatePosAnimal();
+	void init();
+	void clearGame();
 public:
 	CGAME();
 	~CGAME();
-
-	void init();
 
 	CPEOPLE getPeople() const;
 	std::vector<CVEHICLE*> getVehicle() const;
 	std::vector<CANIMAL*> getAnimal() const;
 
 	void resetGame();
-	void exitGame(HANDLE);
+	void exitGame();
 	void startGame();
-
+	
 	void loadGame(std::istream &);
 	void saveGame(std::istream &);
 
 	void pauseGame(HANDLE);
 	void resumeGame(HANDLE);
-
-	void updatePosPeople(char);
-	void updatePosVehicle();
-	void updatePosAnimal();
 };
 
 #endif CGAME_H_
