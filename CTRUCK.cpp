@@ -32,8 +32,5 @@ void CTRUCK::draw_self_bw()
 
 void CTRUCK::delete_self_bw()
 {
-	GUI::gotoXY(_x, _y);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
+	delete_self();
 }

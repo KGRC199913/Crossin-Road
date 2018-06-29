@@ -1,14 +1,16 @@
 #include "CGAME.h"
 
-char input_key;
 bool STOP_FLAG;
-char movement_key;
+
 
 CGAME::CGAME()
 {
 	_vehicles.clear();
 	_animals.clear();
 	_player = new CPEOPLE;
+	EXIT_FLAG = false;
+	input_key = ' ';
+	movement_key = ' ';
 }
 
 
@@ -68,19 +70,23 @@ void CGAME::clearGame()
 	_animals.clear();
 }
 
-CPEOPLE CGAME::getPeople() const
-{
-	return *_player;
-}
-
 void CGAME::resetGame()
 {
 	clearGame();
+
 }
 
 void CGAME::exitGame()
 {
+	EXIT_FLAG = true;
 	STOP_FLAG = true;
+}
+
+void CGAME::pauseGame()
+{
+	input_key = ' ';
+	while (input_key != 'g') {}
+	input_key = ' ';
 }
 
 void CGAME::startGame()
@@ -89,6 +95,11 @@ void CGAME::startGame()
 	std::thread keyManageThread(&CGAME::inputKey, this);
 	gameloop();
 	keyManageThread.join();
+}
+
+bool CGAME::isExit() const
+{
+	return EXIT_FLAG;
 }
 
 void CGAME::loadGame(std::istream &)
@@ -101,25 +112,14 @@ void CGAME::saveGame(std::istream &)
 	Database::saveGame(_vehicles, _animals, *_player);
 }
 
-void CGAME::pauseGame(HANDLE)
-{
-}
-
-void CGAME::resumeGame(HANDLE)
-{
-}
-
 void CGAME::gameloop()
 {
 	while (!STOP_FLAG) {
 		// GUI::clearConsoleScreen();
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
-		
 
-		updatePosVehicle();
-		updatePosAnimal();
-		updatePosPeople();
+		updatePosObjs();
 
 		for (auto it : _vehicles) {
 			if (_player->isImpact(it)) {
@@ -144,16 +144,17 @@ void CGAME::gameloop()
 			break;
 		}
 
-		if (input_key == 'g') {
-			input_key = ' ';
-			while (input_key != 'g') {}
-			input_key = ' ';
-		}
+		if (input_key == 'g')
+			pauseGame();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(25));
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	}
-	FINISH_FLAG = false;
-	_player->LevelUp();
+
+	if (FINISH_FLAG) {
+		FINISH_FLAG = false;
+		_player->LevelUp();
+	}
+
 	STOP_FLAG = true;
 }
 
@@ -164,15 +165,16 @@ void CGAME::inputKey()
 	input_key = '\0';
 	while (!STOP_FLAG) {
 		input_key = _getch();
+		if (input_key == 27) {
+			exitGame();
+			break;
+		}
 		if ((input_key == KEY_UP) || (input_key == KEY_DOWN)
 			|| (input_key == KEY_LEFT) || (input_key == KEY_RIGHT)) {
 			movement_key = input_key;
+			input_key = ' ';
 		}
 
-		if (input_key == 27) {
-			STOP_FLAG = true;
-			break;
-		}
 	}
 }
 
@@ -227,4 +229,11 @@ void CGAME::updatePosAnimal()
 			_animals[i]->Move(4);
 		}
 	}
+}
+
+void CGAME::updatePosObjs()
+{
+	updatePosVehicle();
+	updatePosAnimal();
+	updatePosPeople();
 }

@@ -92,7 +92,7 @@ void Menu::CreateLoopMenu() {
 
 				case 4: {
 					GUI::clearConsoleScreen();
-					std::cout << "EXIT!" << std::endl;
+					exit(EXIT_SUCCESS);
 					return;
 				}
 				}

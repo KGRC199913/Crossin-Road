@@ -25,18 +25,10 @@ void CBIRD::delete_self()
 void CBIRD::draw_self_bw()
 {
 
-	GUI::gotoXY(_x, _y - 1);
-	GUI::gotoXY(_x, _y);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
+	draw_self();
 }
 
 void CBIRD::delete_self_bw()
 {
-	GUI::gotoXY(_x, _y - 1);
-	GUI::gotoXY(_x, _y);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
+	delete_self();
 }

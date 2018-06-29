@@ -14,30 +14,32 @@ class CGAME final
 	std::vector<CVEHICLE*> _vehicles;
 	std::vector<CANIMAL*> _animals;
 	CPEOPLE* _player;
+	bool EXIT_FLAG;
+	char input_key;
+	char movement_key;
+
 	void gameloop();
 	void inputKey();
 	void updatePosPeople();
 	void updatePosVehicle();
 	void updatePosAnimal();
+	void updatePosObjs();
 	void init();
 	void clearGame();
+	void exitGame();
+	void pauseGame();
+	void loadGame(std::istream &);
+	void saveGame(std::istream &);
 public:
 	CGAME();
 	~CGAME();
 
-	CPEOPLE getPeople() const;
-	std::vector<CVEHICLE*> getVehicle() const;
-	std::vector<CANIMAL*> getAnimal() const;
-
 	void resetGame();
-	void exitGame();
-	void startGame();
 	
-	void loadGame(std::istream &);
-	void saveGame(std::istream &);
+	void startGame();
+	bool isExit() const;
 
-	void pauseGame(HANDLE);
-	void resumeGame(HANDLE);
+	
 };
 
 #endif CGAME_H_
