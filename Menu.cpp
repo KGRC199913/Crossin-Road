@@ -46,7 +46,8 @@ void Menu::PrintMenuOptions() {
 }
 
 void Menu::CreateLoopMenu() {
-	START: while (true) {
+	PushBackBeginOptions();
+	while (true) {
 		this->PrintMenuOptions();
 		while (true) {
 			_pressKey = _getch();
@@ -68,10 +69,10 @@ void Menu::CreateLoopMenu() {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
+					return;
 					//std::cout << "Game Start!!" << std::endl;
-					GUI::drawPlayArea();
+					//GUI::drawPlayArea();
 					system("pause > nul");
-					goto START;
 					break;
 				}
 
@@ -79,7 +80,6 @@ void Menu::CreateLoopMenu() {
 					GUI::clearConsoleScreen();
 					std::cout << "Choose Options!!" << std::endl;
 					system("pause");
-					goto START;
 					break;
 				}
 
@@ -87,14 +87,12 @@ void Menu::CreateLoopMenu() {
 					GUI::clearConsoleScreen();
 					std::cout << "Cat Rules The World!" << std::endl;
 					system("pause");
-					goto START;
 					break;
 				}
 
 				case 4: {
 					GUI::clearConsoleScreen();
 					std::cout << "EXIT!" << std::endl;
-
 					return;
 				}
 				}
