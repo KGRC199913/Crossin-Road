@@ -1,4 +1,4 @@
-#include "CPEOPLE.h"
+ #include "CPEOPLE.h"
 
 bool FINISH_FLAG;
 

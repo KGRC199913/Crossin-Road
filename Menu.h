@@ -9,7 +9,8 @@ private:
 	std::vector<std::string> _options;
 	char _pressKey;
 	int _pointer;
-
+	Menu& PushBackBeginOptions();
+	void PrintMenuOptions();
 	//MENU's DECORATION METHOD
 	void DrawGameName();
 	void DrawBox();
@@ -22,8 +23,6 @@ private:
 	void DrawCloud();
 public:
 	Menu();
-	Menu& PushBackBeginOptions();
-	void PrintMenuOptions();
 	void CreateLoopMenu();
 	~Menu();
 };

@@ -31,7 +31,7 @@ CGAME::~CGAME()
 void CGAME::init()
 {
 	int enemiesCount = _player->Level() * 4;
-	int distance = 40 / (enemiesCount / 2);
+	int distance = 50 / (enemiesCount / 2);
 
 	_vehicles.resize(enemiesCount);
 	_animals.resize(enemiesCount);
@@ -115,10 +115,7 @@ void CGAME::gameloop()
 		// GUI::clearConsoleScreen();
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
-		if (input_key == 'g') {
-			input_key = ' ';
-			while (input_key != 'g') {}
-		}
+		
 
 		updatePosVehicle();
 		updatePosAnimal();
@@ -139,18 +136,25 @@ void CGAME::gameloop()
 				break;
 			}
 		}
-		GUI::deleteObjects(_vehicles, _animals, *_player);
+		//GUI::deleteObjects(_vehicles, _animals, *_player);
 		GUI::redrawObjects(_vehicles, _animals, *_player);
 		if (FINISH_FLAG == true) {
-			GUI::deleteObjects(_vehicles, _animals, *_player);
+			//GUI::deleteObjects(_vehicles, _animals, *_player);
 			GUI::redrawObjects(_vehicles, _animals, *_player);
 			break;
 		}
+
+		if (input_key == 'g') {
+			input_key = ' ';
+			while (input_key != 'g') {}
+			input_key = ' ';
+		}
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 	}
-
 	FINISH_FLAG = false;
 	_player->LevelUp();
+	STOP_FLAG = true;
 }
 
 void CGAME::inputKey()

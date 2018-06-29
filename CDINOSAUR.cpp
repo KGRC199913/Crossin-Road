@@ -12,7 +12,7 @@ void CDINOSAUR::draw_self()
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
 	GUI::gotoXY(_x, _y);
-	std::cout << char(UNDERSCORE_ASCII);
+	std::cout << char(SPACE_ASCII);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
@@ -24,10 +24,10 @@ void CDINOSAUR::delete_self()
 	std::cout << char(SPACE_ASCII);
 	std::cout << char(SPACE_ASCII);
 	GUI::gotoXY(_x, _y);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
 }
 
 void CDINOSAUR::draw_self_bw()
@@ -36,7 +36,7 @@ void CDINOSAUR::draw_self_bw()
 	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
+	std::cout << char(SPACE_ASCII);
 	GUI::gotoXY(_x + 2, _y - 1);
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
@@ -45,10 +45,10 @@ void CDINOSAUR::draw_self_bw()
 void CDINOSAUR::delete_self_bw()
 {
 	GUI::gotoXY(_x, _y);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
 	GUI::gotoXY(_x + 2, _y - 1);
 	std::cout << char(SPACE_ASCII);
 	std::cout << char(SPACE_ASCII);
