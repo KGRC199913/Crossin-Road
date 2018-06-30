@@ -16,8 +16,8 @@ void GUI::drawPlayArea() {
                        @@_@        {o}{o}{o}            |             |
                         ||          |  |  |            / \           / \
                        _||_        \|/\|/\|/          /  /          /  /
-                  
-                  
+                                                                           
+                                                                           
                   =========================================================
                   |                                                       |
                   |                                                       |
@@ -96,6 +96,17 @@ void GUI::setWindowSize()
 	RECT r = { 0 };
 	GetWindowRect(console, &r);
 	MoveWindow(console, r.left, r.top, WIDTH, HEIGHT, TRUE);
+}
+
+void GUI::initWindows()
+{
+	GUI::setWindowSize();
+	GUI::fixConsoleWindows();
+}
+
+void GUI::render(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player)
+{
+	GUI::redrawObjects(vehicleList, animalList, player);
 }
 
 void GUI::gotoXY(int x, int y)

@@ -4,8 +4,7 @@
 // pseudo-main
 int main() {
 	CGAME cg;
-	GUI::setWindowSize();
-	GUI::fixConsoleWindows();
+	GUI::initWindows();
 	Menu menu;
 	menu.CreateLoopMenu();
 	do {

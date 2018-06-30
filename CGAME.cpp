@@ -8,23 +8,19 @@ CGAME::CGAME()
 	_vehicles.clear();
 	_animals.clear();
 	_player = new CPEOPLE;
-	EXIT_FLAG = false;
+	_exitFlag = false;
 	input_key = ' ';
 	movement_key = ' ';
+	for (auto& i : _trafficLight)
+		i = false;
+	for (auto& i : _reverseLane)
+		i = false;
 }
 
 
 CGAME::~CGAME()
 {
-	for (auto& it : _vehicles) {
-		delete it;
-	}
-	_vehicles.clear();
-
-	for (auto& it : _animals) {
-		delete it;
-	}
-	_animals.clear();
+	clearGame();
 
 	delete _player;
 	_player = nullptr;
@@ -55,6 +51,14 @@ void CGAME::init()
 	}
 
 	_player->setCoord(41, 26);
+
+	if (_player->Level() >= 4) {
+		srand(time(NULL));
+
+		for (auto& i : _trafficLight) {
+			i = (((rand() % 10) % 2) == 0) ? true : false;
+		}
+	}
 }
 
 void CGAME::clearGame()
@@ -78,7 +82,7 @@ void CGAME::resetGame()
 
 void CGAME::exitGame()
 {
-	EXIT_FLAG = true;
+	_exitFlag = true;
 	STOP_FLAG = true;
 }
 
@@ -92,14 +96,19 @@ void CGAME::pauseGame()
 void CGAME::startGame()
 {
 	init();
+	std::thread trafficManage;
+	if (_player->Level() >= 4)
+		trafficManage = std::thread(&CGAME::trafficLightManage, this);
 	std::thread keyManageThread(&CGAME::inputKey, this);
 	gameloop();
+	if (trafficManage.joinable())
+		trafficManage.join();
 	keyManageThread.join();
 }
 
 bool CGAME::isExit() const
 {
-	return EXIT_FLAG;
+	return _exitFlag;
 }
 
 void CGAME::loadGame(std::istream &)
@@ -110,6 +119,15 @@ void CGAME::loadGame(std::istream &)
 void CGAME::saveGame(std::istream &)
 {
 	Database::saveGame(_vehicles, _animals, *_player);
+}
+
+void CGAME::trafficLightManage()
+{
+	while (!STOP_FLAG) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		for (auto& i : _trafficLight)
+			i = !i;
+	}
 }
 
 void CGAME::gameloop()
@@ -147,7 +165,7 @@ void CGAME::gameloop()
 		if (input_key == 'g')
 			pauseGame();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(5));
+		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 	}
 
 	if (FINISH_FLAG) {
@@ -207,26 +225,32 @@ void CGAME::updatePosPeople()
 
 void CGAME::updatePosVehicle()
 {
+	int carMove = _trafficLight[0] ? 0 : 2;
+	int truckMove = _trafficLight[3] ? 0 : 5;
+
 	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {
 		if (i <= (enemiesCount / 2) - 1) {
-			_vehicles[i]->Move(1);
+			_vehicles[i]->Move(carMove);
 		}
 		else {
-			_vehicles[i]->Move(5);
+			_vehicles[i]->Move(truckMove);
 		}
 	}
 }
 
 void CGAME::updatePosAnimal()
 {
+	int birdMove = _trafficLight[2] ? 0 : 3;
+	int dinoMove = _trafficLight[1] ? 0 : 4;
+
 	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {
 		if (i <= (enemiesCount / 2) - 1) {
-			_animals[i]->Move(3);
+			_animals[i]->Move(birdMove);
 		}
 		else {
-			_animals[i]->Move(4);
+			_animals[i]->Move(dinoMove);
 		}
 	}
 }

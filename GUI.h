@@ -26,6 +26,11 @@ class GUI final
 {
 	GUI() = default;
 	~GUI() = delete;
+	
+	void static fixConsoleWindows();
+	void static setWindowSize();
+	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
+	
 public:
 	// go to (x, y) pos on console screen
 	void static gotoXY(int x, int y);
@@ -33,15 +38,18 @@ public:
 	void static clearConsoleScreen();
 	// draw the playground
 	void static drawPlayArea();
-	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
+		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 	// use to delete objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList,
+		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	
 	// Disable Maximize/Minimize button
-	// Disable Maximize/Minimize button
-	void static fixConsoleWindows();
 	// Set Console size to WIDTH x HEIGHT
-	void static setWindowSize();
+	void static initWindows();
+	void static render(std::vector<CVEHICLE*> & vehicleList,
+				std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+
 };
 
 #endif GUI_H_

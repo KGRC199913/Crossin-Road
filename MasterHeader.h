@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <conio.h>
+#include <random>
 
 #define MAX_LEVEL 5
 #define MAX_BIRD 6

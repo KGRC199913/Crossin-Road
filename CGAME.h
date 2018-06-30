@@ -14,10 +14,13 @@ class CGAME final
 	std::vector<CVEHICLE*> _vehicles;
 	std::vector<CANIMAL*> _animals;
 	CPEOPLE* _player;
-	bool EXIT_FLAG;
-	char input_key;
 	char movement_key;
+	bool _trafficLight[4];
+	bool _reverseLane[4];
+	bool _exitFlag;
+	char input_key;
 
+	void trafficLightManage();
 	void gameloop();
 	void inputKey();
 	void updatePosPeople();
