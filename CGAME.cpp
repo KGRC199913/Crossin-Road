@@ -28,6 +28,11 @@ CGAME::~CGAME()
 
 void CGAME::init()
 {
+	STOP_FLAG = false;
+	FINISH_FLAG = false;
+	_exitFlag = false;
+	input_key = ' ';
+	movement_key = ' ';
 	int enemiesCount = _player->Level() * 4;
 	int distance = 50 / (enemiesCount / 2);
 
@@ -72,12 +77,14 @@ void CGAME::clearGame()
 		delete it;
 	}
 	_animals.clear();
+	for (auto& it : _trafficLight) {
+		it = false;
+	}
 }
 
 void CGAME::resetGame()
 {
 	clearGame();
-
 }
 
 void CGAME::exitGame()
@@ -179,8 +186,6 @@ void CGAME::gameloop()
 void CGAME::inputKey()
 {
 	char c = '\0';
-	STOP_FLAG = false;
-	input_key = '\0';
 	while (!STOP_FLAG) {
 		input_key = _getch();
 		if (input_key == 27) {

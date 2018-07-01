@@ -19,6 +19,7 @@ class CGAME final
 	bool _reverseLane[4];
 	bool _exitFlag;
 	char input_key;
+	
 
 	void trafficLightManage();
 	void gameloop();

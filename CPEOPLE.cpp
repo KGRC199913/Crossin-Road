@@ -7,7 +7,7 @@ CPEOPLE::CPEOPLE()
 	_x = 0;
 	_y = 0;
 	_Dead = false;
-	_level = 1;
+	_level = 4;
 }
 
 void CPEOPLE::setCoord(int x, int y)

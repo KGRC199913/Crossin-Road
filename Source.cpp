@@ -10,6 +10,7 @@ int main() {
 	do {
 		cg.startGame();
 		cg.resetGame();
+		//std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	} while (!cg.isExit());
 	return 0;
 }
