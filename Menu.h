@@ -6,24 +6,35 @@
 class Menu
 {
 private:
-	std::vector<std::string> _options;
-	char _pressKey;
-	int _pointer;
-	Menu& PushBackBeginOptions();
-	void PrintMenuOptions();
+	static std::vector<std::string> _options;
+	static char _pressKey;
+	static int _pointer;
+	static void PushBackBeginOptions();
+	static void PrintMenuOptions();
 	//MENU's DECORATION METHOD
-	void DrawGameName();
-	void DrawBox();
-	void DrawMan();
-	void DrawDinos();
-	void DrawBirds();
-	void DrawCars();
-	void DrawTrucks();
-	void DrawTree();
-	void DrawCloud();
+	static void DrawGameName();
+	static void DrawMenuBox();
+	static void DrawMan();
+	static void DrawDinos();
+	static void DrawBirds();
+	static void DrawCars();
+	static void DrawTrucks();
+	static void DrawTree();
+	static void DrawCloud();
+	static void PrintSubMenuOptions();
+	static void PushBackLevelMenu();
+	static void ChooseLevelBox();
+	static void PushBackDifficultiesMenu();
+	static void DifficultiesBox();
+	static void PushBackPlayAgainMenu();
+	static void PlayAgainBox();
+	
 public:
 	Menu();
-	void CreateLoopMenu();
+	static void CreateLoopMenu();
+	static void DrawChooseLevelMenu();
+	static void DrawDifficultiesMenu();
+	static void DrawPlayAgainMenu();
 	~Menu();
 };
 

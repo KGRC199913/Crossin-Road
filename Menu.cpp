@@ -5,25 +5,27 @@
 #include "CBIRD.h"
 #include "CDINOSAUR.h"
 
+std::vector<std::string> Menu::_options;
+char Menu::_pressKey = ' ';
+int Menu::_pointer = 0;
+
 Menu::Menu()
 {
-	_pressKey = NULL;
-	_pointer = 0;
+	Menu::_pressKey = NULL;
+	Menu::_pointer = 0;
 }
 
-Menu & Menu::PushBackBeginOptions() {
+void Menu::PushBackBeginOptions() {
 	std::vector<std::string> ops = { "NEW GAME", "LOAD GAME", "SETTINGS", "ABOUT US", "EXIT" };
 	for (size_t i = 0; i < ops.size(); ++i)
-		_options.push_back(ops[i]);
-
-	return *this;
+		Menu::_options.push_back(ops[i]);
 }
 
 void Menu::PrintMenuOptions() {
 	GUI::clearConsoleScreen();
 	DrawGameName();
 	DrawTree();
-	DrawBox();
+	DrawMenuBox();
 	DrawMan();
 	DrawDinos();
 	DrawBirds();
@@ -48,7 +50,7 @@ void Menu::PrintMenuOptions() {
 void Menu::CreateLoopMenu() {
 	PushBackBeginOptions();
 	while (true) {
-		this->PrintMenuOptions();
+		Menu::PrintMenuOptions();
 		while (true) {
 			_pressKey = _getch();
 			if (_pressKey == 72) {
@@ -124,7 +126,7 @@ void Menu::DrawGameName() {
 	std::cout << std::endl;
 }
 
-void Menu::DrawBox() {
+void Menu::DrawMenuBox() {
 
 
 	for (int coordX = 44; coordX < 61; ++coordX) {
@@ -212,6 +214,253 @@ void Menu::DrawCloud() {
  _(    )        _(    ) 
 (___(__)       (___(__)             
 )abcd";
+}
+
+void Menu::PrintSubMenuOptions()
+{
+	int coordY = 10;
+	for (size_t i = 0; i < _options.size(); ++i) {
+		if (_pointer == i) {
+			GUI::gotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
+			coordY += 1;
+		}
+		else {
+			GUI::gotoXY(46, coordY); std::cout << "   " << _options[i];
+			coordY += 1;
+		}
+	}
+}
+
+void Menu::PushBackLevelMenu()
+{
+	std::vector<std::string> ops = { "LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4", "LEVEL 5" , "EXIT" };
+	for (size_t i = 0; i < ops.size(); ++i)
+		Menu::_options.push_back(ops[i]);
+}
+
+void Menu::ChooseLevelBox()
+{
+	for (int coordX = 49; coordX < 65; coordX++)
+	{
+		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 16); std::cout << char(BOX_HORIZONTAL_ASCII);
+	}
+	for (int coordY = 10; coordY <= 15; coordY++)
+	{
+		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+	}
+	GUI::gotoXY(65, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(65, 16); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(48, 16); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+}
+
+void Menu::DrawChooseLevelMenu() {
+	PushBackLevelMenu();
+	while (true) {
+		ChooseLevelBox();
+		PrintSubMenuOptions();
+		while (true) {
+			_pressKey = _getch();
+			if (_pressKey == 72) {
+				if (_pointer > 0)
+					--_pointer;
+				else
+					_pointer = _options.size() - 1;
+				break;
+			}
+			if (_pressKey == 80) {
+				if ((size_t)_pointer < _options.size() - 1)
+					++_pointer;
+				else
+					_pointer = 0;
+				break;
+			}
+			if (_pressKey == 13) {
+				switch (_pointer) {
+				case 0: {
+					GUI::clearConsoleScreen();
+					std::cout << "Level 1" << std::endl;
+					break;
+				}
+
+				case 1: {
+					GUI::clearConsoleScreen();
+					std::cout << "Level 2" << std::endl;
+					break;
+				}
+
+				case 2: {
+					GUI::clearConsoleScreen();
+					std::cout << "Level 3" << std::endl;
+					break;
+				}
+
+				case 3: {
+					GUI::clearConsoleScreen();
+					std::cout << "Level 4" << std::endl;
+					break;
+				}
+
+				case 4: {
+					GUI::clearConsoleScreen();
+					std::cout << "Level 5" << std::endl;
+					break;
+				}
+
+				case 5: {
+					GUI::clearConsoleScreen();
+					exit(EXIT_SUCCESS);
+					return;
+				}
+				}
+			}
+		}
+	}
+}
+
+void Menu::PushBackDifficultiesMenu()
+{
+	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC", "EXIT" };
+	for (size_t i = 0; i < ops.size(); ++i)
+		Menu::_options.push_back(ops[i]);
+}
+
+void Menu::DifficultiesBox()
+{
+	for (int coordX = 49; coordX < 65; coordX++)
+	{
+		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 14); std::cout << char(BOX_HORIZONTAL_ASCII);
+	}
+	for (int coordY = 10; coordY <= 13; coordY++)
+	{
+		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+	}
+	GUI::gotoXY(65, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(65, 14); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(48, 14); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+}
+
+void Menu::DrawDifficultiesMenu() {
+	PushBackDifficultiesMenu();
+	while (true) {
+		DifficultiesBox();
+		PrintSubMenuOptions();
+		while (true) {
+			_pressKey = _getch();
+			if (_pressKey == 72) {
+				if (_pointer > 0)
+					--_pointer;
+				else
+					_pointer = _options.size() - 1;
+				break;
+			}
+			if (_pressKey == 80) {
+				if ((size_t)_pointer < _options.size() - 1)
+					++_pointer;
+				else
+					_pointer = 0;
+				break;
+			}
+			if (_pressKey == 13) {
+				switch (_pointer) {
+				case 0: {
+					GUI::clearConsoleScreen();
+					std::cout << "Normal" << std::endl;
+					break;
+				}
+
+				case 1: {
+					GUI::clearConsoleScreen();
+					std::cout << "Hardcore" << std::endl;
+					break;
+				}
+
+				case 2: {
+					GUI::clearConsoleScreen();
+					std::cout << "Lunatic" << std::endl;
+					break;
+				}
+
+				case 3: {
+					GUI::clearConsoleScreen();
+					exit(EXIT_SUCCESS);
+					return;
+				}
+				}
+			}
+		}
+	}
+}
+
+void Menu::PushBackPlayAgainMenu()
+{
+	std::vector<std::string> ops = { "PLAY AGAIN", "EXIT" };
+	for (size_t i = 0; i < ops.size(); ++i)
+		Menu::_options.push_back(ops[i]);
+}
+
+void Menu::PlayAgainBox()
+{
+	for (int coordX = 49; coordX < 68; coordX++)
+	{
+		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 12); std::cout << char(BOX_HORIZONTAL_ASCII);
+	}
+	for (int coordY = 10; coordY <= 12; coordY++)
+	{
+		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(68, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+	}
+	GUI::gotoXY(68, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(68, 12); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(48, 12); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+}
+
+void Menu::DrawPlayAgainMenu()
+{
+	PushBackPlayAgainMenu();
+	while (true) {
+		PlayAgainBox();
+		PrintSubMenuOptions();
+		while (true) {
+			_pressKey = _getch();
+			if (_pressKey == 72) {
+				if (_pointer > 0)
+					--_pointer;
+				else
+					_pointer = _options.size() - 1;
+				break;
+			}
+			if (_pressKey == 80) {
+				if ((size_t)_pointer < _options.size() - 1)
+					++_pointer;
+				else
+					_pointer = 0;
+				break;
+			}
+			if (_pressKey == 13) {
+				switch (_pointer) {
+				case 0: {
+					GUI::clearConsoleScreen();
+					std::cout << "Play Again" << std::endl;
+					break;
+				}
+
+				case 1: {
+					GUI::clearConsoleScreen();
+					exit(EXIT_SUCCESS);
+					return;
+				}
+				}
+			}
+		}
+	}
 }
 
 Menu::~Menu() {}
