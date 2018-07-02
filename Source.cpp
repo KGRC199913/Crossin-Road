@@ -5,8 +5,7 @@
 int main() {
 	CGAME cg;
 	GUI::initWindows();
-	Menu menu;
-	menu.CreateLoopMenu();
+	Menu::CreateLoopMenu();
 	do {
 		cg.startGame();
 		cg.resetGame();
