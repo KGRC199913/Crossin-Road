@@ -422,7 +422,7 @@ void Menu::PlayAgainBox()
 	GUI::gotoXY(48, 12); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 }
 
-void Menu::DrawPlayAgainMenu()
+bool Menu::DrawPlayAgainMenu()
 {
 	PushBackPlayAgainMenu();
 	while (true) {
@@ -448,19 +448,23 @@ void Menu::DrawPlayAgainMenu()
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
-					std::cout << "Play Again" << std::endl;
-					break;
+					return true;
 				}
 
 				case 1: {
 					GUI::clearConsoleScreen();
-					exit(EXIT_SUCCESS);
-					return;
+					return false;
 				}
 				}
 			}
 		}
 	}
+}
+
+bool Menu::AskPlayAgainMenu()
+{
+	_options.clear();
+	return DrawPlayAgainMenu();
 }
 
 Menu::~Menu() {}

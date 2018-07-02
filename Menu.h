@@ -5,6 +5,7 @@
 
 class Menu
 {
+	
 private:
 	static std::vector<std::string> _options;
 	static char _pressKey;
@@ -28,14 +29,16 @@ private:
 	static void DifficultiesBox();
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
-	
-public:
-	Menu();
-	static void CreateLoopMenu();
 	static void DrawChooseLevelMenu();
 	static void DrawDifficultiesMenu();
-	static void DrawPlayAgainMenu();
+	static bool DrawPlayAgainMenu();
+	Menu();
 	~Menu();
+public:
+	static void CreateLoopMenu();
+	// true = play again, false = not play again
+	static bool AskPlayAgainMenu();
+	
 };
 
 #endif MENU_H_

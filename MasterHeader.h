@@ -11,6 +11,7 @@
 #include <vector>
 #include <conio.h>
 #include <random>
+#include <array>
 
 #define MAX_LEVEL 5
 #define MAX_BIRD 6
@@ -30,8 +31,5 @@
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 
-extern bool STOP_FLAG;
 extern bool FINISH_FLAG;
-extern char input_key;
-
 #endif MASTERHEADER_H_

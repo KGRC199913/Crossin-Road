@@ -1,38 +1,47 @@
 #include "CGAME.h"
 
-bool STOP_FLAG;
 
+CGAME* CGAME::_instance = nullptr;
 
 CGAME::CGAME()
 {
 	_vehicles.clear();
 	_animals.clear();
 	_player = new CPEOPLE;
-	_exitFlag = false;
-	input_key = ' ';
-	movement_key = ' ';
+	_exitFLAG = false;
+	_inputKeyHolder = ' ';
+	_movementKeyHolder = ' ';
 	for (auto& i : _trafficLight)
 		i = false;
 	for (auto& i : _reverseLane)
 		i = false;
+	_wonFLAG = false;
+	_stopFLAG = false;
 }
 
 
 CGAME::~CGAME()
 {
 	clearGame();
-
 	delete _player;
 	_player = nullptr;
 }
 
+CGAME * CGAME::getInstance()
+{
+	if (_instance == nullptr) {
+		_instance = new CGAME;
+	}
+	return _instance;
+}
+
 void CGAME::init()
 {
-	STOP_FLAG = false;
+	_stopFLAG = false;
 	FINISH_FLAG = false;
-	_exitFlag = false;
-	input_key = ' ';
-	movement_key = ' ';
+	_exitFLAG = false;
+	_inputKeyHolder = ' ';
+	_movementKeyHolder = ' ';
 	int enemiesCount = _player->Level() * 4;
 	int distance = 50 / (enemiesCount / 2);
 
@@ -82,22 +91,17 @@ void CGAME::clearGame()
 	}
 }
 
-void CGAME::resetGame()
-{
-	clearGame();
-}
-
 void CGAME::exitGame()
 {
-	_exitFlag = true;
-	STOP_FLAG = true;
+	_exitFLAG = true;
+	_stopFLAG = true;
 }
 
 void CGAME::pauseGame()
 {
-	input_key = ' ';
-	while (input_key != 'g') {}
-	input_key = ' ';
+	_inputKeyHolder = ' ';
+	while (_inputKeyHolder != 'g') {}
+	_inputKeyHolder = ' ';
 }
 
 void CGAME::startGame()
@@ -111,11 +115,17 @@ void CGAME::startGame()
 	if (trafficManage.joinable())
 		trafficManage.join();
 	keyManageThread.join();
+	clearGame();
 }
 
 bool CGAME::isExit() const
 {
-	return _exitFlag;
+	return _exitFLAG;
+}
+
+bool CGAME::won() const
+{
+	return _wonFLAG;
 }
 
 void CGAME::loadGame(std::istream &)
@@ -130,7 +140,7 @@ void CGAME::saveGame(std::istream &)
 
 void CGAME::trafficLightManage()
 {
-	while (!STOP_FLAG) {
+	while (!_stopFLAG) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));
 		for (auto& i : _trafficLight)
 			i = !i;
@@ -139,7 +149,7 @@ void CGAME::trafficLightManage()
 
 void CGAME::gameloop()
 {
-	while (!STOP_FLAG) {
+	while (!_stopFLAG) {
 		// GUI::clearConsoleScreen();
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
@@ -148,7 +158,8 @@ void CGAME::gameloop()
 
 		for (auto it : _vehicles) {
 			if (_player->isImpact(it)) {
-				STOP_FLAG = true;
+				_stopFLAG = true;
+				_wonFLAG = false;
 				// insert effect code here
 				break;
 			}
@@ -156,7 +167,8 @@ void CGAME::gameloop()
 
 		for (auto it : _animals) {
 			if (_player->isImpact(it)) {
-				STOP_FLAG = true;
+				_stopFLAG = true;
+				_wonFLAG = false;
 				// insert effect code here
 				break;
 			}
@@ -166,10 +178,11 @@ void CGAME::gameloop()
 		if (FINISH_FLAG == true) {
 			//GUI::deleteObjects(_vehicles, _animals, *_player);
 			GUI::redrawObjects(_vehicles, _animals, *_player);
+			_wonFLAG = true;
 			break;
 		}
 
-		if (input_key == 'g')
+		if (_inputKeyHolder == 'g')
 			pauseGame();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
@@ -180,22 +193,22 @@ void CGAME::gameloop()
 		_player->LevelUp();
 	}
 
-	STOP_FLAG = true;
+	_stopFLAG = true;
 }
 
 void CGAME::inputKey()
 {
 	char c = '\0';
-	while (!STOP_FLAG) {
-		input_key = _getch();
-		if (input_key == 27) {
+	while (!_stopFLAG) {
+		_inputKeyHolder = _getch();
+		if (_inputKeyHolder == 27) {
 			exitGame();
 			break;
 		}
-		if ((input_key == KEY_UP) || (input_key == KEY_DOWN)
-			|| (input_key == KEY_LEFT) || (input_key == KEY_RIGHT)) {
-			movement_key = input_key;
-			input_key = ' ';
+		if ((_inputKeyHolder == KEY_UP) || (_inputKeyHolder == KEY_DOWN)
+			|| (_inputKeyHolder == KEY_LEFT) || (_inputKeyHolder == KEY_RIGHT)) {
+			_movementKeyHolder = _inputKeyHolder;
+			_inputKeyHolder = ' ';
 		}
 
 	}
@@ -203,27 +216,27 @@ void CGAME::inputKey()
 
 void CGAME::updatePosPeople()
 {
-	if (movement_key == KEY_UP) {
+	if (_movementKeyHolder == KEY_UP) {
 		_player->Up();
-		movement_key = ' ';
+		_movementKeyHolder = ' ';
 		return;
 	}
 		
-	if (movement_key == KEY_DOWN){
+	if (_movementKeyHolder == KEY_DOWN){
 		_player->Down();
-		movement_key = ' ';
+		_movementKeyHolder = ' ';
 		return;
 	}
 		
-	if (movement_key == KEY_LEFT) {
+	if (_movementKeyHolder == KEY_LEFT) {
 		_player->Left();
-		movement_key = ' ';
+		_movementKeyHolder = ' ';
 		return;
 	}
 		
-	if (movement_key == KEY_RIGHT) {
+	if (_movementKeyHolder == KEY_RIGHT) {
 		_player->Right();
-		movement_key = ' ';
+		_movementKeyHolder = ' ';
 		return;
 	}
 }
