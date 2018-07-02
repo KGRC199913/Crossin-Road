@@ -37,11 +37,13 @@ void Menu::PrintMenuOptions() {
 	int coordY = 21;
 	for (size_t i = 0; i < _options.size(); ++i) {
 		if (_pointer == i) {
-			GUI::gotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
+			GUI::gotoXY(46, coordY);  
+			std::cout << ">> " << _options[i] << " <<";
 			coordY += 1;
 		}
 		else {
-			GUI::gotoXY(46, coordY); std::cout <<"   "<< _options[i];
+			GUI::gotoXY(46, coordY); 
+			std::cout <<"   "<< _options[i];
 			coordY += 1;
 		}
 	}
@@ -218,14 +220,16 @@ void Menu::DrawCloud() {
 
 void Menu::PrintSubMenuOptions()
 {
-	int coordY = 10;
+	int coordY = 14;
 	for (size_t i = 0; i < _options.size(); ++i) {
 		if (_pointer == i) {
-			GUI::gotoXY(46, coordY);  std::cout << ">> " << _options[i] << " <<";
+			GUI::gotoXY(43, coordY); 
+			std::cout << ">> " << _options[i] << " <<";
 			coordY += 1;
 		}
 		else {
-			GUI::gotoXY(46, coordY); std::cout << "   " << _options[i];
+			GUI::gotoXY(43, coordY); 
+			std::cout << "   " << _options[i];
 			coordY += 1;
 		}
 	}
@@ -240,20 +244,20 @@ void Menu::PushBackLevelMenu()
 
 void Menu::ChooseLevelBox()
 {
-	for (int coordX = 49; coordX < 65; coordX++)
+	for (int coordX = 42; coordX < 58; coordX++)
 	{
-		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
-		GUI::gotoXY(coordX, 16); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 20); std::cout << char(BOX_HORIZONTAL_ASCII);
 	}
-	for (int coordY = 10; coordY <= 15; coordY++)
+	for (int coordY = 14; coordY <= 19; coordY++)
 	{
-		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(41, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(58, coordY); std::cout << char(BOX_VERTICAL_ASCII);
 	}
-	GUI::gotoXY(65, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(65, 16); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
-	GUI::gotoXY(48, 16); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+	GUI::gotoXY(58, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(58, 20); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(41, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(41, 20); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 }
 
 void Menu::DrawChooseLevelMenu() {
@@ -329,20 +333,20 @@ void Menu::PushBackDifficultiesMenu()
 
 void Menu::DifficultiesBox()
 {
-	for (int coordX = 49; coordX < 65; coordX++)
+	for (int coordX = 42; coordX < 57; coordX++)
 	{
-		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
-		GUI::gotoXY(coordX, 14); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 18); std::cout << char(BOX_HORIZONTAL_ASCII);
 	}
-	for (int coordY = 10; coordY <= 13; coordY++)
+	for (int coordY = 14; coordY <= 17; coordY++)
 	{
-		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(41, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(57, coordY); std::cout << char(BOX_VERTICAL_ASCII);
 	}
-	GUI::gotoXY(65, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(65, 14); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
-	GUI::gotoXY(48, 14); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+	GUI::gotoXY(57, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(57, 18); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(41, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(41, 18); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 }
 
 void Menu::DrawDifficultiesMenu() {
@@ -406,20 +410,20 @@ void Menu::PushBackPlayAgainMenu()
 
 void Menu::PlayAgainBox()
 {
-	for (int coordX = 49; coordX < 68; coordX++)
+	for (int coordX = 42; coordX < 61; coordX++)
 	{
-		GUI::gotoXY(coordX, 9); std::cout << char(BOX_HORIZONTAL_ASCII);
-		GUI::gotoXY(coordX, 12); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 16); std::cout << char(BOX_HORIZONTAL_ASCII);
 	}
-	for (int coordY = 10; coordY <= 12; coordY++)
+	for (int coordY = 14; coordY <= 15; coordY++)
 	{
-		GUI::gotoXY(48, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-		GUI::gotoXY(68, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(42, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(61, coordY); std::cout << char(BOX_VERTICAL_ASCII);
 	}
-	GUI::gotoXY(68, 9); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(68, 12); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(48, 9); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
-	GUI::gotoXY(48, 12); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+	GUI::gotoXY(61, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(61, 16); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(42, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(42, 16); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 }
 
 bool Menu::DrawPlayAgainMenu()
