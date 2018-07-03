@@ -9,6 +9,11 @@
 #include "GUI.h"
 #include "Database.h"
 
+#define NORMAL_SPEED 75
+#define HARDCORE_SPEED 25
+#define LUNATIC_SPEED 5
+
+
 class CGAME final
 {
 	static CGAME* _instance;
@@ -20,6 +25,8 @@ class CGAME final
 	bool _exitFLAG;
 	bool _wonFLAG;
 	bool _stopFLAG;
+	bool _devModeFLAG = false;
+	bool _pauseFLAG = false;
 	std::vector<CVEHICLE*> _vehicles;
 	std::vector<CANIMAL*> _animals;
 

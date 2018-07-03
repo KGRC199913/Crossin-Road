@@ -224,12 +224,12 @@ void Menu::PrintSubMenuOptions()
 	for (size_t i = 0; i < _options.size(); ++i) {
 		if (_pointer == i) {
 			GUI::gotoXY(43, coordY); 
-			std::cout << ">> " << _options[i] << " <<";
+			std::cout << ">> " << _options[i]<< " <<" ;
 			coordY += 1;
 		}
 		else {
 			GUI::gotoXY(43, coordY); 
-			std::cout << "   " << _options[i];
+			std::cout << "   " << _options[i] << "   ";
 			coordY += 1;
 		}
 	}
