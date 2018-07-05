@@ -99,9 +99,7 @@ void CGAME::exitGame()
 
 void CGAME::pauseGame()
 {
-	_inputKeyHolder = ' ';
-	while (_inputKeyHolder != 'g') {}
-	_inputKeyHolder = ' ';
+	while (_pauseFLAG);
 }
 
 void CGAME::startGame()
@@ -154,25 +152,31 @@ void CGAME::gameloop()
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 
+		if (_pauseFLAG)
+			pauseGame();
+
 		updatePosObjs();
 
-		for (auto it : _vehicles) {
-			if (_player->isImpact(it)) {
-				_stopFLAG = true;
-				_wonFLAG = false;
-				// insert effect code here
-				break;
+		if (!_devModeFLAG) {
+			for (auto it : _vehicles) {
+				if (_player->isImpact(it)) {
+					_stopFLAG = true;
+					_wonFLAG = false;
+					// insert effect code here
+					break;
+				}
+			}
+
+			for (auto it : _animals) {
+				if (_player->isImpact(it)) {
+					_stopFLAG = true;
+					_wonFLAG = false;
+					// insert effect code here
+					break;
+				}
 			}
 		}
 
-		for (auto it : _animals) {
-			if (_player->isImpact(it)) {
-				_stopFLAG = true;
-				_wonFLAG = false;
-				// insert effect code here
-				break;
-			}
-		}
 		//GUI::deleteObjects(_vehicles, _animals, *_player);
 		GUI::redrawObjects(_vehicles, _animals, *_player);
 		if (FINISH_FLAG == true) {
@@ -182,10 +186,7 @@ void CGAME::gameloop()
 			break;
 		}
 
-		if (_inputKeyHolder == 'g')
-			pauseGame();
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(25));
+		std::this_thread::sleep_for(std::chrono::milliseconds(LUNATIC_SPEED));
 	}
 
 	if (FINISH_FLAG) {
@@ -201,16 +202,20 @@ void CGAME::inputKey()
 	char c = '\0';
 	while (!_stopFLAG) {
 		_inputKeyHolder = _getch();
+		if (_inputKeyHolder == 'g')
+			_pauseFLAG = !_pauseFLAG;
 		if (_inputKeyHolder == 27) {
 			exitGame();
 			break;
 		}
-		if ((_inputKeyHolder == KEY_UP) || (_inputKeyHolder == KEY_DOWN)
-			|| (_inputKeyHolder == KEY_LEFT) || (_inputKeyHolder == KEY_RIGHT)) {
+		if (((_inputKeyHolder == KEY_UP) || (_inputKeyHolder == KEY_DOWN)
+			|| (_inputKeyHolder == KEY_LEFT) || (_inputKeyHolder == KEY_RIGHT)) && (!_pauseFLAG)) {
 			_movementKeyHolder = _inputKeyHolder;
 			_inputKeyHolder = ' ';
 		}
-
+		if (_inputKeyHolder == 'o') {
+			_devModeFLAG = !_devModeFLAG;
+		}
 	}
 }
 
