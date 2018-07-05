@@ -4,6 +4,7 @@
 #include "CTRUCK.h"
 #include "CBIRD.h"
 #include "CDINOSAUR.h"
+#include "CGAME.h"
 
 std::vector<std::string> Menu::_options;
 char Menu::_pressKey = ' ';
@@ -403,7 +404,9 @@ void Menu::DrawDifficultiesMenu() {
 
 void Menu::PushBackPlayAgainMenu()
 {
-	std::vector<std::string> ops = { "PLAY AGAIN", "EXIT" };
+	CGAME* cg = CGAME::getInstance();
+	std::string option1String = cg->wonPreviousLevel() ? "NEXT LEVEL" : "PLAY AGAIN";
+	std::vector<std::string> ops = { option1String, "EXIT" };
 	for (size_t i = 0; i < ops.size(); ++i)
 		Menu::_options.push_back(ops[i]);
 }

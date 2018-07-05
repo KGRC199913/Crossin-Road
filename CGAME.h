@@ -13,6 +13,9 @@
 #define HARDCORE_SPEED 25
 #define LUNATIC_SPEED 5
 
+#define BGM_PATH "DeepInAbyss.wav"
+#define BIRD_SOUND "Bird.wav"
+#define DINO_SOUND "Dino.wav"
 
 class CGAME final
 {
@@ -27,6 +30,7 @@ class CGAME final
 	bool _stopFLAG;
 	bool _devModeFLAG = false;
 	bool _pauseFLAG = false;
+	bool _wonPreviousLevel = false;
 	std::vector<CVEHICLE*> _vehicles;
 	std::vector<CANIMAL*> _animals;
 
@@ -43,7 +47,6 @@ class CGAME final
 	void pauseGame();
 	void loadGame(std::istream &);
 	void saveGame(std::istream &);
-
 	CGAME();
 	
 public:
@@ -55,6 +58,7 @@ public:
 	void startGame();
 	bool isExit() const;
 	bool won() const;
+	bool wonPreviousLevel() const;
 
 	~CGAME();
 };

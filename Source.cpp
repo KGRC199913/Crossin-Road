@@ -8,12 +8,9 @@ int main() {
 	do {
 		cg->startGame();
 		GUI::clearConsoleScreen();
-		if (!cg->won()) {
-			if (!Menu::AskPlayAgainMenu()) {
-				break;
-			}
-		}	
-	} while (!cg->isExit());
+		if ((cg->isExit()) || (cg->won()))
+			break;
+	} while (Menu::AskPlayAgainMenu());
 	delete cg;
 	return 0;
 }

@@ -17,6 +17,7 @@ CGAME::CGAME()
 		i = false;
 	_wonFLAG = false;
 	_stopFLAG = false;
+	_pauseFLAG = false;
 }
 
 
@@ -40,6 +41,7 @@ void CGAME::init()
 	_stopFLAG = false;
 	FINISH_FLAG = false;
 	_exitFLAG = false;
+	_wonPreviousLevel = false;
 	_inputKeyHolder = ' ';
 	_movementKeyHolder = ' ';
 	int enemiesCount = _player->Level() * 4;
@@ -99,7 +101,9 @@ void CGAME::exitGame()
 
 void CGAME::pauseGame()
 {
-	while (_pauseFLAG);
+	while (_pauseFLAG) {
+		std::this_thread::sleep_for(std::chrono::seconds(0)); //intended due to Visual C++ compiler skip inf loop in release mode
+	}
 }
 
 void CGAME::startGame()
@@ -124,6 +128,11 @@ bool CGAME::isExit() const
 bool CGAME::won() const
 {
 	return _wonFLAG;
+}
+
+bool CGAME::wonPreviousLevel() const
+{
+	return _wonPreviousLevel;
 }
 
 void CGAME::loadGame(std::istream &)
@@ -152,9 +161,8 @@ void CGAME::gameloop()
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 
-		if (_pauseFLAG)
-			pauseGame();
-
+		
+			
 		updatePosObjs();
 
 		if (!_devModeFLAG) {
@@ -182,8 +190,13 @@ void CGAME::gameloop()
 		if (FINISH_FLAG == true) {
 			//GUI::deleteObjects(_vehicles, _animals, *_player);
 			GUI::redrawObjects(_vehicles, _animals, *_player);
-			_wonFLAG = true;
+			if (_player->Level() == 5)
+				_wonFLAG = true;
 			break;
+		}
+
+		if (_pauseFLAG) {
+			pauseGame();
 		}
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(LUNATIC_SPEED));
@@ -191,6 +204,7 @@ void CGAME::gameloop()
 
 	if (FINISH_FLAG) {
 		FINISH_FLAG = false;
+		_wonPreviousLevel = true;
 		_player->LevelUp();
 	}
 
@@ -204,7 +218,8 @@ void CGAME::inputKey()
 		_inputKeyHolder = _getch();
 		if (_inputKeyHolder == 'g')
 			_pauseFLAG = !_pauseFLAG;
-		if (_inputKeyHolder == 27) {
+			
+		if ((_inputKeyHolder == 27) && (!_pauseFLAG)) {
 			exitGame();
 			break;
 		}
