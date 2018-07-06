@@ -101,22 +101,22 @@ void CGAME::exitGame()
 
 void CGAME::pauseGame()
 {
+	bool a = false;
 	while (_pauseFLAG) {
-		std::this_thread::sleep_for(std::chrono::seconds(0)); //intended due to Visual C++ compiler skip inf loop in release mode
+		a =! a; //intended due to compiler skip inf loop in release mode
 	}
 }
 
 void CGAME::startGame()
 {
 	init();
-	std::thread trafficManage;
-	if (_player->Level() >= 4)
-		trafficManage = std::thread(&CGAME::trafficLightManage, this);
-	std::thread keyManageThread(&CGAME::inputKey, this);
+	_trafficManage = std::thread(&CGAME::trafficLightManage, this);
+	_keyManage = std::thread(&CGAME::inputKey, this);
 	gameloop();
-	if (trafficManage.joinable())
-		trafficManage.join();
-	keyManageThread.join();
+	if (_trafficManage.joinable())
+		_trafficManage.join();
+	if (_keyManage.joinable())
+		_keyManage.join();
 	clearGame();
 }
 
@@ -135,34 +135,46 @@ bool CGAME::wonPreviousLevel() const
 	return _wonPreviousLevel;
 }
 
-void CGAME::loadGame(std::istream &)
+void CGAME::loadGame()
 {
-	Database::loadGame(_vehicles, _animals, *_player);
+	clearGame();
+	Database::loadGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 }
 
-void CGAME::saveGame(std::istream &)
+void CGAME::saveGame()
 {
-	Database::saveGame(_vehicles, _animals, *_player);
+	Database::saveGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 }
 
 void CGAME::trafficLightManage()
 {
 	while (!_stopFLAG) {
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));
-		for (auto& i : _trafficLight)
-			i = !i;
+		if (_player->Level() >= 4) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			for (auto& i : _trafficLight)
+				i = !i;
+		}
 	}
 }
 
 void CGAME::gameloop()
 {
+	
 	while (!_stopFLAG) {
 		// GUI::clearConsoleScreen();
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
-
 		
+		if (_inputKeyHolder == 's') {
+			_inputKeyHolder = ' ';
+			saveGame();
+		}
+		if (_inputKeyHolder == 'l') {
+			_inputKeyHolder = ' ';
+			loadGame();
+		}
 			
+
 		updatePosObjs();
 
 		if (!_devModeFLAG) {

@@ -50,7 +50,7 @@ void Menu::PrintMenuOptions() {
 	}
 }
 
-void Menu::CreateLoopMenu() {
+bool Menu::CreateLoopMenu() {
 	PushBackBeginOptions();
 	while (true) {
 		Menu::PrintMenuOptions();
@@ -74,7 +74,7 @@ void Menu::CreateLoopMenu() {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
-					return;
+					return true;
 					//std::cout << "Game Start!!" << std::endl;
 					//GUI::drawPlayArea();
 					system("pause > nul");
@@ -97,8 +97,7 @@ void Menu::CreateLoopMenu() {
 
 				case 4: {
 					GUI::clearConsoleScreen();
-					exit(EXIT_SUCCESS);
-					return;
+					return false;
 				}
 				}
 			}

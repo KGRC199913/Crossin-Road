@@ -1,42 +1,79 @@
 #include "Database.h"
 
-// DO NOT USE YET
-void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
+void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus)
 {
-	/*std::ofstream SaveFile(SAVE_PATH, std::ios::binary);
-	SaveFile.write((char*)((void*)(player)), sizeof(player));
-
-	size_t temp = vehicleList.size();
-	SaveFile.write((char*)(&temp), sizeof(size_t));
+	std::ofstream saveFile(SAVE_PATH, std::ios::binary);
+	if (!saveFile) {
+		std::cerr << "Error Saving Game" << std::endl;
+		return;
+	}
+	saveFile.write(static_cast<char*>(static_cast<void*>(&player)), sizeof(player));
 	for (auto& it : vehicleList) {
-		SaveFile.write(reinterpret_cast<char*>((void*)(it)), sizeof(CVEHICLE));
+		saveFile.write(static_cast<char*>(static_cast<void*>(it)), sizeof(CVEHICLE));
 	}
-
-	temp = animalList.size();
-	SaveFile.write((char*)(&temp), sizeof(size_t));
 	for (auto& it : animalList) {
-		SaveFile.write(reinterpret_cast<char*>((void*)(it)), sizeof(CANIMAL));
+		saveFile.write(static_cast<char*>(static_cast<void*>(it)), sizeof(CANIMAL));
 	}
-	SaveFile.close();*/
+	saveFile.write(static_cast<char*>(static_cast<void*>(&trafficLightStatus)), sizeof(trafficLightStatus));
+	saveFile.write(static_cast<char*>(static_cast<void*>(&reverseLaneStatus)), sizeof(reverseLaneStatus));
+
+	saveFile.close();
 }
 
-//DO NOT USE YET
-void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
+
+// Please ensure that the object in vehicle and animal were been clean before calling this function, or memory leak may occurs
+void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus)
 {
-	//std::ifstream savefile(save_path, std::ios::binary);
-	//savefile.read((char*)((void*)(player)), sizeof(player));
-	//size_t size = 0;
-	//savefile.read(reinterpret_cast<char*>(&size), sizeof(size_t));
-	//vehiclelist.clear();
-	//vehiclelist.resize(size);
-	//for (auto& it : vehiclelist) {
+	std::ifstream saveFile(SAVE_PATH, std::ios::binary);
+	if (!saveFile) {
+		std::cerr << "Error Saving Game" << std::endl;
+		return;
+	}
+	vehicleList.clear();
+	animalList.clear();
+	vehicleList.shrink_to_fit();
+	animalList.shrink_to_fit();
 
-	//}
+	saveFile.read(static_cast<char*>(static_cast<void*>(&player)), sizeof(player));
+	int objCount = player.Level() * 4;
 
-	//size = 0;
-	//savefile.read(reinterpret_cast<char*>(&size), sizeof(size_t));
-	//animallist.clear();
-	//animallist.resize(size);
-	//savefile.read(reinterpret_cast<char*>(&animallist[0]), size * sizeof(canimal));
-	//savefile.close();
+	vehicleList.resize(objCount);
+	for (int i = 0; i < objCount; ++i) {
+		if (i <= (objCount / 2) - 1) {
+			CCAR* carPointer = new CCAR;
+			saveFile.read(reinterpret_cast<char*>(carPointer), sizeof(CCAR));
+			vehicleList[i] = new CCAR(*carPointer);
+			delete carPointer;
+		}
+		else {
+			CTRUCK* truckPointer = new CTRUCK;
+			saveFile.read(reinterpret_cast<char*>(truckPointer), sizeof(CTRUCK));
+			vehicleList[i] = new CTRUCK(*truckPointer);
+			delete truckPointer;
+		}
+	}
+
+	animalList.resize(objCount);
+	for (int i = 0; i < objCount; ++i) {
+		if (i <= (objCount / 2) - 1) {
+			CBIRD* birdPointer = new CBIRD;
+			saveFile.read(reinterpret_cast<char*>(birdPointer), sizeof(CBIRD));
+			animalList[i] = new CBIRD(*birdPointer);
+			delete birdPointer;
+		}
+		else {
+			CDINOSAUR* dinoPointer = new CDINOSAUR;
+			saveFile.read(reinterpret_cast<char*>(dinoPointer), sizeof(CDINOSAUR));
+			animalList[i] = new CDINOSAUR(*dinoPointer);
+			delete dinoPointer;
+		}
+	}
+
+	saveFile.read(static_cast<char*>(static_cast<void*>(&trafficLightStatus)), sizeof(trafficLightStatus));
+	saveFile.read(static_cast<char*>(static_cast<void*>(&reverseLaneStatus)), sizeof(reverseLaneStatus));
+
+
+	vehicleList.shrink_to_fit();
+	animalList.shrink_to_fit();
+	saveFile.close();
 }

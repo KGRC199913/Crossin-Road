@@ -33,6 +33,8 @@ class CGAME final
 	bool _wonPreviousLevel = false;
 	std::vector<CVEHICLE*> _vehicles;
 	std::vector<CANIMAL*> _animals;
+	std::thread _trafficManage;
+	std::thread _keyManage;
 
 	void trafficLightManage();
 	void gameloop();
@@ -45,8 +47,8 @@ class CGAME final
 	void clearGame();
 	void exitGame();
 	void pauseGame();
-	void loadGame(std::istream &);
-	void saveGame(std::istream &);
+	void loadGame();
+	void saveGame();
 	CGAME();
 	
 public:

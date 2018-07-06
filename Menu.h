@@ -35,7 +35,7 @@ private:
 	Menu();
 	~Menu();
 public:
-	static void CreateLoopMenu();
+	static bool CreateLoopMenu();
 	// true = play again, false = not play again
 	static bool AskPlayAgainMenu();
 	
