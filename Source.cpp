@@ -11,7 +11,7 @@ int main() {
 			GUI::clearConsoleScreen();
 			if ((cg->isExit()) || (cg->won()))
 				break;
-		} while (Menu::AskPlayAgainMenu());
+		} while (Menu::DrawPlayAgainMenu());
 
 		delete cg;
 	}

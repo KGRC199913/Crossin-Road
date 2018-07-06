@@ -17,6 +17,11 @@
 #define BIRD_SOUND "Bird.wav"
 #define DINO_SOUND "Dino.wav"
 
+#define KEY_UP 119
+#define KEY_DOWN 115
+#define KEY_LEFT 97
+#define KEY_RIGHT 100
+
 class CGAME final
 {
 	static CGAME* _instance;

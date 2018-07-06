@@ -18,8 +18,8 @@ Menu::Menu()
 
 void Menu::PushBackBeginOptions() {
 	std::vector<std::string> ops = { "NEW GAME", "LOAD GAME", "SETTINGS", "ABOUT US", "EXIT" };
-	for (size_t i = 0; i < ops.size(); ++i)
-		Menu::_options.push_back(ops[i]);
+	Menu::_options.clear();
+	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::PrintMenuOptions() {
@@ -56,21 +56,21 @@ bool Menu::CreateLoopMenu() {
 		Menu::PrintMenuOptions();
 		while (true) {
 			_pressKey = _getch();
-			if (_pressKey == 72) {
+			if (_pressKey == KEY_UP) {
 				if (_pointer > 0)
 					--_pointer;
 				else
 					_pointer = _options.size() - 1;
 				break;
 			}
-			if (_pressKey == 80) {
+			if (_pressKey == KEY_DOWN) {
 				if ((size_t)_pointer < _options.size() - 1)
 					++_pointer;
 				else
 					_pointer = 0;
 				break;
 			}
-			if (_pressKey == 13) {
+			if (_pressKey == ENTER) {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
@@ -238,8 +238,8 @@ void Menu::PrintSubMenuOptions()
 void Menu::PushBackLevelMenu()
 {
 	std::vector<std::string> ops = { "LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4", "LEVEL 5" , "EXIT" };
-	for (size_t i = 0; i < ops.size(); ++i)
-		Menu::_options.push_back(ops[i]);
+	Menu::_options.clear();
+	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::ChooseLevelBox()
@@ -267,21 +267,21 @@ void Menu::DrawChooseLevelMenu() {
 		PrintSubMenuOptions();
 		while (true) {
 			_pressKey = _getch();
-			if (_pressKey == 72) {
+			if (_pressKey == KEY_UP) {
 				if (_pointer > 0)
 					--_pointer;
 				else
 					_pointer = _options.size() - 1;
 				break;
 			}
-			if (_pressKey == 80) {
+			if (_pressKey == KEY_DOWN) {
 				if ((size_t)_pointer < _options.size() - 1)
 					++_pointer;
 				else
 					_pointer = 0;
 				break;
 			}
-			if (_pressKey == 13) {
+			if (_pressKey == ENTER) {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
@@ -327,8 +327,8 @@ void Menu::DrawChooseLevelMenu() {
 void Menu::PushBackDifficultiesMenu()
 {
 	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC", "EXIT" };
-	for (size_t i = 0; i < ops.size(); ++i)
-		Menu::_options.push_back(ops[i]);
+	Menu::_options.clear();
+	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::DifficultiesBox()
@@ -356,21 +356,21 @@ void Menu::DrawDifficultiesMenu() {
 		PrintSubMenuOptions();
 		while (true) {
 			_pressKey = _getch();
-			if (_pressKey == 72) {
+			if (_pressKey == KEY_UP) {
 				if (_pointer > 0)
 					--_pointer;
 				else
 					_pointer = _options.size() - 1;
 				break;
 			}
-			if (_pressKey == 80) {
+			if (_pressKey == KEY_DOWN) {
 				if ((size_t)_pointer < _options.size() - 1)
 					++_pointer;
 				else
 					_pointer = 0;
 				break;
 			}
-			if (_pressKey == 13) {
+			if (_pressKey == ENTER) {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
@@ -406,8 +406,8 @@ void Menu::PushBackPlayAgainMenu()
 	CGAME* cg = CGAME::getInstance();
 	std::string option1String = cg->wonPreviousLevel() ? "NEXT LEVEL" : "PLAY AGAIN";
 	std::vector<std::string> ops = { option1String, "EXIT" };
-	for (size_t i = 0; i < ops.size(); ++i)
-		Menu::_options.push_back(ops[i]);
+	Menu::_options.clear();
+	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::PlayAgainBox()
@@ -436,21 +436,21 @@ bool Menu::DrawPlayAgainMenu()
 		PrintSubMenuOptions();
 		while (true) {
 			_pressKey = _getch();
-			if (_pressKey == 72) {
+			if (_pressKey == KEY_UP) {
 				if (_pointer > 0)
 					--_pointer;
 				else
 					_pointer = _options.size() - 1;
 				break;
 			}
-			if (_pressKey == 80) {
+			if (_pressKey == KEY_DOWN) {
 				if ((size_t)_pointer < _options.size() - 1)
 					++_pointer;
 				else
 					_pointer = 0;
 				break;
 			}
-			if (_pressKey == 13) {
+			if (_pressKey == ENTER) {
 				switch (_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
@@ -465,12 +465,6 @@ bool Menu::DrawPlayAgainMenu()
 			}
 		}
 	}
-}
-
-bool Menu::AskPlayAgainMenu()
-{
-	_options.clear();
-	return DrawPlayAgainMenu();
 }
 
 Menu::~Menu() {}

@@ -3,6 +3,10 @@
 
 #include "MasterHeader.h"
 
+#define KEY_UP 119
+#define KEY_DOWN 115
+#define ENTER 13
+
 class Menu
 {
 	
@@ -31,13 +35,13 @@ private:
 	static void PlayAgainBox();
 	static void DrawChooseLevelMenu();
 	static void DrawDifficultiesMenu();
-	static bool DrawPlayAgainMenu();
+	
 	Menu();
 	~Menu();
 public:
 	static bool CreateLoopMenu();
 	// true = play again, false = not play again
-	static bool AskPlayAgainMenu();
+	static bool DrawPlayAgainMenu();
 	
 };
 
