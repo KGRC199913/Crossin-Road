@@ -50,6 +50,9 @@ public:
 	void static render(std::vector<CVEHICLE*> & vehicleList,
 				std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 
+	void static drawRedTrafficLight();
+	void static drawGreenTrafficLight();
+	void static drawTrafficLight(std::array<bool, 4> arr);
 };
 
 #endif GUI_H_
