@@ -109,6 +109,39 @@ void GUI::render(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & a
 	GUI::redrawObjects(vehicleList, animalList, player);
 }
 
+void GUI::drawRedTrafficLight()
+{
+	//GUI::gotoXY(75, 11);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII) << std::endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
+}
+
+void GUI::drawGreenTrafficLight()
+{
+	//GUI::gotoXY(75, 12);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
+	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
+}
+
+void GUI::drawTrafficLight(std::array<bool, 4> arr)
+{
+	const unsigned coordX = 75;
+	unsigned coordYRed = 11;
+	unsigned coordYGreen = 12;
+	for (int i = 0; i < arr.size(); ++i) {
+		if (arr.at(i)) {
+			GUI::gotoXY(coordX, coordYRed + (3 * i));
+			GUI::drawRedTrafficLight();
+		}
+		else {
+			GUI::gotoXY(coordX, coordYGreen + (3 * i));
+			GUI::drawGreenTrafficLight();
+		}
+	}
+}
+
 void GUI::gotoXY(int x, int y)
 {
 	COORD coord = { 0,0 };

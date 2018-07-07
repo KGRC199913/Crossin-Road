@@ -28,6 +28,14 @@ auto main(void) -> int {
 	}
 
 	music.stop();
-	
+	/*GUI::drawPlayArea();
+	std::array<bool, 4> arr;
+	arr.assign(true);
+	GUI::drawTrafficLight(arr);
+	std::array<bool, 4> arr1;
+	arr1.assign(false);
+	GUI::drawTrafficLight(arr1);*/
+
 	return 0;
 }
+
