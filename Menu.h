@@ -34,7 +34,7 @@ private:
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
 	static void DrawChooseLevelMenu();
-	static void DrawDifficultiesMenu();
+	
 	
 	Menu();
 	~Menu();
@@ -42,7 +42,7 @@ public:
 	static bool CreateLoopMenu();
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
-	
+	static int DrawDifficultiesMenu();
 };
 
 #endif MENU_H_

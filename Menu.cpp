@@ -326,7 +326,7 @@ void Menu::DrawChooseLevelMenu() {
 
 void Menu::PushBackDifficultiesMenu()
 {
-	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC", "EXIT" };
+	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC" };
 	Menu::_options.clear();
 	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
 }
@@ -349,7 +349,7 @@ void Menu::DifficultiesBox()
 	GUI::gotoXY(41, 18); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
 }
 
-void Menu::DrawDifficultiesMenu() {
+int Menu::DrawDifficultiesMenu() {
 	PushBackDifficultiesMenu();
 	while (true) {
 		DifficultiesBox();
@@ -371,31 +371,7 @@ void Menu::DrawDifficultiesMenu() {
 				break;
 			}
 			if (_pressKey == ENTER) {
-				switch (_pointer) {
-				case 0: {
-					GUI::clearConsoleScreen();
-					std::cout << "Normal" << std::endl;
-					break;
-				}
-
-				case 1: {
-					GUI::clearConsoleScreen();
-					std::cout << "Hardcore" << std::endl;
-					break;
-				}
-
-				case 2: {
-					GUI::clearConsoleScreen();
-					std::cout << "Lunatic" << std::endl;
-					break;
-				}
-
-				case 3: {
-					GUI::clearConsoleScreen();
-					exit(EXIT_SUCCESS);
-					return;
-				}
-				}
+				return _pointer;
 			}
 		}
 	}

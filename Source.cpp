@@ -1,22 +1,22 @@
 #include "Menu.h"
 #include "CGAME.h"
-#include <SFML\Audio.hpp>
 
 auto main(void) -> int {
 	GUI::initWindows();
 
+	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 	sf::Music music;
 	if (music.openFromFile(BGM_PATH)) {
 		music.play();
 		music.setLoop(true);
-		music.setVolume(50);
+		music.setVolume(20);
 	}
 	else
 		std::cerr << "Error loading bgm";
 
-
 	if (Menu::CreateLoopMenu()) {
 		CGAME* cg = CGAME::getInstance();
+		cg->setDifficulties(Menu::DrawDifficultiesMenu());
 		do {
 			cg->startGame();
 			GUI::clearConsoleScreen();
@@ -28,13 +28,6 @@ auto main(void) -> int {
 	}
 
 	music.stop();
-	/*GUI::drawPlayArea();
-	std::array<bool, 4> arr;
-	arr.assign(true);
-	GUI::drawTrafficLight(arr);
-	std::array<bool, 4> arr1;
-	arr1.assign(false);
-	GUI::drawTrafficLight(arr1);*/
 
 	return 0;
 }

@@ -18,21 +18,21 @@ void GUI::drawPlayArea() {
                        _||_        \|/\|/\|/
 
                                                                            
-                  =========================================================
-                  |                                                       |
-                  |                                                       |
-                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ |
-                  |                                                       |
-                  |                                                       |
-                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __|
-                  |                                                       |
-                  |                                                       |
-                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ |
-                  |                                                       |
-                  |                                                       |
-                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __|
-                  |                                                       |
-                  |                                                       |
+                  ========================================================= 
+                  |                                                       | 
+                  |                                                       | 
+                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
+                  |                                                       | 
+                  |                                                       | 
+                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
+                  |                                                       | 
+                  |                                                       | 
+                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
+                  |                                                       | 
+                  |                                                       | 
+                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
+                  |                                                       | 
+                  |                                                       | 
                   =========================================================
                                                                            
                                                                     @@@@
@@ -65,11 +65,11 @@ void GUI::clearConsoleScreen()
 
 void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
 {
+	player.draw_self();
 	for (auto& it : vehicleList)
 		it->draw_self_bw();
 	for (auto& it : animalList)
 		it->draw_self_bw();
-	player.draw_self();
 }
 
 void GUI::deleteObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
@@ -104,10 +104,13 @@ void GUI::initWindows()
 	GUI::fixConsoleWindows();
 }
 
-void GUI::render(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player)
+void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> trafficState)
 {
 	GUI::redrawObjects(vehicleList, animalList, player);
+	GUI::drawTrafficLight(trafficState);
 }
+
+
 
 void GUI::drawRedTrafficLight()
 {
@@ -125,13 +128,13 @@ void GUI::drawGreenTrafficLight()
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
 }
 
-void GUI::drawTrafficLight(std::array<bool, 4> arr)
+void GUI::drawTrafficLight(std::array<bool, 4> trafficState)
 {
 	const unsigned coordX = 75;
 	unsigned coordYRed = 11;
 	unsigned coordYGreen = 12;
-	for (int i = 0; i < arr.size(); ++i) {
-		if (arr.at(i)) {
+	for (int i = 0; i < trafficState.size(); ++i) {
+		if (trafficState[i]) {
 			GUI::gotoXY(coordX, coordYRed + (3 * i));
 			GUI::drawRedTrafficLight();
 		}

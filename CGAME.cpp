@@ -18,8 +18,12 @@ CGAME::CGAME()
 	_wonFLAG = false;
 	_stopFLAG = false;
 	_pauseFLAG = false;
+	
+	soundBufferArray[0].loadFromFile(BIRD_SOUND);
+	soundBufferArray[1].loadFromFile(DINO_SOUND);
+	soundBufferArray[2].loadFromFile(CAR_SOUND);
+	soundBufferArray[3].loadFromFile(TRUCK_SOUND);
 }
-
 
 CGAME::~CGAME()
 {
@@ -120,6 +124,30 @@ void CGAME::startGame()
 	clearGame();
 }
 
+void CGAME::setDifficulties(int diffVal)
+{
+	switch (diffVal)
+	{
+	case 0: {
+		_gameSpeed = NORMAL_SPEED;
+		break;
+	}
+	case 1: {
+		_gameSpeed = HARDCORE_SPEED;
+		break;
+	}
+	case 2: {
+		_gameSpeed = LUNATIC_SPEED;
+		break;
+	}
+	default: {
+		_gameSpeed = NORMAL_SPEED;
+		break;
+	}
+		
+	}
+}
+
 bool CGAME::isExit() const
 {
 	return _exitFLAG;
@@ -146,6 +174,23 @@ void CGAME::saveGame()
 	Database::saveGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 }
 
+void CGAME::soundEffectPlay()
+{
+	static int hitcount = 0;
+	if (hitcount >= 10) {
+		srand(int(time(NULL)));
+	}
+
+	if (soundPlayer.getStatus() != sf::SoundSource::Status::Playing) {
+		int soundPick = rand() % 100;
+		if (soundPick <= 3) {
+			soundPlayer.setBuffer(soundBufferArray[soundPick]);
+			soundPlayer.play();
+			++hitcount;
+		}
+	}
+}
+
 void CGAME::trafficLightManage()
 {
 	while (!_stopFLAG) {
@@ -161,15 +206,14 @@ void CGAME::gameloop()
 {
 	
 	while (!_stopFLAG) {
-		// GUI::clearConsoleScreen();
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 		
-		if (_inputKeyHolder == 's') {
+		if (_inputKeyHolder == '1') {
 			_inputKeyHolder = ' ';
 			saveGame();
 		}
-		if (_inputKeyHolder == 'l') {
+		if (_inputKeyHolder == '2') {
 			_inputKeyHolder = ' ';
 			loadGame();
 		}
@@ -197,11 +241,9 @@ void CGAME::gameloop()
 			}
 		}
 
-		//GUI::deleteObjects(_vehicles, _animals, *_player);
-		GUI::redrawObjects(_vehicles, _animals, *_player);
+		GUI::render(_vehicles, _animals, *_player, _trafficLight);
+		soundEffectPlay();
 		if (FINISH_FLAG == true) {
-			//GUI::deleteObjects(_vehicles, _animals, *_player);
-			GUI::redrawObjects(_vehicles, _animals, *_player);
 			if (_player->Level() == 5)
 				_wonFLAG = true;
 			break;
@@ -211,7 +253,7 @@ void CGAME::gameloop()
 			pauseGame();
 		}
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(LUNATIC_SPEED));
+		std::this_thread::sleep_for(std::chrono::milliseconds(_gameSpeed));
 	}
 
 	if (FINISH_FLAG) {

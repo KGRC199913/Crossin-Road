@@ -30,7 +30,13 @@ class GUI final
 	void static fixConsoleWindows();
 	void static setWindowSize();
 	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	
+	void static drawRedTrafficLight();
+	void static drawGreenTrafficLight();
+	void static drawTrafficLight(std::array<bool, 4> trafficState);
+	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
+		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList,
+		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 public:
 	// go to (x, y) pos on console screen
 	void static gotoXY(int x, int y);
@@ -38,21 +44,16 @@ public:
 	void static clearConsoleScreen();
 	// draw the playground
 	void static drawPlayArea();
-	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
-		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	
 	// use to delete objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
-	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList,
-		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+	
 	
 	// Disable Maximize/Minimize button
 	// Set Console size to WIDTH x HEIGHT
 	void static initWindows();
 	void static render(std::vector<CVEHICLE*> & vehicleList,
-				std::vector<CANIMAL*> & animalList, CPEOPLE& player);
-
-	void static drawRedTrafficLight();
-	void static drawGreenTrafficLight();
-	void static drawTrafficLight(std::array<bool, 4> arr);
+				std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> trafficState);
+	
 };
 
 #endif GUI_H_
