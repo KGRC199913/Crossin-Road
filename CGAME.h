@@ -11,9 +11,9 @@
 
 #define NORMAL_SPEED 75
 #define HARDCORE_SPEED 25
-#define LUNATIC_SPEED 5
+#define LUNATIC_SPEED 15
 
-#define BGM_PATH "DeepInAbyss.wav"
+#define BGM_PATH "./bgm.ogg"
 #define BIRD_SOUND "Bird.wav"
 #define DINO_SOUND "Dino.wav"
 

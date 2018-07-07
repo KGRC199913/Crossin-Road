@@ -1,6 +1,13 @@
 #ifndef MASTERHEADER_H_
 #define MASTERHEADER_H_
 
+#if _WIN64
+#define ENVIRONMENT64
+#else
+#define ENVIRONMENT32
+#endif
+
+
 #include <iostream>
 #include <fstream>
 #include <iterator>
@@ -20,7 +27,6 @@
 #define MAX_CAR 6
 #define WIDTH 800
 #define HEIGHT 600
-#define SAVE_PATH "./save.dat"
 #define TOP_EDGE 10
 #define LOW_EDGE 30
 #define LEFT_EDGE 20

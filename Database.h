@@ -7,6 +7,9 @@
 #include "CBIRD.h"
 #include "CDINOSAUR.h"
 
+#define SAVE_PATH "./save.dat"
+
+
 class Database final
 {
 	Database() = default;

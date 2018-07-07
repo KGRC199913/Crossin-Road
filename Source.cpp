@@ -1,9 +1,20 @@
 #include "Menu.h"
 #include "CGAME.h"
+#include <SFML\Audio.hpp>
 
-
-int main() {
+auto main(void) -> int {
 	GUI::initWindows();
+
+	sf::Music music;
+	if (music.openFromFile(BGM_PATH)) {
+		music.play();
+		music.setLoop(true);
+		music.setVolume(50);
+	}
+	else
+		std::cerr << "Error loading bgm";
+
+
 	if (Menu::CreateLoopMenu()) {
 		CGAME* cg = CGAME::getInstance();
 		do {
@@ -16,5 +27,7 @@ int main() {
 		delete cg;
 	}
 
+	music.stop();
+	
 	return 0;
 }
