@@ -1,6 +1,7 @@
 #include "Database.h"
 
-void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus)
+void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
+	CPEOPLE & player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus, int & gameSpeed)
 {
 	std::ofstream saveFile(SAVE_PATH, std::ios::binary);
 	if (!saveFile) {
@@ -16,13 +17,15 @@ void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 	}
 	saveFile.write(static_cast<char*>(static_cast<void*>(&trafficLightStatus)), sizeof(trafficLightStatus));
 	saveFile.write(static_cast<char*>(static_cast<void*>(&reverseLaneStatus)), sizeof(reverseLaneStatus));
+	saveFile.write(static_cast<char*>(static_cast<void*>(&gameSpeed)), sizeof(gameSpeed));
 
 	saveFile.close();
 }
 
 
 // Please ensure that the object in vehicle and animal were been clean before calling this function, or memory leak may occurs
-void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus)
+void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
+	CPEOPLE & player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus, int & gameSpeed)
 {
 	std::ifstream saveFile(SAVE_PATH, std::ios::binary);
 	if (!saveFile) {
@@ -71,7 +74,7 @@ void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 
 	saveFile.read(static_cast<char*>(static_cast<void*>(&trafficLightStatus)), sizeof(trafficLightStatus));
 	saveFile.read(static_cast<char*>(static_cast<void*>(&reverseLaneStatus)), sizeof(reverseLaneStatus));
-
+	saveFile.read(static_cast<char*>(static_cast<void*>(&gameSpeed)), sizeof(gameSpeed));
 
 	vehicleList.shrink_to_fit();
 	animalList.shrink_to_fit();

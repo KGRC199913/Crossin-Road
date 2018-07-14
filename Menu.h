@@ -34,15 +34,18 @@ private:
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
 	static void DrawChooseLevelMenu();
-	
+	static void PushBackAdjustSoundMenu();
+	static void PrintAdjustSoundOptions(int music, int sfx);
+	static void AdjustSoundBox();
 	
 	Menu();
 	~Menu();
 public:
-	static bool CreateLoopMenu();
+	static bool CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_volume);
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
 	static int DrawDifficultiesMenu();
+	static void DrawAdjustSoundMenu(int &music, int &sfx);
 };
 
 #endif MENU_H_

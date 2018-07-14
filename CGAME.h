@@ -64,12 +64,13 @@ class CGAME final
 	CGAME();
 public:
 	static CGAME* getInstance();
-	void startGame();
+	void startGame(bool & isLoadSelected);
 	
 	CGAME(const CGAME& other) = delete;
 	void operator=(const CGAME& other) = delete;
 	
 	void setDifficulties(int diffVal);
+	void setSoundVol(int sfx_volume);
 
 	bool isExit() const;
 	bool won() const;
