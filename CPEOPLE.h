@@ -30,6 +30,8 @@ public:
 	bool isDead();
 
 	void draw_self();
+	void draw_dead_self();
+	void draw_win_dance();
 	void delete_self();
 
 	explicit operator void*();

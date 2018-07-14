@@ -23,6 +23,7 @@ void Menu::PushBackBeginOptions() {
 }
 
 void Menu::PrintMenuOptions() {
+	PushBackBeginOptions();
 	GUI::clearConsoleScreen();
 	DrawGameName();
 	DrawTree();
@@ -50,8 +51,7 @@ void Menu::PrintMenuOptions() {
 	}
 }
 
-bool Menu::CreateLoopMenu() {
-	PushBackBeginOptions();
+bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_volume) {
 	while (true) {
 		Menu::PrintMenuOptions();
 		while (true) {
@@ -75,25 +75,25 @@ bool Menu::CreateLoopMenu() {
 				case 0: {
 					GUI::clearConsoleScreen();
 					return true;
-					//std::cout << "Game Start!!" << std::endl;
-					//GUI::drawPlayArea();
-					system("pause > nul");
-					break;
+				}
+
+				case 1: {
+					loadGameFlag = true;
+					return true;
 				}
 
 				case 2: {
 					GUI::clearConsoleScreen();
-					//std::cout << "Choose Options!!" << std::endl;
-					int music = 100, sfx = 100;
-					DrawAdjustSoundMenu(music, sfx);
-					system("pause");
+					Menu::DrawAdjustSoundMenu(music_volume, sfx_volume);
+					Menu::PrintMenuOptions();
 					break;
 				}
 
 				case 3: {
 					GUI::clearConsoleScreen();
-					std::cout << "Cat Rules The World!" << std::endl;
-					system("pause");
+					Menu::DrawTeamName();
+					system("pause > null");
+					Menu::PrintMenuOptions();
 					break;
 				}
 
@@ -126,6 +126,33 @@ void Menu::DrawGameName() {
 			             \ \ \\ \ /\ \L\ \/\ \L\.\_/\ \L\ \               
 			              \ \_\ \_\ \____/\ \__/.\_\ \___,_\              
 			               \/_/\/ /\/___/  \/__/\/_/\/__,_ /      
+)abcd";
+	std::cout << std::endl;
+}
+
+void Menu::DrawTeamName() {
+	std::cout << R"abcd(
+                     
+
+
+                               *                 *@@@@@*
+                                         *      *@@@@@@@*     *
+                                    *           *@@@@@@@*   
+                                                 *@@@@@*  *
+                         
+                                      |\___/|
+                                   *  )     (      *   
+                               *     =\     /=
+                                       )===(       *
+                                      /     \
+                                      |     | NEKO~NEKO TEAM
+                                     /       \  
+                                     \       /
+                              _/\_/\_/\__  _/_/\_/\_/\_/\_/\_
+                              |  |  |  |( (  |  |  |  |  |  |
+                              |  |  |  | ) ) |  |  |  |  |  |  
+
+                                   THANKS FOR PLAYING!!
 )abcd";
 	std::cout << std::endl;
 }
@@ -326,120 +353,6 @@ void Menu::DrawChooseLevelMenu() {
 	}
 }
 
-void Menu::PushBackAdjustSoundMenu()
-{
-	std::vector<std::string> ops = { "MUSIC: ", "SFX:   ", "BACK" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
-}
-
-void Menu::PrintAdjustSoundOptions(int music, int sfx)
-{
-	int coordY = 14;
-	for (size_t i = 0; i < _options.size(); ++i) {
-		if (_pointer == i) {
-			GUI::gotoXY(43, coordY);
-			if (i == 0) {
-				std::cout << _options[i] << " << " << music << " >> ";
-				coordY += 1;
-			}
-			else if (i == 1) {
-				std::cout << _options[i] << " << " << sfx << " >> ";
-				coordY += 1;
-			}
-			else {
-				std::cout << " <<  " << _options[i] << " >> ";
-				coordY += 1;
-			}
-		}
-		else {
-			GUI::gotoXY(43, coordY);
-			if (i == 0) {
-				std::cout << _options[i] << "    " << music << "    ";
-				coordY += 1;
-			}
-			else if (i == 1) {
-				std::cout << _options[i] << "    " << sfx << "    ";
-				coordY += 1;
-			}
-			else {
-				std::cout << "     " << _options[i] << "    ";
-				coordY += 1;
-			}
-		}
-	}
-}
-
-void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
-{
-	PushBackAdjustSoundMenu();
-	_pointer = 0;
-	while (true) {
-		AdjustSoundBox();
-		PrintAdjustSoundOptions(music, sfx);
-		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
-				else
-					_pointer = _options.size() - 1;
-				break;
-			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
-				else
-					_pointer = 0;
-				break;
-			}
-			if (_pressKey == KEY_RIGHT) {
-				if (_pointer == 0) {
-					if (music < 100)
-						++music;
-				}
-				else if (_pointer == 1) {
-					if (sfx < 100)
-						++sfx;
-				}
-				break;
-			}
-			if (_pressKey == KEY_LEFT) {
-				if (_pointer == 0) {
-					if (music > 0)
-						--music;
-				}
-				else if (_pointer == 1) {
-					if (sfx > 0)
-						--sfx;
-				}
-				break;
-			}
-			if (_pressKey == ENTER && _pointer == 2) {
-				break;
-			}
-		}
-	}
-}
-
-void Menu::AdjustSoundBox()
-{
-	for (int coordX = 42; coordX < 65; coordX++)
-	{
-		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
-		GUI::gotoXY(coordX, 18); std::cout << char(BOX_HORIZONTAL_ASCII);
-	}
-	for (int coordY = 14; coordY <= 17; coordY++)
-	{
-		GUI::gotoXY(41, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-	}
-	GUI::gotoXY(65, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(65, 18); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(41, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
-	GUI::gotoXY(41, 18); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
-}
-
 void Menu::PushBackDifficultiesMenu()
 {
 	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC" };
@@ -562,3 +475,116 @@ bool Menu::DrawPlayAgainMenu()
 Menu::~Menu() {}
 
 
+void Menu::PushBackAdjustSoundMenu()
+{
+	std::vector<std::string> ops = { "MUSIC: ", "SFX:   ", "BACK" };
+	Menu::_options.clear();
+	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
+}
+
+void Menu::PrintAdjustSoundOptions(int music, int sfx)
+{
+	int coordY = 14;
+	for (size_t i = 0; i < _options.size(); ++i) {
+		if (_pointer == i) {
+			GUI::gotoXY(43, coordY);
+			if (i == 0) {
+				std::cout << _options[i] << " << " << music << " >> ";
+				coordY += 1;
+			}
+			else if (i == 1) {
+				std::cout << _options[i] << " << " << sfx << " >> ";
+				coordY += 1;
+			}
+			else {
+				std::cout << " <<  " << _options[i] << " >> ";
+				coordY += 1;
+			}
+		}
+		else {
+			GUI::gotoXY(43, coordY);
+			if (i == 0) {
+				std::cout << _options[i] << "    " << music << "    ";
+				coordY += 1;
+			}
+			else if (i == 1) {
+				std::cout << _options[i] << "    " << sfx << "    ";
+				coordY += 1;
+			}
+			else {
+				std::cout << "     " << _options[i] << "    ";
+				coordY += 1;
+			}
+		}
+	}
+}
+
+void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
+{
+	PushBackAdjustSoundMenu();
+	_pointer = 0;
+	while (true) {
+		AdjustSoundBox();
+		PrintAdjustSoundOptions(music, sfx);
+		while (true) {
+			_pressKey = _getch();
+			if (_pressKey == KEY_UP) {
+				if (_pointer > 0)
+					--_pointer;
+				else
+					_pointer = _options.size() - 1;
+				break;
+			}
+			if (_pressKey == KEY_DOWN) {
+				if ((size_t)_pointer < _options.size() - 1)
+					++_pointer;
+				else
+					_pointer = 0;
+				break;
+			}
+			if (_pressKey == KEY_RIGHT) {
+				if (_pointer == 0) {
+					if (music < 100)
+						++music;
+				}
+				else if (_pointer == 1) {
+					if (sfx < 100)
+						++sfx;
+				}
+				break;
+			}
+			if (_pressKey == KEY_LEFT) {
+				if (_pointer == 0) {
+					if (music > 0)
+						--music;
+				}
+				else if (_pointer == 1) {
+					if (sfx > 0)
+						--sfx;
+				}
+				break;
+			}
+			if (_pressKey == ENTER && _pointer == 2) {
+				return;
+			}
+		}
+	}
+}
+
+void Menu::AdjustSoundBox()
+{
+	for (int coordX = 42; coordX < 65; coordX++)
+	{
+		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordX, 18); std::cout << char(BOX_HORIZONTAL_ASCII);
+	}
+	for (int coordY = 14; coordY <= 17; coordY++)
+	{
+		GUI::gotoXY(41, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(65, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+	}
+	GUI::gotoXY(65, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(65, 18); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(41, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(41, 18); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+}

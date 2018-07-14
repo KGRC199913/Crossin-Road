@@ -18,6 +18,13 @@
 #define BOX_BOTTOM_LEFT_CORNER_ASCII    200
 #define BOX_BOTTOM_RIGHT_CORNER_ASCII   188
 
+#ifndef NORMAL_SPEED
+#define NORMAL_SPEED 75
+#define HARDCORE_SPEED 50
+#define LUNATIC_SPEED 25
+#endif
+
+
 class CVEHICLE;
 class CANIMAL;
 class CPEOPLE;
@@ -47,7 +54,7 @@ public:
 	
 	// use to delete objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
 	
-	
+	void static drawInfoBox(CPEOPLE & playerInfo, int gameSpeed);
 	// Disable Maximize/Minimize button
 	// Set Console size to WIDTH x HEIGHT
 	void static initWindows();

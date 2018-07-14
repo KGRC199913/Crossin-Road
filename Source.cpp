@@ -5,25 +5,36 @@ auto main(void) -> int {
 	GUI::initWindows();
 
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
+
 	sf::Music music;
 	if (music.openFromFile(BGM_PATH)) {
 		music.play();
 		music.setLoop(true);
-		music.setVolume(20);
 	}
 	else
 		std::cerr << "Error loading bgm";
 
-	if (Menu::CreateLoopMenu()) {
+	bool isLoadSelected = false;
+
+	int music_vol = 100, sfx_vol = 100;
+	if (Menu::CreateLoopMenu(isLoadSelected, music_vol, sfx_vol)) {
 		CGAME* cg = CGAME::getInstance();
-		cg->setDifficulties(Menu::DrawDifficultiesMenu());
+		
+		music.setVolume(music_vol);
+
+		if (!isLoadSelected)
+			cg->setDifficulties(Menu::DrawDifficultiesMenu());
 		do {
-			cg->startGame();
+			cg->startGame(isLoadSelected);
 			GUI::clearConsoleScreen();
 			if ((cg->isExit()) || (cg->won()))
 				break;
-		} while (Menu::DrawPlayAgainMenu());
 
+			isLoadSelected = false;
+		} while (Menu::DrawPlayAgainMenu());
+		if (cg->wonPreviousLevel()) {
+			std::cout << "u won" << std::endl; // TODO: make a winning scene
+		}
 		delete cg;
 	}
 

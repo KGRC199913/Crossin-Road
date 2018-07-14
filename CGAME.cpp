@@ -79,6 +79,8 @@ void CGAME::init()
 			i = (((rand() % 10) % 2) == 0) ? true : false;
 		}
 	}
+
+	GUI::drawInfoBox(*_player, _gameSpeed);
 }
 
 void CGAME::clearGame()
@@ -107,13 +109,17 @@ void CGAME::pauseGame()
 {
 	bool a = false;
 	while (_pauseFLAG) {
-		a =! a; //intended due to compiler skip inf loop in release mode
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
 }
 
-void CGAME::startGame()
+void CGAME::startGame(bool & isLoadSelected)
 {
-	init();
+	if (isLoadSelected) {
+		loadGame();
+	}
+	else
+		init();
 	_trafficManage = std::thread(&CGAME::trafficLightManage, this);
 	_keyManage = std::thread(&CGAME::inputKey, this);
 	gameloop();
@@ -148,6 +154,11 @@ void CGAME::setDifficulties(int diffVal)
 	}
 }
 
+void CGAME::setSoundVol(int sfx_volume)
+{
+	soundPlayer.setVolume(sfx_volume);
+}
+
 bool CGAME::isExit() const
 {
 	return _exitFLAG;
@@ -166,12 +177,13 @@ bool CGAME::wonPreviousLevel() const
 void CGAME::loadGame()
 {
 	clearGame();
-	Database::loadGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
+	Database::loadGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane, _gameSpeed);
+	GUI::drawInfoBox(*_player, _gameSpeed);
 }
 
 void CGAME::saveGame()
 {
-	Database::saveGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
+	Database::saveGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane, _gameSpeed);
 }
 
 void CGAME::soundEffectPlay()
@@ -199,6 +211,9 @@ void CGAME::trafficLightManage()
 			for (auto& i : _trafficLight)
 				i = !i;
 		}
+		else if (_trafficLight[0]) {
+			std::fill(_trafficLight.begin(), _trafficLight.end(), false);
+		}
 	}
 }
 
@@ -224,6 +239,7 @@ void CGAME::gameloop()
 		if (!_devModeFLAG) {
 			for (auto it : _vehicles) {
 				if (_player->isImpact(it)) {
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
 					// insert effect code here
@@ -233,6 +249,7 @@ void CGAME::gameloop()
 
 			for (auto it : _animals) {
 				if (_player->isImpact(it)) {
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
 					// insert effect code here
@@ -244,8 +261,10 @@ void CGAME::gameloop()
 		GUI::render(_vehicles, _animals, *_player, _trafficLight);
 		soundEffectPlay();
 		if (FINISH_FLAG == true) {
-			if (_player->Level() == 5)
+			if (_player->Level() == 5) {
 				_wonFLAG = true;
+				_player->draw_win_dance();
+			}
 			break;
 		}
 
@@ -270,7 +289,7 @@ void CGAME::inputKey()
 	char c = '\0';
 	while (!_stopFLAG) {
 		_inputKeyHolder = _getch();
-		if (_inputKeyHolder == 'g')
+		if (_inputKeyHolder == 'p')
 			_pauseFLAG = !_pauseFLAG;
 			
 		if ((_inputKeyHolder == 27) && (!_pauseFLAG)) {

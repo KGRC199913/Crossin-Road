@@ -15,8 +15,10 @@ class Database final
 	Database() = default;
 	~Database() = default;
 public:
-	void static saveGame(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus);
-	void static loadGame(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus);
+	void static saveGame(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList,
+		CPEOPLE& player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus, int & gameSpeed);
+	void static loadGame(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList,
+		CPEOPLE& player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus, int & gameSpeed);
 };
 
 #endif Database_H_

@@ -18,6 +18,7 @@ private:
 	static void PrintMenuOptions();
 	//MENU's DECORATION METHOD
 	static void DrawGameName();
+	static void DrawTeamName();
 	static void DrawMenuBox();
 	static void DrawMan();
 	static void DrawDinos();
@@ -41,7 +42,7 @@ private:
 	Menu();
 	~Menu();
 public:
-	static bool CreateLoopMenu();
+	static bool CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_volume);
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
 	static int DrawDifficultiesMenu();

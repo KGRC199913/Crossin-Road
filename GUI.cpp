@@ -98,6 +98,23 @@ void GUI::setWindowSize()
 	MoveWindow(console, r.left, r.top, WIDTH, HEIGHT, TRUE);
 }
 
+void GUI::drawInfoBox(CPEOPLE & player, int gameSpeed)
+{
+	GUI::gotoXY(51, 0);
+	std::cout << "Level: " << player.Level();
+
+	GUI::gotoXY(51, 1);
+	if (gameSpeed == NORMAL_SPEED)
+		std::cout << "Mode: NORMAL" << std::endl;
+	else if (gameSpeed == HARDCORE_SPEED)
+		std::cout << "Mode: HARDCORE" << std::endl;
+	else if (gameSpeed == LUNATIC_SPEED)
+		std::cout << "Mode: LUNATIC" << std::endl;
+	else std::cout << gameSpeed << std::endl;
+		
+	GUI::gotoXY(0, 0);
+}
+
 void GUI::initWindows()
 {
 	GUI::setWindowSize();
