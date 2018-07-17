@@ -8,20 +8,16 @@ class CANIMAL
 protected:
 	int _x, _y;
 	int _type; // 0 = bird, 1 = dino;
-public:
 	CANIMAL() = default;
-
+public:
 	int getType() const;
 
 	void setCoord(int x, int y);
 	void Move(int blockX);
 	COORD getCoord() const;
 
-	virtual void Tell() {};
 	virtual void draw_self() = 0;
-	virtual void delete_self() = 0;
 	virtual void draw_self_bw() = 0;
-	virtual void delete_self_bw() = 0;
 };
 
 #endif CANIMAL_H_

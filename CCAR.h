@@ -9,9 +9,7 @@ public:
 	CCAR();
 
 	void draw_self();
-	void delete_self();
 	void draw_self_bw();
-	void delete_self_bw();
 };
 
 #endif CCAR_H_

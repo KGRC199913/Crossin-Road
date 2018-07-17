@@ -11,29 +11,30 @@ class Menu
 {
 	
 private:
-	static std::vector<std::string> _options;
-	static char _pressKey;
-	static int _pointer;
+	static std::vector<std::string> s_options;
+	static char s_pressKey;
+	static int s_pointer;
+
 	static void PushBackBeginOptions();
 	static void PrintMenuOptions();
 	//MENU's DECORATION METHOD
-	static void DrawGameName();
-	static void DrawMenuBox();
-	static void DrawMan();
+	
+	/*static void DrawMan();
 	static void DrawDinos();
 	static void DrawBirds();
 	static void DrawCars();
 	static void DrawTrucks();
 	static void DrawTree();
-	static void DrawCloud();
+	static void DrawCloud();*/
+
+	static void DrawGameName();
+	static void DrawMenuBox();
+
 	static void PrintSubMenuOptions();
-	static void PushBackLevelMenu();
-	static void ChooseLevelBox();
 	static void PushBackDifficultiesMenu();
 	static void DifficultiesBox();
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
-	static void DrawChooseLevelMenu();
 	static void PushBackAdjustSoundMenu();
 	static void PrintAdjustSoundOptions(int music, int sfx);
 	static void AdjustSoundBox();
@@ -45,7 +46,8 @@ public:
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
 	static int DrawDifficultiesMenu();
-	static void DrawAdjustSoundMenu(int &music, int &sfx);
+	static void  DrawAdjustSoundMenu(int &music, int &sfx);
 };
 
 #endif MENU_H_
+

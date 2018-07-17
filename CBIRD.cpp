@@ -14,21 +14,8 @@ void CBIRD::draw_self()
 	std::cout << char(TOP_HALF_BLOCK_ASCII);
 }
 
-void CBIRD::delete_self()
-{
-	GUI::gotoXY(_x, _y);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
-}
-
 void CBIRD::draw_self_bw()
 {
 
 	draw_self();
-}
-
-void CBIRD::delete_self_bw()
-{
-	delete_self();
 }

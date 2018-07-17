@@ -14,20 +14,7 @@ void CCAR::draw_self()
 	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 }
 
-void CCAR::delete_self()
-{
-	GUI::gotoXY(_x, _y);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-	std::cout << char(UNDERSCORE_ASCII);
-}
-
 void CCAR::draw_self_bw()
 {
 	draw_self();
-}
-
-void CCAR::delete_self_bw()
-{
-	delete_self();
 }
