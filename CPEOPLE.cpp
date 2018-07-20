@@ -117,6 +117,51 @@ void CPEOPLE::draw_self()
 	std::cout << char(A_WITH_DIAERESIS);
 }
 
+void CPEOPLE::draw_dead_self()
+{
+	while (_y <= 32) {
+		GUI::gotoXY(_x, _y);
+		std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(A_WITH_DIAERESIS);
+		Sleep(50);
+		GUI::gotoXY(_x, _y);
+		std::cout << char(SPACE_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(SPACE_ASCII);
+		++_y;
+		GUI::gotoXY(0, 0);
+		GUI::drawPlayArea();
+	}
+}
+
+void CPEOPLE::draw_win_dance() {
+	for (int i = 0; i < 3; ++i) {
+		GUI::gotoXY(_x, _y);
+		std::cout << char(SPACE_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(SPACE_ASCII);
+		_y -= 2;
+		GUI::gotoXY(_x, _y);
+		std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(A_WITH_DIAERESIS);
+		Sleep(150);
+		GUI::gotoXY(_x, _y);
+		std::cout << char(SPACE_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(SPACE_ASCII);
+		_y += 2;
+		GUI::gotoXY(_x, _y);
+		std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+		GUI::gotoXY(_x, _y + 1);
+		std::cout << char(A_WITH_DIAERESIS);
+		Sleep(150);
+	}
+	GUI::gotoXY(_x - 2, _y - 2);
+	std::cout << "VICTORY!!";
+}
+
 void CPEOPLE::delete_self()
 {
 	GUI::gotoXY(_x, _y);

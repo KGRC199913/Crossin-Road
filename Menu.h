@@ -18,14 +18,6 @@ private:
 	static void PushBackBeginOptions();
 	static void PrintMenuOptions();
 	//MENU's DECORATION METHOD
-	
-	/*static void DrawMan();
-	static void DrawDinos();
-	static void DrawBirds();
-	static void DrawCars();
-	static void DrawTrucks();
-	static void DrawTree();
-	static void DrawCloud();*/
 
 	static void DrawGameName();
 	static void DrawMenuBox();
@@ -36,7 +28,7 @@ private:
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
 	static void PushBackAdjustSoundMenu();
-	static void PrintAdjustSoundOptions(int music, int sfx);
+	static void PrintAdjustSoundOptions(int music, int sfx);	
 	static void AdjustSoundBox();
 	
 	Menu();

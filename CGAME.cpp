@@ -250,6 +250,7 @@ void CGAME::gameloop()
 		if (!_devModeFLAG) {
 			for (auto it : _vehicles) {
 				if (_player->isImpact(it)) {
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
 					// insert effect code here
@@ -259,6 +260,7 @@ void CGAME::gameloop()
 
 			for (auto it : _animals) {
 				if (_player->isImpact(it)) {
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
 					// insert effect code here
@@ -274,8 +276,10 @@ void CGAME::gameloop()
 
 		// check if win
 		if (FINISH_FLAG == true) {
-			if (_player->Level() == 5)
+			if (_player->Level() == 5) {
 				_wonFLAG = true;
+				_player->draw_win_dance();
+			}
 			break;
 		}
 

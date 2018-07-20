@@ -91,8 +91,9 @@ bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_vol
 
 				case 3: {
 					GUI::clearConsoleScreen();
-					std::cout << "Cat Rules The World!" << std::endl;
-					system("pause");
+					Menu::DrawTeamName();
+					system("pause > null");
+					Menu::PrintMenuOptions();
 					break;
 				}
 
@@ -125,6 +126,33 @@ void Menu::DrawGameName() {
 			             \ \ \\ \ /\ \L\ \/\ \L\.\_/\ \L\ \               
 			              \ \_\ \_\ \____/\ \__/.\_\ \___,_\              
 			               \/_/\/ /\/___/  \/__/\/_/\/__,_ /      
+)abcd";
+	std::cout << std::endl;
+}
+
+void Menu::DrawTeamName() {
+	std::cout << R"abcd(
+                     
+
+
+                               *                 *@@@@@*
+                                         *      *@@@@@@@*     *
+                                    *           *@@@@@@@*   
+                                                 *@@@@@*  *
+                         
+                                      |\___/|
+                                   *  )     (      *   
+                               *     =\     /=
+                                       )===(       *
+                                      /     \
+                                      |     | NEKO~NEKO TEAM
+                                     /       \  
+                                     \       /
+                              _/\_/\_/\__  _/_/\_/\_/\_/\_/\_
+                              |  |  |  |( (  |  |  |  |  |  |
+                              |  |  |  | ) ) |  |  |  |  |  |  
+
+                                   THANKS FOR PLAYING!!
 )abcd";
 	std::cout << std::endl;
 }
