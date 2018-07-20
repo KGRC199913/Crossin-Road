@@ -1,7 +1,7 @@
 #include "CGAME.h"
 
 
-CGAME* CGAME::_instance = nullptr;
+CGAME* CGAME::s_instance = nullptr;
 
 CGAME::CGAME()
 {
@@ -34,14 +34,17 @@ CGAME::~CGAME()
 
 CGAME * CGAME::getInstance()
 {
-	if (_instance == nullptr) {
-		_instance = new CGAME;
+	if (s_instance == nullptr) {
+		s_instance = new CGAME;
 	}
-	return _instance;
+	return s_instance;
 }
 
+
+// init the game's data
 void CGAME::init()
 {
+	// init the flag
 	_stopFLAG = false;
 	FINISH_FLAG = false;
 	_exitFLAG = false;
@@ -54,15 +57,15 @@ void CGAME::init()
 	_vehicles.resize(enemiesCount);
 	_animals.resize(enemiesCount);
 
-
+	// create enemies
 	for (auto i = 0; i < enemiesCount; ++i) {
-		if (i <= (enemiesCount / 2) - 1) {
+		if (i <= (enemiesCount / 2) - 1) { //divide by half for each type of enemy
 			_vehicles[i] = new CCAR;
 			_vehicles[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 21);
 			_animals[i] = new CBIRD;
 			_animals[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 18);
 		}
-		else {
+		else { // this too
 			_vehicles[i] = new CTRUCK;
 			_vehicles[i]->setCoord(21 + distance*(i % (enemiesCount / 2)), 12);
 			_animals[i] = new CDINOSAUR;
@@ -70,11 +73,13 @@ void CGAME::init()
 		}
 	}
 
+	// set start position
 	_player->setCoord(41, 26);
 
+	// random light status
 	if (_player->Level() >= 4) {
 		srand(time(NULL));
-
+		// create a random number from 0 - 10, if odd => red, even => green
 		for (auto& i : _trafficLight) {
 			i = (((rand() % 10) % 2) == 0) ? true : false;
 		}
@@ -107,7 +112,6 @@ void CGAME::exitGame()
 
 void CGAME::pauseGame()
 {
-	bool a = false;
 	while (_pauseFLAG) {
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 	}
@@ -217,25 +221,32 @@ void CGAME::trafficLightManage()
 	}
 }
 
+// main game loop
+// being call by CGAME::startgame()
+// do not try to call
 void CGAME::gameloop()
 {
-	
+	// the loop
 	while (!_stopFLAG) {
+		// draw the play area
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 		
+		// check in needs of saving
 		if (_inputKeyHolder == '1') {
 			_inputKeyHolder = ' ';
 			saveGame();
 		}
+		// or loading
 		if (_inputKeyHolder == '2') {
 			_inputKeyHolder = ' ';
 			loadGame();
 		}
 			
-
+		// move the vehicle
 		updatePosObjs();
 
+		// check if impact
 		if (!_devModeFLAG) {
 			for (auto it : _vehicles) {
 				if (_player->isImpact(it)) {
@@ -258,8 +269,12 @@ void CGAME::gameloop()
 			}
 		}
 
+		// render eveything other than play area
 		GUI::render(_vehicles, _animals, *_player, _trafficLight);
+
 		soundEffectPlay();
+
+		// check if win
 		if (FINISH_FLAG == true) {
 			if (_player->Level() == 5) {
 				_wonFLAG = true;
@@ -268,13 +283,16 @@ void CGAME::gameloop()
 			break;
 		}
 
+		// check if pause
 		if (_pauseFLAG) {
 			pauseGame();
 		}
 
+		// pause the loop (speed depends on difficulty
 		std::this_thread::sleep_for(std::chrono::milliseconds(_gameSpeed));
 	}
 
+	// check if won
 	if (FINISH_FLAG) {
 		FINISH_FLAG = false;
 		_wonPreviousLevel = true;

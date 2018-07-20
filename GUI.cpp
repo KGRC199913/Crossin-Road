@@ -72,16 +72,6 @@ void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 		it->draw_self_bw();
 }
 
-void GUI::deleteObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
-{
-	for (auto& it : vehicleList)
-		it->delete_self_bw();
-	for (auto& it : animalList)
-		it->delete_self_bw();
-	player.delete_self();
-}
-
-
 void GUI::fixConsoleWindows()
 {
 	HWND consoleWindow = GetConsoleWindow();

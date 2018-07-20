@@ -8,9 +8,8 @@ class CVEHICLE
 protected:
 	int _x, _y;
 	int _type; // 0 = car, 1 = truck;
-public:
 	CVEHICLE() = default;
-
+public:
 	// 0 = car, 1 = truck;
 	int getType() const;
 
@@ -19,9 +18,7 @@ public:
 	COORD getCoord() const;
 
 	virtual void draw_self() = 0;
-	virtual void delete_self() = 0;
 	virtual void draw_self_bw() = 0;
-	virtual void delete_self_bw() = 0;
 };
 
 

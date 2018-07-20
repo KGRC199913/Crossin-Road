@@ -31,9 +31,8 @@ class CPEOPLE;
 
 class GUI final
 {
-	GUI() = default;
+	GUI() = delete;
 	~GUI() = delete;
-	
 	void static fixConsoleWindows();
 	void static setWindowSize();
 	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
@@ -41,8 +40,6 @@ class GUI final
 	void static drawGreenTrafficLight();
 	void static drawTrafficLight(std::array<bool, 4> trafficState);
 	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
-		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
-	void static deleteObjects(std::vector<CVEHICLE*> & vehicleList,
 		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
 public:
 	// go to (x, y) pos on console screen

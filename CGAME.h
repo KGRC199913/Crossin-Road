@@ -27,7 +27,7 @@
 
 class CGAME final
 {
-	static CGAME* _instance;
+	static CGAME* s_instance;
 	CPEOPLE* _player;
 	std::array<bool, 4> _trafficLight;
 	std::array<bool, 4> _reverseLane;

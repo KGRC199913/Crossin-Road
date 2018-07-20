@@ -40,9 +40,7 @@ void CPEOPLE::Up(int block)
 	if (_y - block > TOP_EDGE - 2)
 		_y -= block;
 	else
-		if (_y - block <= TOP_EDGE - 2) {
-			FINISH_FLAG = true;
-		}
+		FINISH_FLAG = true;
 }
 
 void CPEOPLE::Left(int block)

@@ -6,46 +6,46 @@
 #include "CDINOSAUR.h"
 #include "CGAME.h"
 
-std::vector<std::string> Menu::_options;
-char Menu::_pressKey = ' ';
-int Menu::_pointer = 0;
+std::vector<std::string> Menu::s_options;
+char Menu::s_pressKey = ' ';
+int Menu::s_pointer = 0;
 
 Menu::Menu()
 {
-	Menu::_pressKey = NULL;
-	Menu::_pointer = 0;
+	Menu::s_pressKey = NULL;
+	Menu::s_pointer = 0;
 }
 
 void Menu::PushBackBeginOptions() {
 	std::vector<std::string> ops = { "NEW GAME", "LOAD GAME", "SETTINGS", "ABOUT US", "EXIT" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
+	Menu::s_options.clear();
+	Menu::s_options.insert(Menu::s_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::PrintMenuOptions() {
 	PushBackBeginOptions();
 	GUI::clearConsoleScreen();
 	DrawGameName();
-	DrawTree();
 	DrawMenuBox();
+	/*DrawTree();
 	DrawMan();
 	DrawDinos();
 	DrawBirds();
 	DrawCloud();
 	DrawCars();
-	DrawTrucks();
+	DrawTrucks();*/
 	GUI::gotoXY(45, 30); std::cout << "BE SAFE PASSER!!!!";
 	
 	int coordY = 21;
-	for (size_t i = 0; i < _options.size(); ++i) {
-		if (_pointer == i) {
+	for (size_t i = 0; i < s_options.size(); ++i) {
+		if (s_pointer == i) {
 			GUI::gotoXY(46, coordY);  
-			std::cout << ">> " << _options[i] << " <<";
+			std::cout << ">> " << s_options[i] << " <<";
 			coordY += 1;
 		}
 		else {
 			GUI::gotoXY(46, coordY); 
-			std::cout <<"   "<< _options[i];
+			std::cout <<"   "<< s_options[i];
 			coordY += 1;
 		}
 	}
@@ -55,23 +55,23 @@ bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_vol
 	while (true) {
 		Menu::PrintMenuOptions();
 		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
+			s_pressKey = _getch();
+			if (s_pressKey == KEY_UP) {
+				if (s_pointer > 0)
+					--s_pointer;
 				else
-					_pointer = _options.size() - 1;
+					s_pointer = s_options.size() - 1;
 				break;
 			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
+			if (s_pressKey == KEY_DOWN) {
+				if ((size_t)s_pointer < s_options.size() - 1)
+					++s_pointer;
 				else
-					_pointer = 0;
+					s_pointer = 0;
 				break;
 			}
-			if (_pressKey == ENTER) {
-				switch (_pointer) {
+			if (s_pressKey == ENTER) {
+				switch (s_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
 					return true;
@@ -177,178 +177,89 @@ void Menu::DrawMenuBox() {
 
 }
 
-void Menu::DrawMan() {
-	GUI::gotoXY(100, 23);
-	std::cout << R"abcd(
-                    ___   O
-                  ____   /_\_
-                 ___   __/ \
-                     ___   /
-          
-)abcd";
-}
-
-void Menu::DrawDinos() {
-	GUI::gotoXY(80, 25);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(SPACE_ASCII);
-	std::cout << char(BLOCK_ASCII);
-	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
-	GUI::gotoXY(81, 26);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-	std::cout << char(BLOCK_ASCII);
-	std::cout << char(BLOCK_ASCII);
-}
-
-void Menu::DrawBirds() {
-	GUI::gotoXY(80, 20);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
-	std::cout << char(TOP_HALF_BLOCK_ASCII);
-}
-
-void Menu::DrawCars() {
-	GUI::gotoXY(5, 25);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-	std::cout << char(BLOCK_ASCII);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-}
-
-void Menu::DrawTrucks() {
-	GUI::gotoXY(13, 25);
-	std::cout << char(BLOCK_ASCII);
-	std::cout << char(BLOCK_ASCII);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-	;
-}
-
-void Menu::DrawTree() {
-	GUI::gotoXY(20, 19);
-	std::cout << R"abcd(
-                                                                                             @@@@
-                                                                                            @@@@~@
-                                                                                           @@@~@@@@@
-                                                                                            @@@@~@@
-                                                                                             @@_@
-                                                                                              ||
-                                                                                             _||_
-)abcd";
-}
-
-void Menu::DrawCloud() {
-	GUI::gotoXY(100, 18);
-	std::cout << R"abcd(
-   ____           ____
- _(    )        _(    ) 
-(___(__)       (___(__)             
-)abcd";
-}
+//void Menu::DrawMan() {
+//	GUI::gotoXY(100, 23);
+//	std::cout << R"abcd(
+//                    ___   O
+//                  ____   /_\_
+//                 ___   __/ \
+//                     ___   /
+//          
+//)abcd";
+//}
+//
+//void Menu::DrawDinos() {
+//	GUI::gotoXY(80, 25);
+//	std::cout << char(SPACE_ASCII);
+//	std::cout << char(SPACE_ASCII);
+//	std::cout << char(SPACE_ASCII);
+//	std::cout << char(BLOCK_ASCII);
+//	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
+//	GUI::gotoXY(81, 26);
+//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+//	std::cout << char(BLOCK_ASCII);
+//	std::cout << char(BLOCK_ASCII);
+//}
+//
+//void Menu::DrawBirds() {
+//	GUI::gotoXY(80, 20);
+//	std::cout << char(TOP_HALF_BLOCK_ASCII);
+//	std::cout << char(TOP_HALF_BLOCK_ASCII);
+//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+//	std::cout << char(TOP_HALF_BLOCK_ASCII);
+//	std::cout << char(TOP_HALF_BLOCK_ASCII);
+//}
+//
+//void Menu::DrawCars() {
+//	GUI::gotoXY(5, 25);
+//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+//	std::cout << char(BLOCK_ASCII);
+//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+//}
+//
+//void Menu::DrawTrucks() {
+//	GUI::gotoXY(13, 25);
+//	std::cout << char(BLOCK_ASCII);
+//	std::cout << char(BLOCK_ASCII);
+//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
+//	;
+//}
+//
+//void Menu::DrawTree() {
+//	GUI::gotoXY(20, 19);
+//	std::cout << R"abcd(
+//                                                                                             @@@@
+//                                                                                            @@@@~@
+//                                                                                           @@@~@@@@@
+//                                                                                            @@@@~@@
+//                                                                                             @@_@
+//                                                                                              ||
+//                                                                                             _||_
+//)abcd";
+//}
+//
+//void Menu::DrawCloud() {
+//	GUI::gotoXY(100, 18);
+//	std::cout << R"abcd(
+//   ____           ____
+// _(    )        _(    ) 
+//(___(__)       (___(__)             
+//)abcd";
+//}
 
 void Menu::PrintSubMenuOptions()
 {
 	int coordY = 14;
-	for (size_t i = 0; i < _options.size(); ++i) {
-		if (_pointer == i) {
+	for (size_t i = 0; i < s_options.size(); ++i) {
+		if (s_pointer == i) {
 			GUI::gotoXY(43, coordY); 
-			std::cout << ">> " << _options[i]<< " <<" ;
+			std::cout << ">> " << s_options[i]<< " <<" ;
 			coordY += 1;
 		}
 		else {
 			GUI::gotoXY(43, coordY); 
-			std::cout << "   " << _options[i] << "   ";
+			std::cout << "   " << s_options[i] << "   ";
 			coordY += 1;
-		}
-	}
-}
-
-void Menu::PushBackLevelMenu()
-{
-	std::vector<std::string> ops = { "LEVEL 1", "LEVEL 2", "LEVEL 3", "LEVEL 4", "LEVEL 5" , "EXIT" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
-}
-
-void Menu::ChooseLevelBox()
-{
-	for (int coordX = 42; coordX < 58; coordX++)
-	{
-		GUI::gotoXY(coordX, 13); std::cout << char(BOX_HORIZONTAL_ASCII);
-		GUI::gotoXY(coordX, 20); std::cout << char(BOX_HORIZONTAL_ASCII);
-	}
-	for (int coordY = 14; coordY <= 19; coordY++)
-	{
-		GUI::gotoXY(41, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-		GUI::gotoXY(58, coordY); std::cout << char(BOX_VERTICAL_ASCII);
-	}
-	GUI::gotoXY(58, 13); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(58, 20); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
-	GUI::gotoXY(41, 13); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
-	GUI::gotoXY(41, 20); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
-}
-
-void Menu::DrawChooseLevelMenu() {
-	PushBackLevelMenu();
-	while (true) {
-		ChooseLevelBox();
-		PrintSubMenuOptions();
-		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
-				else
-					_pointer = _options.size() - 1;
-				break;
-			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
-				else
-					_pointer = 0;
-				break;
-			}
-			if (_pressKey == ENTER) {
-				switch (_pointer) {
-				case 0: {
-					GUI::clearConsoleScreen();
-					std::cout << "Level 1" << std::endl;
-					break;
-				}
-
-				case 1: {
-					GUI::clearConsoleScreen();
-					std::cout << "Level 2" << std::endl;
-					break;
-				}
-
-				case 2: {
-					GUI::clearConsoleScreen();
-					std::cout << "Level 3" << std::endl;
-					break;
-				}
-
-				case 3: {
-					GUI::clearConsoleScreen();
-					std::cout << "Level 4" << std::endl;
-					break;
-				}
-
-				case 4: {
-					GUI::clearConsoleScreen();
-					std::cout << "Level 5" << std::endl;
-					break;
-				}
-
-				case 5: {
-					GUI::clearConsoleScreen();
-					exit(EXIT_SUCCESS);
-					return;
-				}
-				}
-			}
 		}
 	}
 }
@@ -356,8 +267,8 @@ void Menu::DrawChooseLevelMenu() {
 void Menu::PushBackDifficultiesMenu()
 {
 	std::vector<std::string> ops = { "NORMAL", "HARDCORE", "LUNATIC" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
+	Menu::s_options.clear();
+	Menu::s_options.insert(Menu::s_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::DifficultiesBox()
@@ -384,23 +295,23 @@ int Menu::DrawDifficultiesMenu() {
 		DifficultiesBox();
 		PrintSubMenuOptions();
 		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
+			s_pressKey = _getch();
+			if (s_pressKey == KEY_UP) {
+				if (s_pointer > 0)
+					--s_pointer;
 				else
-					_pointer = _options.size() - 1;
+					s_pointer = s_options.size() - 1;
 				break;
 			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
+			if (s_pressKey == KEY_DOWN) {
+				if ((size_t)s_pointer < s_options.size() - 1)
+					++s_pointer;
 				else
-					_pointer = 0;
+					s_pointer = 0;
 				break;
 			}
-			if (_pressKey == ENTER) {
-				return _pointer;
+			if (s_pressKey == ENTER) {
+				return s_pointer;
 			}
 		}
 	}
@@ -411,8 +322,8 @@ void Menu::PushBackPlayAgainMenu()
 	CGAME* cg = CGAME::getInstance();
 	std::string option1String = cg->wonPreviousLevel() ? "NEXT LEVEL" : "PLAY AGAIN";
 	std::vector<std::string> ops = { option1String, "EXIT" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
+	Menu::s_options.clear();
+	Menu::s_options.insert(Menu::s_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::PlayAgainBox()
@@ -440,23 +351,23 @@ bool Menu::DrawPlayAgainMenu()
 		PlayAgainBox();
 		PrintSubMenuOptions();
 		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
+			s_pressKey = _getch();
+			if (s_pressKey == KEY_UP) {
+				if (s_pointer > 0)
+					--s_pointer;
 				else
-					_pointer = _options.size() - 1;
+					s_pointer = s_options.size() - 1;
 				break;
 			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
+			if (s_pressKey == KEY_DOWN) {
+				if ((size_t)s_pointer < s_options.size() - 1)
+					++s_pointer;
 				else
-					_pointer = 0;
+					s_pointer = 0;
 				break;
 			}
-			if (_pressKey == ENTER) {
-				switch (_pointer) {
+			if (s_pressKey == ENTER) {
+				switch (s_pointer) {
 				case 0: {
 					GUI::clearConsoleScreen();
 					return true;
@@ -478,41 +389,41 @@ Menu::~Menu() {}
 void Menu::PushBackAdjustSoundMenu()
 {
 	std::vector<std::string> ops = { "MUSIC: ", "SFX:   ", "BACK" };
-	Menu::_options.clear();
-	Menu::_options.insert(Menu::_options.end(), ops.begin(), ops.end());
+	Menu::s_options.clear();
+	Menu::s_options.insert(Menu::s_options.end(), ops.begin(), ops.end());
 }
 
 void Menu::PrintAdjustSoundOptions(int music, int sfx)
 {
 	int coordY = 14;
-	for (size_t i = 0; i < _options.size(); ++i) {
-		if (_pointer == i) {
+	for (size_t i = 0; i < s_options.size(); ++i) {
+		if (s_pointer == i) {
 			GUI::gotoXY(43, coordY);
 			if (i == 0) {
-				std::cout << _options[i] << " << " << music << " >> ";
+				std::cout << s_options[i] << " << " << music << " >> ";
 				coordY += 1;
 			}
 			else if (i == 1) {
-				std::cout << _options[i] << " << " << sfx << " >> ";
+				std::cout << s_options[i] << " << " << sfx << " >> ";
 				coordY += 1;
 			}
 			else {
-				std::cout << " <<  " << _options[i] << " >> ";
+				std::cout << " <<  " << s_options[i] << " >> ";
 				coordY += 1;
 			}
 		}
 		else {
 			GUI::gotoXY(43, coordY);
 			if (i == 0) {
-				std::cout << _options[i] << "    " << music << "    ";
+				std::cout << s_options[i] << "    " << music << "    ";
 				coordY += 1;
 			}
 			else if (i == 1) {
-				std::cout << _options[i] << "    " << sfx << "    ";
+				std::cout << s_options[i] << "    " << sfx << "    ";
 				coordY += 1;
 			}
 			else {
-				std::cout << "     " << _options[i] << "    ";
+				std::cout << "     " << s_options[i] << "    ";
 				coordY += 1;
 			}
 		}
@@ -522,49 +433,49 @@ void Menu::PrintAdjustSoundOptions(int music, int sfx)
 void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
 {
 	PushBackAdjustSoundMenu();
-	_pointer = 0;
+	s_pointer = 0;
 	while (true) {
 		AdjustSoundBox();
 		PrintAdjustSoundOptions(music, sfx);
 		while (true) {
-			_pressKey = _getch();
-			if (_pressKey == KEY_UP) {
-				if (_pointer > 0)
-					--_pointer;
+			s_pressKey = _getch();
+			if (s_pressKey == KEY_UP) {
+				if (s_pointer > 0)
+					--s_pointer;
 				else
-					_pointer = _options.size() - 1;
+					s_pointer = s_options.size() - 1;
 				break;
 			}
-			if (_pressKey == KEY_DOWN) {
-				if ((size_t)_pointer < _options.size() - 1)
-					++_pointer;
+			if (s_pressKey == KEY_DOWN) {
+				if ((size_t)s_pointer < s_options.size() - 1)
+					++s_pointer;
 				else
-					_pointer = 0;
+					s_pointer = 0;
 				break;
 			}
-			if (_pressKey == KEY_RIGHT) {
-				if (_pointer == 0) {
+			if (s_pressKey == KEY_RIGHT) {
+				if (s_pointer == 0) {
 					if (music < 100)
 						++music;
 				}
-				else if (_pointer == 1) {
+				else if (s_pointer == 1) {
 					if (sfx < 100)
 						++sfx;
 				}
 				break;
 			}
-			if (_pressKey == KEY_LEFT) {
-				if (_pointer == 0) {
+			if (s_pressKey == KEY_LEFT) {
+				if (s_pointer == 0) {
 					if (music > 0)
 						--music;
 				}
-				else if (_pointer == 1) {
+				else if (s_pointer == 1) {
 					if (sfx > 0)
 						--sfx;
 				}
 				break;
 			}
-			if (_pressKey == ENTER && _pointer == 2) {
+			if (s_pressKey == ENTER && s_pointer == 2) {
 				return;
 			}
 		}
