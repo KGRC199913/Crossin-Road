@@ -75,29 +75,35 @@ void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
 	CPEOPLE & player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus, int & gameSpeed)
 {
-	std::ifstream saveFile(SAVE_PATH, std::ios::binary);
-	if (!saveFile) {
-		std::cerr << "Error Loading Game" << std::endl;
-		return;
+	try {
+		std::ifstream saveFile(SAVE_PATH, std::ios::binary);
+		if (!saveFile) {
+			throw std::exception::exception("FATAL ERROR: ERROR LOADING SAVE FILE");
+		}
+
+		// read player
+		saveFile.read(static_cast<char*>(static_cast<void*>(&player)), sizeof(player));
+		int objCount = player.Level() * 4;
+
+
+		// read the enemies
+		// vehicles
+		Database::loadVehicles(saveFile, objCount, vehicleList);
+
+		// animals
+		Database::loadAnimals(saveFile, objCount, animalList);
+
+		// read the remain status
+		Database::loadStatuses(saveFile, trafficLightStatus, reverseLaneStatus, gameSpeed);
+
+		// shrink vectors
+		vehicleList.shrink_to_fit();
+		animalList.shrink_to_fit();
+		saveFile.close();
 	}
-
-	// read player
-	saveFile.read(static_cast<char*>(static_cast<void*>(&player)), sizeof(player));
-	int objCount = player.Level() * 4;
-
-	
-	// read the enemies
-	// vehicles
-	Database::loadVehicles(saveFile, objCount, vehicleList);
-
-	// animals
-	Database::loadAnimals(saveFile, objCount, animalList);
-
-	// read the remain status
-	Database::loadStatuses(saveFile, trafficLightStatus, reverseLaneStatus, gameSpeed);
-
-	// shrink vectors
-	vehicleList.shrink_to_fit();
-	animalList.shrink_to_fit();
-	saveFile.close();
+	catch (std::exception e) {
+		CGAME* cg = CGAME::getInstance();
+		cg->~CGAME();
+		exit(FAST_FAIL_FATAL_APP_EXIT);
+	}
 }

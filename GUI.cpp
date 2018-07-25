@@ -45,6 +45,29 @@ void GUI::drawPlayArea() {
 )abcd";
 }
 
+void GUI::redrawRoads()
+{
+	GUI::gotoXY(19, 9);
+	std::cout << R"abcd(
+                  ========================================================= 
+                  |                                                       | 
+                  |                                                       | 
+                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
+                  |                                                       | 
+                  |                                                       | 
+                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
+                  |                                                       | 
+                  |                                                       | 
+                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
+                  |                                                       | 
+                  |                                                       | 
+                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
+                  |                                                       | 
+                  |                                                       | 
+                  =========================================================
+)abcd";
+}
+
 void GUI::clearConsoleScreen()
 {
 	COORD topLeft = { 0, 0 };
@@ -63,13 +86,29 @@ void GUI::clearConsoleScreen()
 	SetConsoleCursorPosition(console, topLeft);
 }
 
-void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
+void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
+	CPEOPLE & player, std::array<bool, 4> reverseLaneFlag)
 {
 	player.draw_self();
-	for (auto& it : vehicleList)
-		it->draw_self_bw();
-	for (auto& it : animalList)
-		it->draw_self_bw();
+
+	int enemiesCount = player.Level() * 4;
+	for (auto i = 0; i < enemiesCount; ++i) {
+		if (i <= (enemiesCount / 2) - 1) {
+				vehicleList[i]->draw_self();
+				animalList[i]->draw_self();
+		}
+		else {
+			if (reverseLaneFlag[3])
+				vehicleList[i]->draw_self();
+			else
+				vehicleList[i]->draw_self_bw();
+
+			if (reverseLaneFlag[2])
+				animalList[i]->draw_self();
+			else
+				animalList[i]->draw_self_bw();
+		}
+	}
 }
 
 void GUI::fixConsoleWindows()
@@ -111,9 +150,10 @@ void GUI::initWindows()
 	GUI::fixConsoleWindows();
 }
 
-void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player, std::array<bool, 4> trafficState)
+void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
+	CPEOPLE & player, std::array<bool, 4> trafficState, std::array<bool, 4> reverseLanes)
 {
-	GUI::redrawObjects(vehicleList, animalList, player);
+	GUI::redrawObjects(vehicleList, animalList, player, reverseLanes);
 	GUI::drawTrafficLight(trafficState);
 }
 

@@ -25,6 +25,8 @@
 #define KEY_LEFT 97
 #define KEY_RIGHT 100
 
+class Database;
+
 class CGAME final
 {
 	static CGAME* s_instance;
@@ -75,6 +77,8 @@ public:
 	bool isExit() const;
 	bool won() const;
 	bool wonPreviousLevel() const;
+
+
 	~CGAME();
 };
 

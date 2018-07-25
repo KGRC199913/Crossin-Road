@@ -6,6 +6,7 @@
 #include "CTRUCK.h"
 #include "CBIRD.h"
 #include "CDINOSAUR.h"
+#include "CGAME.h"
 
 #define SAVE_PATH "./save.dat"
 

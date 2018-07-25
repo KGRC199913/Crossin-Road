@@ -28,7 +28,7 @@
 #define WIDTH 800
 #define HEIGHT 600
 #define TOP_EDGE 10
-#define LOW_EDGE 30
+#define LOW_EDGE 25
 #define LEFT_EDGE 20
 #define RIGHT_EDGE 70
 

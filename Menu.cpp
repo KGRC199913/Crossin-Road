@@ -92,7 +92,7 @@ bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_vol
 				case 3: {
 					GUI::clearConsoleScreen();
 					Menu::DrawTeamName();
-					system("pause > null");
+					std::this_thread::sleep_for(std::chrono::seconds(3));
 					Menu::PrintMenuOptions();
 					break;
 				}

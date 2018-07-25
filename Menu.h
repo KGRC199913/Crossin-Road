@@ -21,7 +21,7 @@ private:
 
 	static void DrawGameName();
 	static void DrawMenuBox();
-
+	static void DrawTeamName();
 	static void PrintSubMenuOptions();
 	static void PushBackDifficultiesMenu();
 	static void DifficultiesBox();

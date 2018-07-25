@@ -74,7 +74,7 @@ void CGAME::init()
 	}
 
 	// set start position
-	_player->setCoord(41, 26);
+	_player->setCoord(41, 24);
 
 	// random light status
 	if (_player->Level() >= 4) {
@@ -82,7 +82,11 @@ void CGAME::init()
 		// create a random number from 0 - 10, if odd => red, even => green
 		for (auto& i : _trafficLight) {
 			i = (((rand() % 10) % 2) == 0) ? true : false;
-		}
+		}	
+	}
+
+	for (auto& i : _reverseLane) {
+		i = (((rand() % 10) % 2) == 0) ? true : false;
 	}
 
 	GUI::drawInfoBox(*_player, _gameSpeed);
@@ -211,7 +215,7 @@ void CGAME::trafficLightManage()
 {
 	while (!_stopFLAG) {
 		if (_player->Level() >= 4) {
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 			for (auto& i : _trafficLight)
 				i = !i;
 		}
@@ -226,12 +230,14 @@ void CGAME::trafficLightManage()
 // do not try to call
 void CGAME::gameloop()
 {
+	// draw the play area
+	GUI::gotoXY(0, 0);
+	GUI::drawPlayArea();
+
 	// the loop
 	while (!_stopFLAG) {
-		// draw the play area
-		GUI::gotoXY(0, 0);
-		GUI::drawPlayArea();
-		
+
+		GUI::redrawRoads();
 		// check in needs of saving
 		if (_inputKeyHolder == '1') {
 			_inputKeyHolder = ' ';
@@ -270,14 +276,14 @@ void CGAME::gameloop()
 		}
 
 		// render eveything other than play area
-		GUI::render(_vehicles, _animals, *_player, _trafficLight);
+		GUI::render(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 
 		soundEffectPlay();
 
 		// check if win
 		if (FINISH_FLAG == true) {
 			if (_player->Level() == 5) {
-				_wonFLAG = true;
+				//_wonFLAG = true;
 				_player->draw_win_dance();
 			}
 			break;
@@ -297,6 +303,7 @@ void CGAME::gameloop()
 		FINISH_FLAG = false;
 		_wonPreviousLevel = true;
 		_player->LevelUp();
+		_player->draw_win_dance();
 	}
 
 	_stopFLAG = true;
@@ -354,8 +361,14 @@ void CGAME::updatePosPeople()
 
 void CGAME::updatePosVehicle()
 {
+
 	int carMove = _trafficLight[0] ? 0 : 2;
+	if (_reverseLane[0])
+		carMove *= -1;
+
 	int truckMove = _trafficLight[3] ? 0 : 5;
+	if (_reverseLane[3])
+		truckMove *= -1;
 
 	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {
@@ -371,7 +384,12 @@ void CGAME::updatePosVehicle()
 void CGAME::updatePosAnimal()
 {
 	int birdMove = _trafficLight[2] ? 0 : 3;
+	if (_reverseLane[1])
+		birdMove *= -1;
+
 	int dinoMove = _trafficLight[1] ? 0 : 4;
+	if (_reverseLane[2])
+		dinoMove *= -1;
 
 	int enemiesCount = _player->Level() * 4;
 	for (auto i = 0; i < enemiesCount; ++i) {

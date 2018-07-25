@@ -28,6 +28,8 @@ void CPEOPLE::LevelUp()
 {
 	if (_level < 5)
 		++_level;
+	else
+		_level = 1;
 }
 
 unsigned int & CPEOPLE::Level()
