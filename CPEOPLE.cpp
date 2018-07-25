@@ -160,7 +160,7 @@ void CPEOPLE::draw_win_dance() {
 		std::cout << char(A_WITH_DIAERESIS);
 		Sleep(150);
 	}
-	GUI::gotoXY(_x - 2, _y - 2);
+	GUI::gotoXY(_x - 1, _y - 1);
 	std::cout << "VICTORY!!";
 }
 

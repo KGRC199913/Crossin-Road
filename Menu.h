@@ -38,7 +38,7 @@ public:
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
 	static int DrawDifficultiesMenu();
-	static void  DrawAdjustSoundMenu(int &music, int &sfx);
+	static void DrawAdjustSoundMenu(int &music, int &sfx);
 };
 
 #endif MENU_H_

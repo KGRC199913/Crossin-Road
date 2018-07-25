@@ -58,6 +58,11 @@ public:
 	void static render(std::vector<CVEHICLE*> & vehicleList,
 				std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> trafficState, std::array<bool, 4> reverseLanes);
 	
+	//draw loading bar
+	void static drawLoadingBar();
+	//draw winning scene
+	void static drawWinningScene();
+	void static drawLosingScene();
 };
 
 #endif GUI_H_
