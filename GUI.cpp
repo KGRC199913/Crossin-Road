@@ -157,7 +157,76 @@ void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& ani
 	GUI::drawTrafficLight(trafficState);
 }
 
+void GUI::drawLoadingBar()
+{
+	GUI::clearConsoleScreen();
+	int per = 0;
+	GUI::gotoXY(50, 13);  
+	std::cout << "LOADING";
 
+	for (int i = 0; i < 20; i++)
+	{
+		GUI::gotoXY(35 + 2 * i, 15);  
+		std::cout << char(BLOCK_ASCII);
+
+		for (int i = 1; i < 6; i++)
+		{
+			GUI::gotoXY(51, 17); 
+			std::cout << per + i << "%";
+			Sleep(100);
+		}
+		Sleep(rand() % 200 + 1);
+		per += 5;
+	}
+}
+
+void GUI::drawWinningScene()
+{
+	GUI::clearConsoleScreen();
+	std::cout << R"abcd(
+           __  __              __                              
+          /\ \/\ \  __        /\ \__                           
+          \ \ \ \ \/\_\    ___\ \ ,_\   ___   _ __   __  __    
+           \ \ \ \ \/\ \  /'___\ \ \/  / __`\/\`'__\/\ \/\ \   
+            \ \ \_/ \ \ \/\ \__/\ \ \_/\ \L\ \ \ \/ \ \ \_\ \  
+             \ `\___/\ \_\ \____\\ \__\ \____/\ \_\  \/`____ \ 
+              `\/__/  \/_/\/____/ \/__/\/___/  \/_/   `/___/> \
+                                                         /\___/
+                                                         \/__/ 
+
+
+                           --THANKS FOR PLAYING--
+                            --HOPE YOU ENJOY IT--
+)abcd";
+	std::cout << std::endl;
+}
+
+void GUI::drawLosingScene()
+{
+	GUI::clearConsoleScreen();
+	std::cout << R"abcd(
+                                   +-------------+         
+                                   |   HOSPITAL  |         
+                                   +---n-----n---+ 
+                         _._._._       |._._.|       _._._._ 
+                         | ___ |_._._._| ___ |_._._._| ___ |
+                         | |_| |  ___  | |_| |  ___  | |_| |
+                         |_III_|  |_|  |_III_|  |_|  |_III_| 
+                         | ___ |__III__| ___ |__III__| ___ |
+                         | |_| |  ___  | |_| |  ___  | |_| |   
+                         |_III_|  |_|  |_III_|  |_|  |_III_|  ( )
+                         | ___ |__III__| ___ |__III__| ___ |(_) (_)
+                         | |_| |  ___  | |_| |  ___  | |_| | /(|)\
+                         |_III_|  |_|  |_III_|  |_|  |_III_|   H
+                         | ___ |__III__|_____|__III__| ___ |   H
+                         | |_| |"""""""||~|~||"""""""| |_| |   H
+                         |_III_|@@@@@@@||_|_||@@@@@@@|_III_|   H 
+                   @@@@@@@@@@@@@@     @/=====\@     @@@@@@@@@@@@@@
+
+                               "YOU SHALL NOT PASS!!!!"
+)abcd";
+	std::cout << std::endl;
+}
 
 void GUI::drawRedTrafficLight()
 {

@@ -23,6 +23,7 @@ auto main(void) -> int {
 
 	int music_vol = 100, sfx_vol = 100;
 	// main game loop
+	GUI::drawLoadingBar();
 	if (Menu::CreateLoopMenu(isLoadSelected, music_vol, sfx_vol)) {
 		CGAME* cg = CGAME::getInstance();
 		
@@ -42,7 +43,8 @@ auto main(void) -> int {
 		} while (Menu::DrawPlayAgainMenu());
 		// wining effect here
 		if (cg->wonPreviousLevel()) {
-			std::cout << "u won" << std::endl; // TODO: make a winning scene
+			//std::cout << "u won" << std::endl; // TODO: make a winning scene
+			GUI::drawWinningScene();
 		}
 
 		// delete the cg to avoid huge memory leak
