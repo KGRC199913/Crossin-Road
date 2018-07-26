@@ -135,6 +135,7 @@ void CPEOPLE::draw_dead_self()
 		GUI::gotoXY(0, 0);
 		GUI::drawPlayArea();
 	}
+	GUI::drawPlayArea();
 }
 
 void CPEOPLE::draw_win_dance() {

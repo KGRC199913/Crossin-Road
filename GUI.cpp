@@ -84,6 +84,7 @@ void GUI::clearConsoleScreen()
 		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
 	);
 	SetConsoleCursorPosition(console, topLeft);
+
 }
 
 void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
@@ -109,6 +110,15 @@ void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 				animalList[i]->draw_self_bw();
 		}
 	}
+}
+
+void GUI::hideCursor()
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = FALSE;
+	SetConsoleCursorInfo(consoleHandle, &info);
 }
 
 void GUI::fixConsoleWindows()
@@ -148,6 +158,7 @@ void GUI::initWindows()
 {
 	GUI::setWindowSize();
 	GUI::fixConsoleWindows();
+	GUI::hideCursor();
 }
 
 void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
@@ -160,7 +171,7 @@ void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& ani
 void GUI::drawLoadingBar()
 {
 	GUI::clearConsoleScreen();
-	int per = 0;
+	int percent = 0;
 	GUI::gotoXY(50, 13);  
 	std::cout << "LOADING";
 
@@ -169,19 +180,23 @@ void GUI::drawLoadingBar()
 		GUI::gotoXY(35 + 2 * i, 15);  
 		std::cout << char(BLOCK_ASCII);
 
-		for (int i = 1; i < 6; i++)
+		for (int i = 1; i < 10; i += 2)
 		{
-			GUI::gotoXY(51, 17); 
-			std::cout << per + i << "%";
-			Sleep(100);
+			GUI::gotoXY(51, 17);
+			if (percent + i > 100)
+				std::cout << "100%";
+			else
+				std::cout << percent + i << "%";
+			//std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		}
-		Sleep(rand() % 200 + 1);
-		per += 5;
+		std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 100));
+		percent += 5;
 	}
 }
 
 void GUI::drawWinningScene()
 {
+	GUI::gotoXY(0, 0);
 	GUI::clearConsoleScreen();
 	std::cout << R"abcd(
            __  __              __                              
@@ -203,6 +218,7 @@ void GUI::drawWinningScene()
 
 void GUI::drawLosingScene()
 {
+	GUI::gotoXY(0, 0);
 	GUI::clearConsoleScreen();
 	std::cout << R"abcd(
                                    +-------------+         

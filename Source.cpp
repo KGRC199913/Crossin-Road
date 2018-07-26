@@ -1,8 +1,10 @@
+
+//
+
 #include "Menu.h"
 #include "CGAME.h"
 
 auto main(void) -> int {
-
 	// lock the size, change the console size to WIDTH x HEIGHT
 	GUI::initWindows();
 	std::ios_base::sync_with_stdio(false);
@@ -22,36 +24,51 @@ auto main(void) -> int {
 	bool isLoadSelected = false;
 
 	int music_vol = 100, sfx_vol = 100;
+	bool contiPlayFlag = false;
 	// main game loop
-	GUI::drawLoadingBar();
-	if (Menu::CreateLoopMenu(isLoadSelected, music_vol, sfx_vol)) {
-		CGAME* cg = CGAME::getInstance();
-		
-		music.setVolume(music_vol);
-
-		// choose difficulty only if start new game
-		if (!isLoadSelected)
-			cg->setDifficulties(Menu::DrawDifficultiesMenu());
-		do {
-			cg->startGame(isLoadSelected);
-			// reset after each round
+	while (true) {
+		if (Menu::CreateLoopMenu(isLoadSelected, music_vol, sfx_vol)) {
+			GUI::drawLoadingBar();
 			GUI::clearConsoleScreen();
-			if ((cg->isExit()) || (cg->won()))
+			CGAME* cg = CGAME::getInstance();
+
+			music.setVolume(music_vol);
+
+			// choose difficulty only if start new game
+			if (!isLoadSelected)
+				cg->setDifficulties(Menu::DrawDifficultiesMenu());
+			do {
+				cg->startGame(isLoadSelected);
+				// reset after each round
+				GUI::clearConsoleScreen();
+				if ((cg->isExit()) || (cg->won()))
+					break;
+
+				isLoadSelected = false;
+				contiPlayFlag = Menu::DrawPlayAgainMenu();
+			} while (contiPlayFlag);
+			// wining effect here
+			if (cg->wonPreviousLevel()) {
+				//std::cout << "u won" << std::endl; // TODO: make a winning scene
+				GUI::drawWinningScene();
+			}
+
+			if (cg->isExit() || !contiPlayFlag) {
+				delete cg;
 				break;
-
-			isLoadSelected = false;
-		} while (Menu::DrawPlayAgainMenu());
-		// wining effect here
-		if (cg->wonPreviousLevel()) {
-			//std::cout << "u won" << std::endl; // TODO: make a winning scene
-			GUI::drawWinningScene();
+			}
+				
+			// delete the cg to avoid huge memory leak
+			delete cg;
 		}
-
-		// delete the cg to avoid huge memory leak
-		delete cg;
+		else
+			break;
 	}
+	
 	//
 	music.stop();
+	return 0;
+
 
 	return 0;
 }
