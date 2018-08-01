@@ -23,8 +23,9 @@ void Menu::PushBackBeginOptions() {
 }
 
 void Menu::PrintMenuOptions() {
+	GUI::gotoXY(0, 0);
 	PushBackBeginOptions();
-	GUI::clearConsoleScreen();
+	//GUI::clearConsoleScreen();
 	DrawGameName();
 	DrawMenuBox();
 	/*DrawTree();
@@ -45,7 +46,7 @@ void Menu::PrintMenuOptions() {
 		}
 		else {
 			GUI::gotoXY(46, coordY); 
-			std::cout <<"   "<< s_options[i];
+			std::cout <<"   "<< s_options[i] << "   ";
 			coordY += 1;
 		}
 	}
@@ -92,7 +93,6 @@ bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_vol
 				case 3: {
 					GUI::clearConsoleScreen();
 					Menu::DrawTeamName();
-					std::this_thread::sleep_for(std::chrono::seconds(3));
 					Menu::PrintMenuOptions();
 					break;
 				}
@@ -152,7 +152,7 @@ void Menu::DrawTeamName() {
 
                                    THANKS FOR PLAYING!!
 )abcd";
-	std::cout << std::endl;
+	if (_getch());
 }
 
 void Menu::DrawMenuBox() {

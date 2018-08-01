@@ -41,6 +41,7 @@ class GUI final
 	void static drawTrafficLight(std::array<bool, 4> trafficState);
 	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
 		std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> reverseLaneFlag);
+	void static hideCursor();
 public:
 	// go to (x, y) pos on console screen
 	void static gotoXY(int x, int y);

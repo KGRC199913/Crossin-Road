@@ -84,6 +84,7 @@ void GUI::clearConsoleScreen()
 		screen.dwSize.X * screen.dwSize.Y, topLeft, &written
 	);
 	SetConsoleCursorPosition(console, topLeft);
+
 }
 
 void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
@@ -109,6 +110,15 @@ void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 				animalList[i]->draw_self_bw();
 		}
 	}
+}
+
+void GUI::hideCursor()
+{
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO info;
+	info.dwSize = 100;
+	info.bVisible = FALSE;
+	SetConsoleCursorInfo(consoleHandle, &info);
 }
 
 void GUI::fixConsoleWindows()
@@ -148,6 +158,7 @@ void GUI::initWindows()
 {
 	GUI::setWindowSize();
 	GUI::fixConsoleWindows();
+	GUI::hideCursor();
 }
 
 void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
@@ -160,7 +171,9 @@ void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& ani
 void GUI::drawLoadingBar()
 {
 	GUI::clearConsoleScreen();
+
 	int coordY;
+
 
 	for (coordY = 34; coordY < 75; coordY++)
 	{
@@ -176,6 +189,7 @@ void GUI::drawLoadingBar()
 	GUI::gotoXY(75, 16); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
 	GUI::gotoXY(34, 14); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
 	GUI::gotoXY(34, 16); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+
 
 	int per = 0;
 	GUI::gotoXY(50, 13);  std::cout << "LOADING";
@@ -193,6 +207,7 @@ void GUI::drawLoadingBar()
 
 void GUI::drawWinningScene()
 {
+	GUI::gotoXY(0, 0);
 	GUI::clearConsoleScreen();
 	std::cout << R"abcd(
            __  __              __                              
@@ -214,6 +229,7 @@ void GUI::drawWinningScene()
 
 void GUI::drawLosingScene()
 {
+	GUI::gotoXY(0, 0);
 	GUI::clearConsoleScreen();
 	std::cout << R"abcd(
                                    +-------------+         

@@ -30,6 +30,7 @@ CGAME::~CGAME()
 	clearGame();
 	delete _player;
 	_player = nullptr;
+	s_instance = nullptr;
 }
 
 CGAME * CGAME::getInstance()
@@ -94,15 +95,17 @@ void CGAME::init()
 
 void CGAME::clearGame()
 {
-	for (auto& it : _vehicles) {
-		delete it;
+	for (auto it : _vehicles) {
+		delete(it);
 	}
 	_vehicles.clear();
+	_vehicles.shrink_to_fit();
 
-	for (auto& it : _animals) {
-		delete it;
+	for (auto it : _animals) {
+		delete(it);
 	}
 	_animals.clear();
+	_animals.shrink_to_fit();
 	for (auto& it : _trafficLight) {
 		it = false;
 	}
@@ -251,40 +254,45 @@ void CGAME::gameloop()
 			
 		// move the vehicle
 		updatePosObjs();
-
+		GUI::render(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 		// check if impact
 		if (!_devModeFLAG) {
 			for (auto it : _vehicles) {
 				if (_player->isImpact(it)) {
-					_player->draw_dead_self();
+					//_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
-					// insert effect code here
+					GUI::drawLosingScene();
 					break;
 				}
 			}
+
+			if (_stopFLAG)
+				break;
 
 			for (auto it : _animals) {
 				if (_player->isImpact(it)) {
-					_player->draw_dead_self();
+					//_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
-					// insert effect code here
+					GUI::drawLosingScene();
 					break;
 				}
 			}
+
+			if (_stopFLAG)
+				break;
 		}
 
 		// render eveything other than play area
-		GUI::render(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 
 		soundEffectPlay();
 
 		// check if win
 		if (FINISH_FLAG == true) {
 			if (_player->Level() == 5) {
-				//_wonFLAG = true;
-				_player->draw_win_dance();
+				_wonFLAG = true;
+				//_player->draw_win_dance();
 			}
 			break;
 		}

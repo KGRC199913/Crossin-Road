@@ -7,7 +7,6 @@
 #define ENVIRONMENT32
 #endif
 
-
 #include <iostream>
 #include <fstream>
 #include <iterator>
