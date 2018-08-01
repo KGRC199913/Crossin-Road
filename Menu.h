@@ -23,22 +23,26 @@ private:
 	static void DrawMenuBox();
 	static void DrawTeamName();
 	static void PrintSubMenuOptions();
+
 	static void PushBackDifficultiesMenu();
 	static void DifficultiesBox();
+
 	static void PushBackPlayAgainMenu();
 	static void PlayAgainBox();
+
 	static void PushBackAdjustSoundMenu();
-	static void PrintAdjustSoundOptions(int music, int sfx);	
+	static void PrintAdjustSoundOptions(sf::Music & music, int sfx);
+	static void DrawAdjustSoundMenu(sf::Music & music, int &sfx);
 	static void AdjustSoundBox();
 	
 	Menu();
 	~Menu();
 public:
-	static bool CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_volume);
+	static bool CreateLoopMenu(bool & loadGameFlag, sf::Music & music, int & sfx_volume);
 	// true = play again, false = not play again
 	static bool DrawPlayAgainMenu();
 	static int DrawDifficultiesMenu();
-	static void DrawAdjustSoundMenu(int &music, int &sfx);
+	
 };
 
 #endif MENU_H_

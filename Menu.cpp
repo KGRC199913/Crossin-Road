@@ -52,7 +52,7 @@ void Menu::PrintMenuOptions() {
 	}
 }
 
-bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_volume) {
+bool Menu::CreateLoopMenu(bool & loadGameFlag, sf::Music & music, int & sfx_volume) {
 	while (true) {
 		Menu::PrintMenuOptions();
 		while (true) {
@@ -85,7 +85,8 @@ bool Menu::CreateLoopMenu(bool & loadGameFlag, int & music_volume, int & sfx_vol
 
 				case 2: {
 					GUI::clearConsoleScreen();
-					Menu::DrawAdjustSoundMenu(music_volume, sfx_volume);
+					Menu::DrawAdjustSoundMenu(music, sfx_volume);
+					GUI::clearConsoleScreen();
 					Menu::PrintMenuOptions();
 					break;
 				}
@@ -175,75 +176,6 @@ void Menu::DrawMenuBox() {
 
 }
 
-//void Menu::DrawMan() {
-//	GUI::gotoXY(100, 23);
-//	std::cout << R"abcd(
-//                    ___   O
-//                  ____   /_\_
-//                 ___   __/ \
-//                     ___   /
-//          
-//)abcd";
-//}
-//
-//void Menu::DrawDinos() {
-//	GUI::gotoXY(80, 25);
-//	std::cout << char(SPACE_ASCII);
-//	std::cout << char(SPACE_ASCII);
-//	std::cout << char(SPACE_ASCII);
-//	std::cout << char(BLOCK_ASCII);
-//	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
-//	GUI::gotoXY(81, 26);
-//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-//	std::cout << char(BLOCK_ASCII);
-//	std::cout << char(BLOCK_ASCII);
-//}
-//
-//void Menu::DrawBirds() {
-//	GUI::gotoXY(80, 20);
-//	std::cout << char(TOP_HALF_BLOCK_ASCII);
-//	std::cout << char(TOP_HALF_BLOCK_ASCII);
-//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-//	std::cout << char(TOP_HALF_BLOCK_ASCII);
-//	std::cout << char(TOP_HALF_BLOCK_ASCII);
-//}
-//
-//void Menu::DrawCars() {
-//	GUI::gotoXY(5, 25);
-//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-//	std::cout << char(BLOCK_ASCII);
-//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-//}
-//
-//void Menu::DrawTrucks() {
-//	GUI::gotoXY(13, 25);
-//	std::cout << char(BLOCK_ASCII);
-//	std::cout << char(BLOCK_ASCII);
-//	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
-//	;
-//}
-//
-//void Menu::DrawTree() {
-//	GUI::gotoXY(20, 19);
-//	std::cout << R"abcd(
-//                                                                                             @@@@
-//                                                                                            @@@@~@
-//                                                                                           @@@~@@@@@
-//                                                                                            @@@@~@@
-//                                                                                             @@_@
-//                                                                                              ||
-//                                                                                             _||_
-//)abcd";
-//}
-//
-//void Menu::DrawCloud() {
-//	GUI::gotoXY(100, 18);
-//	std::cout << R"abcd(
-//   ____           ____
-// _(    )        _(    ) 
-//(___(__)       (___(__)             
-//)abcd";
-//}
 
 void Menu::PrintSubMenuOptions()
 {
@@ -391,14 +323,15 @@ void Menu::PushBackAdjustSoundMenu()
 	Menu::s_options.insert(Menu::s_options.end(), ops.begin(), ops.end());
 }
 
-void Menu::PrintAdjustSoundOptions(int music, int sfx)
+void Menu::PrintAdjustSoundOptions(sf::Music & music, int sfx)
 {
 	int coordY = 14;
+	int musicVol = music.getVolume();
 	for (size_t i = 0; i < s_options.size(); ++i) {
 		if (s_pointer == i) {
 			GUI::gotoXY(43, coordY);
 			if (i == 0) {
-				std::cout << s_options[i] << " << " << music << " >> ";
+				std::cout << s_options[i] << " << " << musicVol << " >> ";
 				coordY += 1;
 			}
 			else if (i == 1) {
@@ -413,7 +346,7 @@ void Menu::PrintAdjustSoundOptions(int music, int sfx)
 		else {
 			GUI::gotoXY(43, coordY);
 			if (i == 0) {
-				std::cout << s_options[i] << "    " << music << "    ";
+				std::cout << s_options[i] << "    " << musicVol << "    ";
 				coordY += 1;
 			}
 			else if (i == 1) {
@@ -428,10 +361,11 @@ void Menu::PrintAdjustSoundOptions(int music, int sfx)
 	}
 }
 
-void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
+void Menu::DrawAdjustSoundMenu(sf::Music & music, int &sfx)
 {
 	PushBackAdjustSoundMenu();
 	s_pointer = 0;
+	int musicVol = music.getVolume();
 	while (true) {
 		AdjustSoundBox();
 		PrintAdjustSoundOptions(music, sfx);
@@ -453,8 +387,11 @@ void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
 			}
 			if (s_pressKey == KEY_RIGHT) {
 				if (s_pointer == 0) {
-					if (music < 100)
-						++music;
+					if (musicVol < 100) {
+						++musicVol;
+						music.setVolume(musicVol);
+					}
+						
 				}
 				else if (s_pointer == 1) {
 					if (sfx < 100)
@@ -464,8 +401,10 @@ void Menu::DrawAdjustSoundMenu(int &music, int &sfx)
 			}
 			if (s_pressKey == KEY_LEFT) {
 				if (s_pointer == 0) {
-					if (music > 0)
-						--music;
+					if (musicVol > 0) {
+						--musicVol;
+						music.setVolume(musicVol);
+					}
 				}
 				else if (s_pointer == 1) {
 					if (sfx > 0)

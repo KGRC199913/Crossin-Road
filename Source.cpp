@@ -1,8 +1,9 @@
-
 //
 
 #include "Menu.h"
 #include "CGAME.h"
+
+
 
 auto main(void) -> int {
 	// lock the size, change the console size to WIDTH x HEIGHT
@@ -26,45 +27,53 @@ auto main(void) -> int {
 	int music_vol = 100, sfx_vol = 100;
 	bool contiPlayFlag = false;
 	// main game loop
-	while (true) {
-		if (Menu::CreateLoopMenu(isLoadSelected, music_vol, sfx_vol)) {
-			GUI::drawLoadingBar();
-			GUI::clearConsoleScreen();
-			CGAME* cg = CGAME::getInstance();
-
-			music.setVolume(music_vol);
-
-			// choose difficulty only if start new game
-			if (!isLoadSelected)
-				cg->setDifficulties(Menu::DrawDifficultiesMenu());
-			do {
-				cg->startGame(isLoadSelected);
-				// reset after each round
-				GUI::clearConsoleScreen();
-				if ((cg->isExit()) || (cg->won()))
-					break;
-
-				isLoadSelected = false;
-				contiPlayFlag = Menu::DrawPlayAgainMenu();
-			} while (contiPlayFlag);
-			// wining effect here
-			if (cg->wonPreviousLevel()) {
-				//std::cout << "u won" << std::endl; // TODO: make a winning scene
-				GUI::drawWinningScene();
-			}
-
-			if (cg->isExit() || !contiPlayFlag) {
-				delete cg;
-				break;
-			}
-				
-			// delete the cg to avoid huge memory leak
-			delete cg;
-		}
-		else
-			break;
-	}
 	
+	try {
+		while (true) {
+			if (Menu::CreateLoopMenu(isLoadSelected, music, sfx_vol)) {
+				GUI::drawLoadingBar();
+				GUI::clearConsoleScreen();
+				CGAME* cg = CGAME::getInstance();
+				cg->setSoundVol(sfx_vol);
+
+				// choose difficulty only if start new game
+				if (!isLoadSelected)
+					cg->setDifficulties(Menu::DrawDifficultiesMenu());
+				do {
+					cg->startGame(isLoadSelected);
+					// reset after each round
+					GUI::clearConsoleScreen();
+					if ((cg->isExit()) || (cg->won()))
+						break;
+
+					isLoadSelected = false;
+					contiPlayFlag = Menu::DrawPlayAgainMenu();
+				} while (contiPlayFlag);
+				// wining effect here
+				if (cg->wonPreviousLevel()) {
+					//std::cout << "u won" << std::endl; // TODO: make a winning scene
+					GUI::drawWinningScene();
+				}
+
+				if (cg->isExit() || !contiPlayFlag) {
+					delete cg;
+					break;
+				}
+
+				// delete the cg to avoid huge memory leak
+				delete cg;
+			}
+			else
+				break;
+		}
+
+	}
+	catch (std::exception& e) {
+		LogHere(Log::LOG_WRITE_MODE::FILE, Log::LOG_TAGS::FATAL, e.what());
+	}
+	catch (...) {
+		LogHere(Log::LOG_WRITE_MODE::FILE, Log::LOG_TAGS::FATAL, "UNKNOW");
+	}
 	//
 	music.stop();
 	return 0;

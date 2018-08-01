@@ -6,8 +6,8 @@
 class CVEHICLE
 {
 protected:
-	int _x, _y;
-	int _type; // 0 = car, 1 = truck;
+	short _x, _y;
+	short _type; // 0 = car, 1 = truck;
 	CVEHICLE() = default;
 public:
 	// 0 = car, 1 = truck;

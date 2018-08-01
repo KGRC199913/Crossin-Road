@@ -57,7 +57,6 @@ class CGAME final
 	void updatePosAnimal();
 	void updatePosObjs();
 	void init();
-	void clearGame();
 	void exitGame();
 	void pauseGame();
 	void loadGame();
@@ -66,8 +65,10 @@ class CGAME final
 	CGAME();
 public:
 	static CGAME* getInstance();
+
 	void startGame(bool & isLoadSelected);
-	
+	void clearGame();
+
 	CGAME(const CGAME& other) = delete;
 	void operator=(const CGAME& other) = delete;
 	

@@ -6,8 +6,8 @@
 class CANIMAL
 {
 protected:
-	int _x, _y;
-	int _type; // 0 = bird, 1 = dino;
+	short _x, _y;
+	short _type; // 0 = bird, 1 = dino;
 	CANIMAL() = default;
 public:
 	int getType() const;

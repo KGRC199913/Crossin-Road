@@ -8,13 +8,15 @@
 #include "CDINOSAUR.h"
 #include "CGAME.h"
 
-#define SAVE_PATH "./save.dat"
+#define SAVE_PATH ".\\Save\\save.dat"
 
 
 class Database final
 {
 	Database() = delete;
 	~Database() = delete;
+
+	bool static _mainPaused;
 
 	void static loadVehicles(std::ifstream & saveFile, int objCount, std::vector<CVEHICLE*> & vehicleList);
 	void static loadAnimals(std::ifstream & saveFile, int objCount, std::vector<CANIMAL*> & animalList);
@@ -25,7 +27,10 @@ public:
 		CPEOPLE& player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus, int & gameSpeed);
 	void static loadGame(std::vector<CVEHICLE*> & vehicleList, std::vector<CANIMAL*> & animalList,
 		CPEOPLE& player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus, int & gameSpeed);
+	void static triggerMainPaused(bool state);
 };
+
+
 
 #endif Database_H_
 

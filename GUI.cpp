@@ -112,12 +112,12 @@ void GUI::redrawObjects(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 	}
 }
 
-void GUI::hideCursor()
+void GUI::hideCursor(bool visible)
 {
 	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO info;
 	info.dwSize = 100;
-	info.bVisible = FALSE;
+	info.bVisible = visible;
 	SetConsoleCursorInfo(consoleHandle, &info);
 }
 
@@ -199,7 +199,7 @@ void GUI::drawLoadingBar()
 		for (int i = 1; i < 6; i++)
 		{
 			GUI::gotoXY(51, 17); std::cout << per + i << "%";
-			Sleep(20);
+			Sleep(1);
 		}
 		per += 5;
 	}

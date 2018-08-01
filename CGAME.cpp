@@ -127,7 +127,10 @@ void CGAME::pauseGame()
 void CGAME::startGame(bool & isLoadSelected)
 {
 	if (isLoadSelected) {
+		Database::triggerMainPaused(true);
 		loadGame();
+		Database::triggerMainPaused(false);
+		GUI::clearConsoleScreen();
 	}
 	else
 		init();
@@ -187,7 +190,6 @@ bool CGAME::wonPreviousLevel() const
 
 void CGAME::loadGame()
 {
-	clearGame();
 	Database::loadGame(_vehicles, _animals, *_player, _trafficLight, _reverseLane, _gameSpeed);
 	GUI::drawInfoBox(*_player, _gameSpeed);
 }
@@ -239,19 +241,8 @@ void CGAME::gameloop()
 
 	// the loop
 	while (!_stopFLAG) {
-
 		GUI::redrawRoads();
-		// check in needs of saving
-		if (_inputKeyHolder == '1') {
-			_inputKeyHolder = ' ';
-			saveGame();
-		}
-		// or loading
-		if (_inputKeyHolder == '2') {
-			_inputKeyHolder = ' ';
-			loadGame();
-		}
-			
+		
 		// move the vehicle
 		updatePosObjs();
 		GUI::render(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
@@ -299,7 +290,13 @@ void CGAME::gameloop()
 
 		// check if pause
 		if (_pauseFLAG) {
+			GUI::clearConsoleScreen();
+			Database::triggerMainPaused(true);
 			pauseGame();
+			Database::triggerMainPaused(false);
+			GUI::gotoXY(0, 0);
+			GUI::drawPlayArea();
+			continue;
 		}
 
 		// pause the loop (speed depends on difficulty
@@ -322,6 +319,22 @@ void CGAME::inputKey()
 	char c = '\0';
 	while (!_stopFLAG) {
 		_inputKeyHolder = _getch();
+		
+		// check in needs of saving
+		if (_inputKeyHolder == '1') {
+			_pauseFLAG = true;
+			_inputKeyHolder = ' ';
+			saveGame();
+			_pauseFLAG = false;
+		}
+		// or loading
+		if (_inputKeyHolder == '2') {
+			_pauseFLAG = true;
+			_inputKeyHolder = ' ';
+			loadGame();
+			_pauseFLAG = false;
+		}
+
 		if (_inputKeyHolder == 'p')
 			_pauseFLAG = !_pauseFLAG;
 			

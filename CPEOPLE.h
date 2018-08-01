@@ -9,9 +9,9 @@ class CANIMAL;
 
 class CPEOPLE final
 {
-	int _x, _y;
+	short _x, _y;
 	bool _Dead;
-	unsigned int _level;
+	unsigned short _level;
 public:
 	CPEOPLE();
 
@@ -19,7 +19,7 @@ public:
 
 	void reset();
 	void LevelUp();
-	unsigned int& Level();
+	unsigned int Level();
 	void Up(int block = 1);
 	void Left(int block = 1);
 	void Right(int block = 1);

@@ -1,5 +1,7 @@
 #include "Database.h"
 
+bool Database::_mainPaused = false;
+
 void Database::loadVehicles(std::ifstream & saveFile, int objCount, std::vector<CVEHICLE*>& vehicleList)
 {
 	CVEHICLE * vechiclePtr = nullptr;
@@ -50,7 +52,30 @@ void Database::loadStatuses(std::ifstream & saveFile, std::array<bool, 4>& traff
 void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList,
 	CPEOPLE & player, std::array<bool, 4> trafficLightStatus, std::array<bool, 4> reverseLaneStatus, int & gameSpeed)
 {
-	std::ofstream saveFile(SAVE_PATH, std::ios::binary);
+	std::string userInputSaveLocation;
+	GUI::gotoXY(0, 0);
+
+
+	while (!_mainPaused) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+	GUI::clearConsoleScreen();
+	
+	std::cout << "Please provide your desire save location + save file name\nLeave blank if you want to use default PATH (install folder//Save//):\n";
+
+	std::getline(std::cin, userInputSaveLocation);
+	if (userInputSaveLocation == "") {
+		userInputSaveLocation = SAVE_PATH;
+	}
+
+	std::ofstream saveFile;
+	try {
+		saveFile.open(userInputSaveLocation, std::ios::binary | std::ios::trunc);
+	}
+	catch (std::exception& e) {
+		LogHere(Log::LOG_WRITE_MODE::FILE, Log::LOG_TAGS::FATAL, e.what());
+	}
+	
 	if (!saveFile) {
 		std::cerr << "Error Saving Game" << std::endl;
 		return;
@@ -67,6 +92,7 @@ void Database::saveGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 	saveFile.write(static_cast<char*>(static_cast<void*>(&gameSpeed)), sizeof(gameSpeed));
 
 	saveFile.close();
+	GUI::clearConsoleScreen();
 }
 
 // DO NOT TRY TO CHANGE THIS METHOD WITHOUT ASKING
@@ -76,10 +102,27 @@ void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 	CPEOPLE & player, std::array<bool, 4> & trafficLightStatus, std::array<bool, 4> & reverseLaneStatus, int & gameSpeed)
 {
 	try {
-		std::ifstream saveFile(SAVE_PATH, std::ios::binary);
-		if (!saveFile) {
-			throw std::exception::exception("FATAL ERROR: ERROR LOADING SAVE FILE");
+		std::string userInputSaveLocation;
+		GUI::gotoXY(0, 0);
+		while (!_mainPaused) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
+		GUI::clearConsoleScreen();
+
+		std::cout << "Please provide your desire save location + save file name\nLeave blank if you want to use default PATH (install folder//Save//):\n";
+
+		std::getline(std::cin, userInputSaveLocation);
+		if (userInputSaveLocation == "") {
+			userInputSaveLocation = SAVE_PATH;
+		}
+
+
+		std::ifstream saveFile(userInputSaveLocation, std::ios::binary);
+		if (!saveFile) {
+			throw std::exception::exception("FATAL FILE NOT FOUND");
+		}
+		
+		CGAME::getInstance()->clearGame();
 
 		// read player
 		saveFile.read(static_cast<char*>(static_cast<void*>(&player)), sizeof(player));
@@ -100,10 +143,17 @@ void Database::loadGame(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL
 		vehicleList.shrink_to_fit();
 		animalList.shrink_to_fit();
 		saveFile.close();
+		GUI::clearConsoleScreen();
 	}
-	catch (std::exception e) {
+	catch (std::exception& e) {
 		CGAME* cg = CGAME::getInstance();
 		cg->~CGAME();
-		exit(FAST_FAIL_FATAL_APP_EXIT);
+		LogHere(Log::LOG_WRITE_MODE::FILE, Log::LOG_TAGS::FATAL, e.what());
+		exit(ERROR_FATAL_APP_EXIT);
 	}
+}
+
+void Database::triggerMainPaused(bool state)
+{
+	Database::_mainPaused = state;
 }

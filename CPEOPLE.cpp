@@ -32,7 +32,7 @@ void CPEOPLE::LevelUp()
 		_level = 1;
 }
 
-unsigned int & CPEOPLE::Level()
+unsigned int CPEOPLE::Level()
 {
 	return _level;
 }

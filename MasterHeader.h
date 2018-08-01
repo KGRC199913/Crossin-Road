@@ -1,6 +1,5 @@
 #ifndef MASTERHEADER_H_
 #define MASTERHEADER_H_
-
 #if _WIN64
 #define ENVIRONMENT64
 #else
@@ -18,6 +17,8 @@
 #include <conio.h>
 #include <random>
 #include <array>
+#include <SFML/Audio.hpp>
+#include "Logger.h"
 
 #define MAX_LEVEL 5
 #define MAX_BIRD 6
