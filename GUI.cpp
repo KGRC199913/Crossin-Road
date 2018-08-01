@@ -171,26 +171,37 @@ void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& ani
 void GUI::drawLoadingBar()
 {
 	GUI::clearConsoleScreen();
-	int percent = 0;
-	GUI::gotoXY(50, 13);  
-	std::cout << "LOADING";
 
+	int coordY;
+
+
+	for (coordY = 34; coordY < 75; coordY++)
+	{
+		GUI::gotoXY(coordY, 14); std::cout << char(BOX_HORIZONTAL_ASCII);
+		GUI::gotoXY(coordY, 16); std::cout << char(BOX_HORIZONTAL_ASCII);;
+	}
+	for (coordY = 14; coordY < 16; coordY++)
+	{
+		GUI::gotoXY(34, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+		GUI::gotoXY(75, coordY); std::cout << char(BOX_VERTICAL_ASCII);
+	}
+	GUI::gotoXY(75, 14); std::cout << char(BOX_TOP_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(75, 16); std::cout << char(BOX_BOTTOM_RIGHT_CORNER_ASCII);
+	GUI::gotoXY(34, 14); std::cout << char(BOX_TOP_LEFT_CORNER_ASCII);
+	GUI::gotoXY(34, 16); std::cout << char(BOX_BOTTOM_LEFT_CORNER_ASCII);
+
+
+	int per = 0;
+	GUI::gotoXY(50, 13);  std::cout << "LOADING";
 	for (int i = 0; i < 20; i++)
 	{
-		GUI::gotoXY(35 + 2 * i, 15);  
-		std::cout << char(BLOCK_ASCII);
-
-		for (int i = 1; i < 10; i += 2)
+		GUI::gotoXY(35 + 2 * i, 15);  std::cout << char(BLOCK_ASCII);
+		for (int i = 1; i < 6; i++)
 		{
-			GUI::gotoXY(51, 17);
-			if (percent + i > 100)
-				std::cout << "100%";
-			else
-				std::cout << percent + i << "%";
-			//std::this_thread::sleep_for(std::chrono::milliseconds(200));
+			GUI::gotoXY(51, 17); std::cout << per + i << "%";
+			Sleep(20);
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(rand() % 100));
-		percent += 5;
+		per += 5;
 	}
 }
 
