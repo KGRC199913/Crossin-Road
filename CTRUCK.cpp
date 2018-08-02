@@ -21,3 +21,11 @@ void CTRUCK::draw_self_bw()
 	std::cout << char(BLOCK_ASCII);
 	std::cout << char(BLOCK_ASCII);
 }
+
+void CTRUCK::delete_self()
+{
+	GUI::gotoXY(_x, _y);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+}

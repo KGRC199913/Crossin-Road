@@ -19,3 +19,10 @@ void CBIRD::draw_self_bw()
 
 	draw_self();
 }
+
+void CBIRD::delete_self() {
+	GUI::gotoXY(_x, _y);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+	std::cout << char(SPACE_ASCII);
+}

@@ -18,6 +18,7 @@ public:
 
 	virtual void draw_self() = 0;
 	virtual void draw_self_bw() = 0;
+	virtual void delete_self() = 0;
 };
 
 #endif CANIMAL_H_
