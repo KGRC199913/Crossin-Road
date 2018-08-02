@@ -10,6 +10,7 @@ public:
 
 	void draw_self();
 	void draw_self_bw();
+	void delete_self();
 };
 
 #endif CDINOSAUR_H_
