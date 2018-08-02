@@ -244,15 +244,23 @@ void CGAME::gameloop()
 		GUI::redrawRoads();
 		
 		// move the vehicle
+		GUI::deRender(_vehicles, _animals, *_player);
 		updatePosObjs();
 		GUI::render(_vehicles, _animals, *_player, _trafficLight, _reverseLane);
 		// check if impact
 		if (!_devModeFLAG) {
 			for (auto it : _vehicles) {
 				if (_player->isImpact(it)) {
-					//_player->draw_dead_self();
+					sf::SoundBuffer buffer;
+					buffer.loadFromFile("Crash.ogg");
+					soundPlayer.setBuffer(buffer);
+					soundPlayer.play();
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
+					while (soundPlayer.getStatus() == sf::Sound::Status::Playing) {
+						std::this_thread::sleep_for(std::chrono::seconds(1));
+					}
 					GUI::drawLosingScene();
 					break;
 				}
@@ -263,9 +271,16 @@ void CGAME::gameloop()
 
 			for (auto it : _animals) {
 				if (_player->isImpact(it)) {
-					//_player->draw_dead_self();
+					sf::SoundBuffer buffer;
+					buffer.loadFromFile("AngryAnimal.ogg");
+					soundPlayer.setBuffer(buffer);
+					soundPlayer.play();
+					_player->draw_dead_self();
 					_stopFLAG = true;
 					_wonFLAG = false;
+					while (soundPlayer.getStatus() == sf::Sound::Status::Playing) {
+						std::this_thread::sleep_for(std::chrono::seconds(1));
+					}
 					GUI::drawLosingScene();
 					break;
 				}
@@ -321,14 +336,14 @@ void CGAME::inputKey()
 		_inputKeyHolder = _getch();
 		
 		// check in needs of saving
-		if (_inputKeyHolder == '1') {
+		if (_inputKeyHolder == 'l') {
 			_pauseFLAG = true;
 			_inputKeyHolder = ' ';
 			saveGame();
 			_pauseFLAG = false;
 		}
 		// or loading
-		if (_inputKeyHolder == '2') {
+		if (_inputKeyHolder == 't') {
 			_pauseFLAG = true;
 			_inputKeyHolder = ' ';
 			loadGame();

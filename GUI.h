@@ -35,10 +35,12 @@ class GUI final
 	~GUI() = delete;
 	void static fixConsoleWindows();
 	void static setWindowSize();
-	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
+	
 	void static drawRedTrafficLight();
 	void static drawGreenTrafficLight();
+	void static drawBlackTraffic();
 	void static drawTrafficLight(std::array<bool, 4> trafficState);
+	// use to draw objects like CVEHICLE, CANIMAL, CPEOPLE in gameloop
 	void static redrawObjects(std::vector<CVEHICLE*> & vehicleList,
 		std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> reverseLaneFlag);
 	
@@ -58,7 +60,9 @@ public:
 	void static initWindows();
 	void static render(std::vector<CVEHICLE*> & vehicleList,
 				std::vector<CANIMAL*> & animalList, CPEOPLE& player, std::array<bool, 4> trafficState, std::array<bool, 4> reverseLanes);
-	
+	void static deRender(std::vector<CVEHICLE*> & vehicleList,
+		std::vector<CANIMAL*> & animalList, CPEOPLE& player);
+
 	//draw loading bar
 	void static drawLoadingBar();
 	//draw winning scene

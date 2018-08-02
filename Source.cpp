@@ -9,6 +9,7 @@ auto main(void) -> int {
 	// lock the size, change the console size to WIDTH x HEIGHT
 	GUI::initWindows();
 	std::ios_base::sync_with_stdio(false);
+	SetConsoleTitle(TEXT("Chaotic Road"));
 	// set the priority of this thread to highest to minimize the latency
 	SetThreadPriority(GetCurrentThread(), THREAD_PRIORITY_HIGHEST);
 

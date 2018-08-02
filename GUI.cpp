@@ -47,25 +47,19 @@ void GUI::drawPlayArea() {
 
 void GUI::redrawRoads()
 {
-	GUI::gotoXY(19, 9);
-	std::cout << R"abcd(
-                  ========================================================= 
-                  |                                                       | 
-                  |                                                       | 
-                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
-                  |                                                       | 
-                  |                                                       | 
-                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
-                  |                                                       | 
-                  |                                                       | 
-                  |__  __  __  __  __  __  __  __  __  __  __  __  __  __ | 
-                  |                                                       | 
-                  |                                                       | 
-                  | __  __  __  __  __  __  __  __  __  __  __  __  __  __| 
-                  |                                                       | 
-                  |                                                       | 
-                  =========================================================
-)abcd";
+	GUI::gotoXY(18, 10);
+	std::cout << "=========================================================";
+	GUI::gotoXY(18, 13);
+	std::cout << "| __  __  __  __  __  __  __  __  __  __  __  __  __  __|";
+	GUI::gotoXY(18, 16);
+	std::cout << "| __  __  __  __  __  __  __  __  __  __  __  __  __  __|";
+	GUI::gotoXY(18, 19);
+	std::cout << "| __  __  __  __  __  __  __  __  __  __  __  __  __  __|";
+	GUI::gotoXY(18, 22);
+	std::cout << "| __  __  __  __  __  __  __  __  __  __  __  __  __  __|";
+	GUI::gotoXY(18, 25);
+	std::cout << "=========================================================";
+
 }
 
 void GUI::clearConsoleScreen()
@@ -144,13 +138,16 @@ void GUI::drawInfoBox(CPEOPLE & player, int gameSpeed)
 
 	GUI::gotoXY(51, 1);
 	if (gameSpeed == NORMAL_SPEED)
-		std::cout << "Mode: NORMAL" << std::endl;
+		std::cout << "Mode: NORMAL";
 	else if (gameSpeed == HARDCORE_SPEED)
-		std::cout << "Mode: HARDCORE" << std::endl;
+		std::cout << "Mode: HARDCORE";
 	else if (gameSpeed == LUNATIC_SPEED)
-		std::cout << "Mode: LUNATIC" << std::endl;
-	else std::cout << gameSpeed << std::endl;
-		
+		std::cout << "Mode: LUNATIC";
+	else std::cout << gameSpeed;
+	GUI::gotoXY(51, 4);
+	std::cout << "press [L] to save, [T] to load";
+	GUI::gotoXY(51, 5);
+	std::cout << "[P] to pause/unpause, [ESC] for quick exit";
 	GUI::gotoXY(0, 0);
 }
 
@@ -166,6 +163,15 @@ void GUI::render(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& ani
 {
 	GUI::redrawObjects(vehicleList, animalList, player, reverseLanes);
 	GUI::drawTrafficLight(trafficState);
+}
+
+void GUI::deRender(std::vector<CVEHICLE*>& vehicleList, std::vector<CANIMAL*>& animalList, CPEOPLE & player)
+{
+	for (auto& it : vehicleList)
+		it->delete_self();
+	for (auto& it : animalList)
+		it->delete_self();
+	player.delete_self();
 }
 
 void GUI::drawLoadingBar()
@@ -259,7 +265,7 @@ void GUI::drawRedTrafficLight()
 {
 	//GUI::gotoXY(75, 11);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED);
-	std::cout << char(BOTTOM_HALF_BLOCK_ASCII) << std::endl;
+	std::cout << char(BOTTOM_HALF_BLOCK_ASCII);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
 }
 
@@ -267,7 +273,14 @@ void GUI::drawGreenTrafficLight()
 {
 	//GUI::gotoXY(75, 12);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN);
-	std::cout << char(TOP_HALF_BLOCK_ASCII) << std::endl;
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
+}
+
+void GUI::drawBlackTraffic()
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);
+	std::cout << char(TOP_HALF_BLOCK_ASCII);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0x7);
 }
 
@@ -280,8 +293,12 @@ void GUI::drawTrafficLight(std::array<bool, 4> trafficState)
 		if (trafficState[i]) {
 			GUI::gotoXY(coordX, coordYRed + (3 * i));
 			GUI::drawRedTrafficLight();
+			GUI::gotoXY(coordX, coordYGreen + (3 * i));
+			GUI::drawBlackTraffic();
 		}
 		else {
+			GUI::gotoXY(coordX, coordYRed + (3 * i));
+			GUI::drawBlackTraffic();
 			GUI::gotoXY(coordX, coordYGreen + (3 * i));
 			GUI::drawGreenTrafficLight();
 		}
